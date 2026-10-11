@@ -140,13 +140,67 @@ const MARCAS_ARGENTINAS = {
   }
 };
 
+// ========================================================
+// 6. CORPORACIONES HISTÓRICAS, MEDIOS Y AGROEXPORTACIÓN (LOBBIES AMPLIADOS)
+// ========================================================
+const LOBBIES_CORPORATIVOS_ARG = {
+  grupo_clarin: {
+    id: "grupo_clarin",
+    nombre: "Grupo Clarín / Héctor Magnetto",
+    icono: "fa-solid fa-newspaper",
+    sector: "Medios Concentrados, Telecomunicaciones y Papel Prensa",
+    figuraLobby: "Héctor Magnetto / Directorio Clarín",
+    representa: "El poder mediático por antonomasia. Diario Clarín, Canal 13, TN, Radio Mitre, Telecom/Flow y Papel Prensa.",
+    quilomboFondo: "El histórico apriete de las tapas de los domingos. Si no alineás tu política económica con su agenda, te titulan tres días seguidos 'Incertidumbre en los mercados' y te voltean al ministro de Economía.",
+    dilemaGobierno: "¿Concederles fusiones corporativas y exenciones impositivas para tener blindaje mediático o aplicar la ley antimonopolios y bancarte una guerra frontal en horario central?",
+    quejaUsuario: "Prendés la tele o abrís el diario y te dicen que el país se prende fuego o que está todo bárbaro según cuánta pauta oficial le giró el gobierno esa semana."
+  },
+
+  vicentin_agro: {
+    id: "vicentin_agro",
+    nombre: "Vicentin (y Cerealeras de la Hidrovía)",
+    icono: "fa-solid fa-seedling",
+    sector: "Agroexportación, Molienda de Granos y Puertos Privados",
+    figuraLobby: "Cámara de la Industria Aceitera (CIARA) / Familia Vicentin",
+    representa: "El epicentro del comercio exterior de granos y el mayor concurso de acreedores de la historia argentina.",
+    quilomboFondo: "El fantasma de la expropiación frustrada de 2020: US$ 1.300 millones de deuda, default con el Banco Nación y productores chacareros estafados frente al banderazo federal de tractores en Reconquista.",
+    dilemaGobierno: "¿Intervenir o estatizar la cerealera para crear una empresa testigo de alimentos arriesgando un estallido federal agropecuario, o dejarla en quiebra facilitando su extranjerización?",
+    quejaUsuario: "Los chacareros del interior entregaron la cosecha de soja de todo el año y nunca cobraron un mango, mientras los directivos se paseaban en yate por el Paraná."
+  },
+
+  farmacity_quintana: {
+    id: "farmacity_quintana",
+    nombre: "Farmacity & Laboratorios (CILFA / CAEME)",
+    icono: "fa-solid fa-pills",
+    sector: "Cadena Farmacéutica & Desregulación de Medicamentos",
+    figuraLobby: "Mario Quintana / Cámaras de Laboratorios",
+    representa: "El modelo de farmacia-shopping y la batalla feroz por la venta de medicamentos fuera de farmacias tradicionales.",
+    quilomboFondo: "La guerra contra los colegios de farmacéuticos provinciales (especialmente bonaerense) por la ley de una farmacia cada 300 metros, y los precios de remedios para jubilados de PAMI.",
+    dilemaGobierno: "¿Desregular la venta de remedios en quioscos y habilitar megacadenas (bajando precios por volumen) o proteger a las farmacias de barrio tradicionales atendidas por sus dueños?",
+    quejaUsuario: "Vas a buscar un ibuprofeno y tenés que pasar por tres góndolas de maquillajes, golosinas y ojotas, y cuando llegás a la caja el remedio te sale cuatro veces más caro que en la farmacia del barrio."
+  },
+
+  techint_rocca: {
+    id: "techint_rocca",
+    nombre: "Organización Techint (Ternium / Tenaris)",
+    icono: "fa-solid fa-industry",
+    sector: "Siderurgia Pesada, Tubos sin Costura y Vaca Muerta",
+    figuraLobby: "Paolo Rocca / Asociación Empresaria Argentina (AEA)",
+    representa: "La mayor multinacional de origen argentino. Los caños sin costura de los gasoductos troncales y el monopolio del acero laminado.",
+    quilomboFondo: "El costo argentino del acero: sin Techint no se construye un solo metro del Gasoducto Néstor Kirchner, pero cobran los tubos con sobreprecio protegido contra la importación de chapa china barata.",
+    dilemaGobierno: "¿Abrir la importación de acero para bajar el costo de la obra pública (arruinando la industria pesada nacional) o subsidiar y comprar nacional garantizando empleo industrial y lealtad del círculo rojo?",
+    quejaUsuario: "La chapa para hacer un tinglado en el taller o armar una casa prefabricada cuesta el triple en pesos que lo que sale importar un contenedor de China, todo por el arancel de protección industrial."
+  }
+};
+
 // Helper para obtener marcas relevantes según el texto de una decisión
 function detectarMarcasEnDecision(decision) {
   const decTxt = (decision?.texto || "").toLowerCase();
   const encontradas = [];
+  const catalogoCompleto = { ...MARCAS_ARGENTINAS, ...LOBBIES_CORPORATIVOS_ARG };
 
-  for (const key in MARCAS_ARGENTINAS) {
-    const marca = MARCAS_ARGENTINAS[key];
+  for (const key in catalogoCompleto) {
+    const marca = catalogoCompleto[key];
     const matchNombre = decTxt.includes(marca.nombre.toLowerCase().split(' ')[0]);
     const matchKeywords = (
       (key === 'mercado_libre' && (decTxt.includes('qr') || decTxt.includes('billetera') || decTxt.includes('fintech') || decTxt.includes('galperin') || decTxt.includes('mercado pago'))) ||
@@ -157,7 +211,11 @@ function detectarMarcasEnDecision(decision) {
       (key === 'grupo_dota_colectivos' && (decTxt.includes('colectivo') || decTxt.includes('bondi') || decTxt.includes('dota') || decTxt.includes('frecuencia') || decTxt.includes('transporte'))) ||
       (key === 'aerolineas_argentinas' && (decTxt.includes('aerolínea') || decTxt.includes('vuelo') || decTxt.includes('piloto') || decTxt.includes('aeroparque') || decTxt.includes('avión'))) ||
       (key === 'grandes_supermercados' && (decTxt.includes('supermercado') || decTxt.includes('coto') || decTxt.includes('góndola') || decTxt.includes('carrefour') || decTxt.includes('alimento'))) ||
-      (key === 'grandes_alimenticias' && (decTxt.includes('alimento') || decTxt.includes('galletita') || decTxt.includes('arcor') || decTxt.includes('molinos') || decTxt.includes('reduflación') || decTxt.includes('aceite')))
+      (key === 'grandes_alimenticias' && (decTxt.includes('alimento') || decTxt.includes('galletita') || decTxt.includes('arcor') || decTxt.includes('molinos') || decTxt.includes('reduflación') || decTxt.includes('aceite'))) ||
+      (key === 'grupo_clarin' && (decTxt.includes('clarín') || decTxt.includes('magnetto') || decTxt.includes('papel prensa') || decTxt.includes('tapa') || decTxt.includes('monopolio'))) ||
+      (key === 'vicentin_agro' && (decTxt.includes('vicentin') || decTxt.includes('cereal') || decTxt.includes('hidrovía') || decTxt.includes('soja') || decTxt.includes('grano') || decTxt.includes('expropiac'))) ||
+      (key === 'farmacity_quintana' && (decTxt.includes('farmacity') || decTxt.includes('farmacia') || decTxt.includes('medicamento') || decTxt.includes('remedio') || decTxt.includes('receta') || decTxt.includes('pami'))) ||
+      (key === 'techint_rocca' && (decTxt.includes('techint') || decTxt.includes('rocca') || decTxt.includes('acero') || decTxt.includes('tubo') || decTxt.includes('gasoducto') || decTxt.includes('chapa')))
     );
 
     if (matchNombre || matchKeywords) {
@@ -169,5 +227,11 @@ function detectarMarcasEnDecision(decision) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { MARCAS_ARGENTINAS, detectarMarcasEnDecision };
+  module.exports = { MARCAS_ARGENTINAS, LOBBIES_CORPORATIVOS_ARG, detectarMarcasEnDecision };
+}
+
+if (typeof window !== 'undefined') {
+  window.MARCAS_ARGENTINAS = MARCAS_ARGENTINAS;
+  window.LOBBIES_CORPORATIVOS_ARG = LOBBIES_CORPORATIVOS_ARG;
+  window.detectarMarcasEnDecision = detectarMarcasEnDecision;
 }

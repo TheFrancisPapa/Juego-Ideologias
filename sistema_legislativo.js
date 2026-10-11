@@ -492,6 +492,9 @@ class SistemaLegislativo {
     let senAliadosAFavor = 0;
     let senNeutrosAFavor = 0;
     let senOposAFavor = 0;
+    let huboDesempateVice = false;
+    let votoVicepositivo = false;
+    let detalleDesempate = null;
 
     if (pasoDiputados) {
       senOficAFavor = this.senadores.oficialismo;
@@ -501,7 +504,23 @@ class SistemaLegislativo {
 
       totalSenadoresAFavor = senOficAFavor + senAliadosAFavor + senNeutrosAFavor + senOposAFavor;
       totalSenadoresEnContra = this.senadores.total - totalSenadoresAFavor;
-      pasoSenadores = totalSenadoresAFavor >= 37;
+
+      if (totalSenadoresAFavor === 36 && totalSenadoresEnContra === 36) {
+        huboDesempateVice = true;
+        const descontento = aprobacionSectores.claseMedia !== undefined ? (100 - aprobacionSectores.claseMedia) : 50;
+        votoVicepositivo = descontento < 60;
+        if (votoVicepositivo) {
+          totalSenadoresAFavor += 1;
+          pasoSenadores = true;
+          detalleDesempate = "Empate 36 a 36 en el Senado. El Vicepresidente de la Nación ejerce su facultad constitucional (Art. 57 CN) y desempata a favor del Poder Ejecutivo: ¡Ley aprobada!";
+        } else {
+          totalSenadoresEnContra += 1;
+          pasoSenadores = false;
+          detalleDesempate = "Madrugada histórica en el recinto: Empate 36 a 36. El Vicepresidente de la Nación toma la palabra y pronuncia el fatídico 'Que la historia me juzgue, mi voto no es positivo' (Art. 57 CN). La ley es rechazada.";
+        }
+      } else {
+        pasoSenadores = totalSenadoresAFavor >= 37;
+      }
     }
 
     const resultadoFinal = {
@@ -523,6 +542,9 @@ class SistemaLegislativo {
         aFavor: totalSenadoresAFavor,
         enContra: totalSenadoresEnContra,
         quorumpasado: pasoSenadores,
+        huboDesempateVice: huboDesempateVice || false,
+        votoVicepositivo: votoVicepositivo || false,
+        detalleDesempate: detalleDesempate || null,
         detalle: {
           oficialismo: senOficAFavor,
           aliados: senAliadosAFavor,
@@ -554,7 +576,35 @@ class SistemaLegislativo {
       quorum: 37,
       aFavor: res.senadores.aFavor,
       enContra: res.senadores.enContra,
-      aprobada: res.senadores.quorumpasado
+      aprobada: res.senadores.quorumpasado,
+      huboDesempateVice: res.senadores.huboDesempateVice,
+      votoVicepositivo: res.senadores.votoVicepositivo,
+      detalleDesempate: res.senadores.detalleDesempate
+    };
+  }
+
+  // Simular Desempate Vicepresidencial (Art. 57 CN - Cobos "Mi voto no es positivo")
+  simularDesempateVicepresidencial(motor = null, lealtadVice = null) {
+    let votoPositivo = true;
+    if (lealtadVice !== null && lealtadVice !== undefined) {
+      votoPositivo = Boolean(lealtadVice);
+    } else if (motor && motor.sistemaDinastias) {
+      const tens = motor.sistemaDinastias.tensionFamiliar || 0;
+      votoPositivo = tens < 60;
+    }
+
+    return {
+      articuloConstitucional: "Art. 57 de la Constitución Nacional",
+      empateSenado: "36 a 36",
+      votoVicepositivo: votoPositivo,
+      votoFinalVice: votoPositivo ? "AFIRMATIVO" : "NO POSITIVO",
+      fraseHistorica: votoPositivo
+        ? "El Vicepresidente de la Nación desempata a favor del proyecto oficialista conforme el Art. 57 CN."
+        : "«Que la historia me juzgue, mi voto no es positivo» — El Vicepresidente quiebra la disciplina y sepulta el proyecto.",
+      leyAprobada: votoPositivo,
+      impactoPolitico: votoPositivo
+        ? "El oficialismo salva la ley por un pelo; la oposición denuncia aprietes en el recinto."
+        : "Ruptura terminal en la fórmula presidencial (Síndrome Cobos 2008). Pérdida total del control del Senado."
     };
   }
 

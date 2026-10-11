@@ -3908,6 +3908,33 @@ test("Los 3 Dilemas Legislativos Jugables y Resolución con MotorJuego", () => {
   assert.ok(diag.notificacionEstadoCivico, "Diagnóstico final debe incluir notificacionEstadoCivico");
 });
 
+test("El Desempate Vicepresidencial en el Senado (Art. 57 CN - 'Mi voto no es positivo') y Lobbies Corporativos", () => {
+  const leg = new SistemaLegislativo();
+
+  // 1. Simulación directa del desempate vicepresidencial (Art. 57 CN)
+  const desempateLeal = leg.simularDesempateVicepresidencial(null, true);
+  assert.strictEqual(desempateLeal.empateSenado, "36 a 36");
+  assert.strictEqual(desempateLeal.votoVicepositivo, true);
+  assert.strictEqual(desempateLeal.votoFinalVice, "AFIRMATIVO");
+  assert.strictEqual(desempateLeal.leyAprobada, true);
+  assert.ok(desempateLeal.articuloConstitucional.includes("Art. 57"));
+
+  // 2. Voto no positivo (Estilo Cobos 2008)
+  const desempateRebelde = leg.simularDesempateVicepresidencial(null, false);
+  assert.strictEqual(desempateRebelde.votoVicepositivo, false);
+  assert.strictEqual(desempateRebelde.votoFinalVice, "NO POSITIVO");
+  assert.strictEqual(desempateRebelde.leyAprobada, false);
+  assert.ok(desempateRebelde.fraseHistorica.includes("mi voto no es positivo"));
+
+  // 3. Verificación de catálogo de marcas y lobbies corporativos ampliados
+  const { MARCAS_ARGENTINAS, LOBBIES_CORPORATIVOS_ARG } = require('./marcas_empresas_argentinas.js');
+  assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10, "Catálogo base debe mantener 10 marcas");
+  assert.ok(LOBBIES_CORPORATIVOS_ARG.grupo_clarin, "Debe existir Grupo Clarín en lobbies corporativos");
+  assert.ok(LOBBIES_CORPORATIVOS_ARG.vicentin_agro, "Debe existir Vicentin en lobbies corporativos");
+  assert.ok(LOBBIES_CORPORATIVOS_ARG.farmacity_quintana, "Debe existir Farmacity en lobbies corporativos");
+  assert.ok(LOBBIES_CORPORATIVOS_ARG.techint_rocca, "Debe existir Techint en lobbies corporativos");
+});
+
 console.log("\n=================================================================");
 
 console.log(`🏁 RESULTADO FINAL: ${testsPasados} de ${testsTotales} pruebas PASADAS`);
