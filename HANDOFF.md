@@ -65,9 +65,9 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
      - 🚨 **Crisis & UMP:** Sala de Crisis AMBA, Monitor UMP, Evacuación H-01.
    - Se mantuvieron intactos **todos los IDs y selectores del DOM** que el motor actualiza en tiempo real.
 
-2. **Audio Procedural Criollo:**
+2. **Audio Procedural Criollo (Experimental):**
    - Creado `sonidos_sillon.js` e integrado en `index.html`.
-   - Botón `🔊 Audio` en el header con icono de volumen y estado persistido.
+   - Botón minimalista de solo icono (`w-8 h-8`, squircle `🔊` / `🔇`) en el header sticky con tooltip experimental y estado persistido en `localStorage`.
    - Disparadores de audio conectados a:
      - Selección de opciones en dilemas (`reproducirClick()` en militante/diputado, `reproducirSello()` en presidente).
      - Firma de DNU, promulgación de leyes o vetos (`reproducirSello()`).

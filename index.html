@@ -83,10 +83,9 @@
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <!-- BOTÓN DE AUDIO PROCEDURAL (CRIOLLO) -->
-        <button id="btn-audio-toggle" onclick="toggleAudioGlobal()" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-400/60 text-slate-300 hover:text-amber-300 transition-all text-xs font-semibold flex items-center gap-1.5 sm:gap-2 shadow-sm cursor-pointer" title="Efectos de sonido procedurables (Web Audio API)">
+        <!-- BOTÓN DE AUDIO PROCEDURAL (EXPERIMENTAL - SOLO ICONO) -->
+        <button id="btn-audio-toggle" onclick="toggleAudioGlobal()" class="w-8 h-8 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-400/60 text-slate-300 hover:text-amber-300 transition-all flex items-center justify-center shadow-sm cursor-pointer" title="Efectos de sonido (Experimental - Web Audio API)">
           <i id="icono-audio-toggle" class="fa-solid fa-volume-high text-amber-400 text-xs"></i>
-          <span id="label-audio-toggle" class="hidden sm:inline text-[11px]">Audio</span>
         </button>
         <div id="turn-badge" class="hidden flex items-center gap-2">
           <button id="badge-diputado-sub25" onclick="abrirModalConstitucionalDiputado(false)" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" title="Ver Requisitos Constitucionales (Arts. 48 y 50 CN)">
@@ -5411,17 +5410,16 @@
 
     function actualizarBotonAudioUI(silenciado) {
       const ico = document.getElementById('icono-audio-toggle');
-      const lbl = document.getElementById('label-audio-toggle');
       const btn = document.getElementById('btn-audio-toggle');
-      if (!ico || !lbl || !btn) return;
+      if (!ico || !btn) return;
       if (silenciado) {
         ico.className = 'fa-solid fa-volume-xmark text-slate-500 text-xs';
-        lbl.innerText = 'Silenciado';
-        btn.classList.add('opacity-60');
+        btn.classList.add('opacity-50');
+        btn.title = 'Sonido Silenciado (Experimental - Clic para activar)';
       } else {
         ico.className = 'fa-solid fa-volume-high text-amber-400 text-xs';
-        lbl.innerText = 'Audio';
-        btn.classList.remove('opacity-60');
+        btn.classList.remove('opacity-50');
+        btn.title = 'Sonido Activado (Experimental - Clic para silenciar)';
       }
     }
 
