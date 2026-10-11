@@ -302,226 +302,54 @@
     <!-- PANTALLA 2: JUEGO ACTIVO -->
     <section id="screen-game" class="hidden space-y-4">
       
-      <!-- MESA CHICA DE LA ROSADA: CONSOLA DE OPERACIONES Y LOS 5 DESPACHOS DEL PODER -->
-      <div class="glass-panel p-3 sm:p-4 rounded-2xl border border-amber-500/30 bg-slate-900/90 shadow-xl space-y-3">
-        
-        <!-- Barra de Estado del Mandatario -->
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
-          <div class="flex items-center gap-2.5">
-            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
+      <!-- 1. BARRA SUPERIOR DE IDENTIDAD Y TELEMETRÍA RÁPIDA (HUD) -->
+      <div id="player-identity-bar" class="glass-panel p-3 sm:p-4 rounded-2xl border border-amber-500/30 bg-slate-900/90 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <!-- Identidad y Rol Dinámico -->
+          <div class="flex items-center gap-3">
+            <span id="mandatario-status-dot" class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399] shrink-0"></span>
             <div>
-              <span id="mandatario-cargo-badge" class="text-xs sm:text-sm font-bold text-amber-300 font-serif-title">MANDATARIO EN EJERCICIO</span>
-              <span class="text-[10px] text-slate-400 block sm:inline sm:ml-2">Despacho Presidencial • Casa Rosada</span>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 text-[11px] text-slate-400">
-            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 font-mono text-slate-300 flex items-center gap-1.5 shadow-sm">
-              <i class="fa-solid fa-sliders text-amber-400 text-xs"></i> 5 Despachos Operativos
-            </span>
-          </div>
-        </div>
-
-        <!-- Grilla de los 5 Despachos del Poder Ejecutivo -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
-          
-          <!-- DESPACHO 1: GOBIERNO & LEYES -->
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-violet-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
-            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
-              <span class="flex items-center gap-1.5 text-violet-300"><i class="fa-solid fa-landmark text-violet-400"></i> Gobierno & Leyes</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <button onclick="abrirModalBotoneraNormativa()" id="badge-botonera-normativa-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-violet-950/40 border border-violet-500/40 hover:bg-violet-900/50 text-violet-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Botonera Normativa: Congreso, DNU (Ley 26.122), Veto y Reforma Constitucional">
-                <i class="fa-solid fa-gavel text-violet-400 text-xs shrink-0"></i>
-                <span id="badge-botonera-normativa-txt" class="truncate">Congreso & DNU</span>
-              </button>
-              <button onclick="abrirModalGabinete()" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-950/30 border border-amber-500/30 hover:bg-amber-900/40 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-people-roof text-amber-400 text-xs shrink-0"></i>
-                <span id="badge-gabinete-estado" class="truncate">Gabinete: Salón Blanco</span>
-              </button>
-              <button onclick="abrirModalRoscaFederal()" id="badge-rosca-federal-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Tablero Federal de Control: Ligas Provinciales, ATN vs Quórum (34/37)">
-                <i class="fa-solid fa-landmark-dome text-sky-400 text-xs shrink-0"></i>
-                <span id="badge-rosca-federal-txt" class="truncate">Rosca Federal (34/37)</span>
-              </button>
-              <button onclick="abrirModalEstadoCivico()" id="badge-estado-civico-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-blue-950/40 border border-blue-500/40 hover:bg-blue-900/50 text-blue-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Notificación de Estado Cívico: Ministerio del Interior & Árbol de Desbloqueo Legal">
-                <i class="fa-solid fa-scroll text-blue-400 text-xs shrink-0"></i>
-                <span id="badge-estado-civico-txt" class="truncate">Estado Cívico (25a)</span>
-              </button>
+              <div class="flex items-center gap-2">
+                <span id="mandatario-cargo-badge" class="text-xs sm:text-sm font-bold text-amber-300 font-serif-title">MANDATARIO EN EJERCICIO</span>
+                <span id="mandatario-edad-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">30 Años</span>
+              </div>
+              <span id="mandatario-cargo-sub" class="text-[10px] sm:text-xs text-slate-400 block">Despacho Presidencial • Casa Rosada</span>
             </div>
           </div>
 
-          <!-- DESPACHO 2: ECONOMÍA & CITY -->
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-emerald-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
-            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
-              <span class="flex items-center gap-1.5 text-emerald-300"><i class="fa-solid fa-building-columns text-emerald-400"></i> Economía & City</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <!-- Micro-Pills de Telemetría Clave (Visibles de un solo vistazo) -->
+          <div class="flex flex-wrap items-center gap-2 text-[11px]">
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-1.5 shadow-sm" title="Apoyo Social Promedio">
+              <i class="fa-solid fa-users text-amber-400 text-xs"></i>
+              <span class="text-slate-400">Apoyo:</span>
+              <span id="hud-apoyo-promedio" class="font-bold text-white font-mono">50%</span>
             </div>
-            <div class="flex flex-col gap-1.5">
-              <button onclick="abrirModalMesaDineroBCRA()" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-coins text-emerald-400 text-xs shrink-0"></i>
-                <span id="badge-mesa-bcra-estado" class="truncate">Mesa BCRA ($1.560)</span>
-              </button>
-              <button onclick="abrirModalPantallaSillon()" id="badge-pantalla-sillon-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-600/25 border border-amber-500/50 hover:bg-amber-600/35 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm animate-pulse" title="La Pantalla del Sillón: Situación Económica, Mecha Social y Urnas en Tiempo Real">
-                <i class="fa-solid fa-chair text-amber-400 text-xs shrink-0"></i>
-                <span id="badge-sillon-estado" class="truncate">Pantalla Sillón (Sem. 42)</span>
-              </button>
-              <button onclick="abrirModalBalanceSemanal()" id="badge-ritmo-semanal-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-950/40 border border-amber-500/40 hover:bg-amber-900/50 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Ritmo de Juego Semanal & Radar de Hipocresía (Lunes a Domingo)">
-                <i class="fa-solid fa-calendar-week text-amber-400 text-xs shrink-0"></i>
-                <span id="badge-ritmo-semanal-txt" class="truncate">Semana 1 • Lunes (1/7)</span>
-              </button>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-1.5 shadow-sm" title="Cotización Dólar Blue">
+              <i class="fa-solid fa-money-bill-wave text-emerald-400 text-xs"></i>
+              <span class="text-slate-400">Dólar:</span>
+              <span id="hud-dolar-val" class="font-bold text-emerald-300 font-mono">$1.560</span>
             </div>
-          </div>
-
-          <!-- DESPACHO 3: RETIRO, SIDE & TRIBUNALES -->
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
-            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
-              <span class="flex items-center gap-1.5 text-purple-300"><i class="fa-solid fa-user-secret text-purple-400"></i> Inteligencia & Ley</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-1.5 shadow-sm" title="Tensión de la Mecha Social (Al 85% detona crisis)">
+              <i class="fa-solid fa-bomb text-rose-400 text-xs"></i>
+              <span class="text-slate-400">Mecha:</span>
+              <span id="hud-mecha-val" class="font-bold text-emerald-400 font-mono">20%</span>
             </div>
-            <div class="flex flex-col gap-1.5">
-              <button onclick="abrirModalSIDE()" class="w-full text-left px-2 py-1.5 rounded-lg bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-user-secret text-sky-400 text-xs shrink-0"></i>
-                <span id="badge-side-estado" class="truncate">SIDE: US$ 14.5M</span>
-              </button>
-              <button onclick="abrirModalComodoroPy()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/40 hover:bg-purple-500/25 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-scale-balanced text-purple-400 text-xs shrink-0"></i>
-                <span id="badge-causa-estado" class="truncate">Comodoro Py: Denuncia</span>
-              </button>
-              <button onclick="abrirModalRelaciones()" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 hover:bg-amber-500/25 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-handshake-angle text-amber-400 text-xs shrink-0"></i>
-                <span class="truncate">Relaciones Peligrosas (5)</span>
-              </button>
-              <button onclick="abrirModalFichaMatricular()" id="badge-ficha-candidato-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Ficha Matricular de Candidato: SEN - Sistema Electoral Nacional">
-                <i class="fa-solid fa-id-card text-emerald-400 text-xs shrink-0"></i>
-                <span id="badge-ficha-candidato-txt" class="truncate">Ficha Candidato</span>
-              </button>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-1.5 shadow-sm" title="Reservas Netas del BCRA">
+              <i class="fa-solid fa-vault text-amber-400 text-xs"></i>
+              <span class="text-slate-400">BCRA:</span>
+              <span id="hud-reservas-val" class="font-bold text-amber-300 font-mono">USD 2.800M</span>
             </div>
-          </div>
-
-          <!-- DESPACHO 4: MEDIOS, CLAN & MUNDO -->
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-sky-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
-            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
-              <span class="flex items-center gap-1.5 text-sky-300"><i class="fa-solid fa-tv text-sky-400"></i> Medios & Clan</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <button onclick="abrirModalMedios()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-tv text-purple-400 text-xs shrink-0"></i>
-                <span id="badge-medios-estado" class="truncate">Medios: Pauta & Prime</span>
-              </button>
-              <button onclick="abrirModalClanFamiliar()" id="badge-clan-familiar-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="El Living de Olivos: Clan Familiar, Nepotismo Estatal y Resoluciones Domésticas">
-                <i class="fa-solid fa-people-roof text-purple-400 text-xs shrink-0"></i>
-                <span id="badge-clan-familiar-txt" class="truncate">Clan Familiar</span>
-              </button>
-              <button onclick="abrirModalCancilleria()" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-earth-americas text-emerald-400 text-xs shrink-0"></i>
-                <span id="badge-cancilleria-estado" class="truncate">Mundo: FMI & Swap</span>
-              </button>
-              <button onclick="abrirModalBunkerRetorno()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-crown text-purple-400 text-xs shrink-0"></i>
-                <span id="badge-bunker-estado" class="truncate">Búnker del Retorno</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- DESPACHO 5: CRISIS & SUPERVIVENCIA -->
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-red-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
-            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
-              <span class="flex items-center gap-1.5 text-rose-300"><i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Crisis & UMP</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <button onclick="abrirModalSalaCrisis()" class="w-full text-left px-2 py-1.5 rounded-lg bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-fire text-red-400 text-xs shrink-0"></i>
-                <span id="badge-crisis-estado" class="truncate">Crisis: AMBA en Llamas</span>
-              </button>
-              <button onclick="abrirModalDashboardUMP()" id="badge-ump-salud-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-rose-950/40 border border-rose-500/40 hover:bg-rose-900/50 text-rose-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Monitor de Signos Vitales - Unidad Médica Presidencial (Olivos)">
-                <i class="fa-solid fa-heart-pulse text-rose-400 text-xs shrink-0 animate-pulse"></i>
-                <span id="badge-ump-salud-txt" class="truncate">Monitor UMP (14/9)</span>
-              </button>
-              <button onclick="abrirModalEvacuacionHelicoptero()" class="w-full text-left px-2 py-1.5 rounded-lg bg-red-950/50 border border-red-500/50 hover:bg-red-900/60 text-red-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
-                <i class="fa-solid fa-helicopter text-red-400 text-xs shrink-0"></i>
-                <span id="badge-evacuacion-estado" class="truncate">Evacuación H-01</span>
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Termómetro Social Argentino -->
-      <div class="glass-panel p-3 sm:p-4 rounded-2xl border border-slate-800 space-y-2">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-medium flex items-center gap-1.5"><i class="fa-solid fa-chart-pie text-amber-400"></i> Apoyo en Sectores Sociales (Argentina)</span>
-          <span class="text-[11px] text-slate-500">Define si ganás elecciones y evitás estallidos</span>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="sectors-grid">
-          <!-- Inyectado dinámicamente -->
-        </div>
-      </div>
-
-      <!-- TABLERO MACROECONÓMICO EN VIVO (ARGENTINA) -->
-      <div class="glass-panel p-3 sm:p-3.5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-medium flex items-center gap-1.5 text-amber-300">
-            <i class="fa-solid fa-chart-line text-amber-400"></i> Tablero Macroeconómico en Vivo (Argentina)
-          </span>
-          <span class="text-[11px] text-slate-500">Impacto en tiempo real de tus decisiones en la economía</span>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="macro-grid">
-          <!-- Inyectado dinámicamente: Inflación, Riesgo País, Reservas BCRA, Resultado Fiscal, Pobreza -->
-        </div>
-      </div>
-
-      <!-- EL TERMÓMETRO CRIOLLO: VARIABLES DE PODER Y CRISIS (ARGENTINA) -->
-      <div class="glass-panel p-3 sm:p-3.5 rounded-2xl border border-amber-500/30 bg-slate-900/60 space-y-2">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-medium flex items-center gap-1.5 text-amber-400">
-            <i class="fa-solid fa-gauge-high text-amber-400"></i> El Termómetro Criollo: Poder, Calle y Reserva
-          </span>
-          <span class="text-[11px] text-slate-500">Variables de tensión real: Mecha Social al 85% detona crisis total</span>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="termometro-criollo-grid">
-          <!-- Inyectado dinámicamente: Dólar Blue, Mecha Social, Reservas BCRA, Rosca Federal, Factor Scaloneta -->
-        </div>
-      </div>
-
-      <!-- EL RELOJ DE VIDA & DESGASTE DEL SILLÓN (SUPERVIVENCIA BIOLÓGICA Y POLÍTICA) -->
-      <div class="glass-panel p-3 sm:p-3.5 rounded-2xl border border-rose-500/30 bg-slate-900/60 space-y-2">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-medium flex items-center gap-1.5 text-rose-300">
-            <i class="fa-solid fa-heart-pulse text-rose-400 animate-pulse"></i> El Reloj de Vida & Desgaste del Sillón
-          </span>
-          <div class="flex items-center gap-2">
-            <span id="reloj-vida-resumen" class="text-[11px] text-slate-400 font-mono">55 Años • 0 Días en el Poder</span>
-            <button onclick="abrirModalDashboardUMP()" class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition-all cursor-pointer">
-              <i class="fa-solid fa-stethoscope mr-1"></i> Monitor UMP
+            <!-- Botón de Acceso Rápido a Tableros y Despachos -->
+            <button type="button" onclick="scrollOAlternarConsola()" class="px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-500/40 hover:bg-amber-500/25 text-amber-300 font-semibold text-[11px] flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+              <i class="fa-solid fa-sliders text-amber-400"></i>
+              <span id="hud-btn-consola-label">Ver Tableros ▾</span>
             </button>
           </div>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="salud-supervivencia-grid">
-          <!-- Inyectado dinámicamente: Coronarias, Paranoia, Seguridad/Custodia, Médico Presidencial -->
-        </div>
       </div>
 
-      <!-- BRÚJULA IDEOLÓGICA EN VIVO (12 EJES DOCTRINARIOS) -->
-      <div class="glass-panel p-3 sm:p-3.5 rounded-2xl border border-amber-500/30 bg-slate-900/80 space-y-2">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1 cursor-pointer select-none" onclick="toggleBrujulaEnVivo()">
-          <span class="font-medium flex items-center gap-1.5 text-amber-300">
-            <i class="fa-solid fa-compass text-amber-400"></i> Brújula Ideológica en Vivo (12 Ejes Doctrinarios)
-          </span>
-          <div class="flex items-center gap-2">
-            <span id="brujula-toggle-label" class="text-[11px] font-semibold text-amber-400 hover:text-amber-300 transition-colors">Desplegar</span>
-            <i id="brujula-toggle-icon" class="fa-solid fa-chevron-down text-amber-400 text-xs transition-transform duration-200"></i>
-          </div>
-        </div>
-        <div id="brujula-ejes-grid" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-1 border-t border-slate-800/80">
-          <!-- Inyectado dinámicamente con renderizarBrujulaEnVivo() -->
-        </div>
-      </div>
-
-      <!-- Tarjeta del Dilema Principal -->
-      <div class="glass-panel p-6 sm:p-7 rounded-2xl border border-slate-800 space-y-5 shadow-2xl relative">
+      <!-- 2. TARJETA DEL DILEMA PRINCIPAL (AL FRENTE Y CENTRO - PRIORIDAD TOTAL) -->
+      <div id="dilemma-card-main" class="glass-panel p-6 sm:p-7 rounded-2xl border border-slate-800 space-y-5 shadow-2xl relative">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
           <span id="dilemma-badge" class="px-3 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
             Fase
@@ -675,6 +503,246 @@
             </button>
           </div>
 
+        </div>
+
+      </div>
+
+      <!-- 3. CENTRO DE OPERACIONES Y TELEMETRÍA (ORGANIZADO EN PESTAÑAS ABAJO DEL DILEMA) -->
+      <div id="operations-console" class="glass-panel p-3 sm:p-4 rounded-2xl border border-slate-800 bg-slate-900/90 shadow-xl space-y-3">
+        
+        <!-- Header de la Consola con Pestañas -->
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-amber-400 text-sm"></i>
+            <span class="text-xs font-bold text-white tracking-wide uppercase">Centro de Operaciones y Telemetría</span>
+          </div>
+
+          <!-- Selector de Pestañas -->
+          <div class="flex flex-wrap items-center gap-1.5" id="nav-pestanas-consola">
+            <button id="tab-btn-despachos" onclick="cambiarPestanaConsola('despachos')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-landmark text-amber-400"></i> Despachos Rosada
+            </button>
+            <button id="tab-btn-sectores" onclick="cambiarPestanaConsola('sectores')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-users text-amber-400"></i> Apoyo Social
+            </button>
+            <button id="tab-btn-macro" onclick="cambiarPestanaConsola('macro')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-money-bill-trend-up text-emerald-400"></i> Macro & Mecha
+            </button>
+            <button id="tab-btn-salud" onclick="cambiarPestanaConsola('salud')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-heart-pulse text-rose-400"></i> Salud & Vida
+            </button>
+            <button id="tab-btn-brujula" onclick="cambiarPestanaConsola('brujula')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-compass text-sky-400"></i> Brújula 12 Ejes
+            </button>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 1: MESA CHICA DE LA ROSADA (LOS 5 DESPACHOS DEL PODER) -->
+        <div id="pane-despachos" class="tab-pane-content space-y-2.5">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 px-1">
+            <span class="flex items-center gap-1.5 text-amber-300 font-semibold">
+              <i class="fa-solid fa-sliders text-amber-400"></i> 5 Despachos Operativos de la Casa Rosada
+            </span>
+            <span class="text-slate-500">Mesa de decisión institucional y resortes de poder</span>
+          </div>
+
+          <!-- Grilla de los 5 Despachos del Poder Ejecutivo -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+            
+            <!-- DESPACHO 1: GOBIERNO & LEYES -->
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-violet-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+                <span class="flex items-center gap-1.5 text-violet-300"><i class="fa-solid fa-landmark text-violet-400"></i> Gobierno & Leyes</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <button onclick="abrirModalBotoneraNormativa()" id="badge-botonera-normativa-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-violet-950/40 border border-violet-500/40 hover:bg-violet-900/50 text-violet-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Botonera Normativa: Congreso, DNU (Ley 26.122), Veto y Reforma Constitucional">
+                  <i class="fa-solid fa-gavel text-violet-400 text-xs shrink-0"></i>
+                  <span id="badge-botonera-normativa-txt" class="truncate">Congreso & DNU</span>
+                </button>
+                <button onclick="abrirModalGabinete()" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-950/30 border border-amber-500/30 hover:bg-amber-900/40 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-people-roof text-amber-400 text-xs shrink-0"></i>
+                  <span id="badge-gabinete-estado" class="truncate">Gabinete: Salón Blanco</span>
+                </button>
+                <button onclick="abrirModalRoscaFederal()" id="badge-rosca-federal-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Tablero Federal de Control: Ligas Provinciales, ATN vs Quórum (34/37)">
+                  <i class="fa-solid fa-landmark-dome text-sky-400 text-xs shrink-0"></i>
+                  <span id="badge-rosca-federal-txt" class="truncate">Rosca Federal (34/37)</span>
+                </button>
+                <button onclick="abrirModalEstadoCivico()" id="badge-estado-civico-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-blue-950/40 border border-blue-500/40 hover:bg-blue-900/50 text-blue-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Notificación de Estado Cívico: Ministerio del Interior & Árbol de Desbloqueo Legal">
+                  <i class="fa-solid fa-scroll text-blue-400 text-xs shrink-0"></i>
+                  <span id="badge-estado-civico-txt" class="truncate">Estado Cívico (25a)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- DESPACHO 2: ECONOMÍA & CITY -->
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-emerald-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+                <span class="flex items-center gap-1.5 text-emerald-300"><i class="fa-solid fa-building-columns text-emerald-400"></i> Economía & City</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <button onclick="abrirModalMesaDineroBCRA()" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-coins text-emerald-400 text-xs shrink-0"></i>
+                  <span id="badge-mesa-bcra-estado" class="truncate">Mesa BCRA ($1.560)</span>
+                </button>
+                <button onclick="abrirModalPantallaSillon()" id="badge-pantalla-sillon-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-600/25 border border-amber-500/50 hover:bg-amber-600/35 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm animate-pulse" title="La Pantalla del Sillón: Situación Económica, Mecha Social y Urnas en Tiempo Real">
+                  <i class="fa-solid fa-chair text-amber-400 text-xs shrink-0"></i>
+                  <span id="badge-sillon-estado" class="truncate">Pantalla Sillón (Sem. 42)</span>
+                </button>
+                <button onclick="abrirModalBalanceSemanal()" id="badge-ritmo-semanal-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-950/40 border border-amber-500/40 hover:bg-amber-900/50 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Ritmo de Juego Semanal & Radar de Hipocresía (Lunes a Domingo)">
+                  <i class="fa-solid fa-calendar-week text-amber-400 text-xs shrink-0"></i>
+                  <span id="badge-ritmo-semanal-txt" class="truncate">Semana 1 • Lunes (1/7)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- DESPACHO 3: RETIRO, SIDE & TRIBUNALES -->
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+                <span class="flex items-center gap-1.5 text-purple-300"><i class="fa-solid fa-user-secret text-purple-400"></i> Inteligencia & Ley</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <button onclick="abrirModalSIDE()" class="w-full text-left px-2 py-1.5 rounded-lg bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-user-secret text-sky-400 text-xs shrink-0"></i>
+                  <span id="badge-side-estado" class="truncate">SIDE: US$ 14.5M</span>
+                </button>
+                <button onclick="abrirModalComodoroPy()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/40 hover:bg-purple-500/25 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-scale-balanced text-purple-400 text-xs shrink-0"></i>
+                  <span id="badge-causa-estado" class="truncate">Comodoro Py: Denuncia</span>
+                </button>
+                <button onclick="abrirModalRelaciones()" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 hover:bg-amber-500/25 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-handshake-angle text-amber-400 text-xs shrink-0"></i>
+                  <span class="truncate">Relaciones Peligrosas (5)</span>
+                </button>
+                <button onclick="abrirModalFichaMatricular()" id="badge-ficha-candidato-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Ficha Matricular de Candidato: SEN - Sistema Electoral Nacional">
+                  <i class="fa-solid fa-id-card text-emerald-400 text-xs shrink-0"></i>
+                  <span id="badge-ficha-candidato-txt" class="truncate">Ficha Candidato</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- DESPACHO 4: MEDIOS, CLAN & MUNDO -->
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-sky-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+                <span class="flex items-center gap-1.5 text-sky-300"><i class="fa-solid fa-tv text-sky-400"></i> Medios & Clan</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <button onclick="abrirModalMedios()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-tv text-purple-400 text-xs shrink-0"></i>
+                  <span id="badge-medios-estado" class="truncate">Medios: Pauta & Prime</span>
+                </button>
+                <button onclick="abrirModalClanFamiliar()" id="badge-clan-familiar-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="El Living de Olivos: Clan Familiar, Nepotismo Estatal y Resoluciones Domésticas">
+                  <i class="fa-solid fa-people-roof text-purple-400 text-xs shrink-0"></i>
+                  <span id="badge-clan-familiar-txt" class="truncate">Clan Familiar</span>
+                </button>
+                <button onclick="abrirModalCancilleria()" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-earth-americas text-emerald-400 text-xs shrink-0"></i>
+                  <span id="badge-cancilleria-estado" class="truncate">Mundo: FMI & Swap</span>
+                </button>
+                <button onclick="abrirModalBunkerRetorno()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-crown text-purple-400 text-xs shrink-0"></i>
+                  <span id="badge-bunker-estado" class="truncate">Búnker del Retorno</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- DESPACHO 5: CRISIS & SUPERVIVENCIA -->
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-red-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+                <span class="flex items-center gap-1.5 text-rose-300"><i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Crisis & UMP</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <button onclick="abrirModalSalaCrisis()" class="w-full text-left px-2 py-1.5 rounded-lg bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-fire text-red-400 text-xs shrink-0"></i>
+                  <span id="badge-crisis-estado" class="truncate">Crisis: AMBA en Llamas</span>
+                </button>
+                <button onclick="abrirModalDashboardUMP()" id="badge-ump-salud-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-rose-950/40 border border-rose-500/40 hover:bg-rose-900/50 text-rose-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Monitor de Signos Vitales - Unidad Médica Presidencial (Olivos)">
+                  <i class="fa-solid fa-heart-pulse text-rose-400 text-xs shrink-0 animate-pulse"></i>
+                  <span id="badge-ump-salud-txt" class="truncate">Monitor UMP (14/9)</span>
+                </button>
+                <button onclick="abrirModalEvacuacionHelicoptero()" class="w-full text-left px-2 py-1.5 rounded-lg bg-red-950/50 border border-red-500/50 hover:bg-red-900/60 text-red-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-helicopter text-red-400 text-xs shrink-0"></i>
+                  <span id="badge-evacuacion-estado" class="truncate">Evacuación H-01</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: TERMÓMETRO SOCIAL ARGENTINO (SECTORES) -->
+        <div id="pane-sectores" class="tab-pane-content hidden space-y-2">
+          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+            <span class="font-medium flex items-center gap-1.5"><i class="fa-solid fa-chart-pie text-amber-400"></i> Apoyo en Sectores Sociales (Argentina)</span>
+            <span class="text-[11px] text-slate-500">Define si ganás elecciones y evitás estallidos</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="sectors-grid">
+            <!-- Inyectado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: MACROECONOMÍA & EL TERMÓMETRO CRIOLLO -->
+        <div id="pane-macro" class="tab-pane-content hidden space-y-3">
+          <!-- Tablero Macro -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+              <span class="font-medium flex items-center gap-1.5 text-amber-300">
+                <i class="fa-solid fa-chart-line text-amber-400"></i> Tablero Macroeconómico en Vivo (Argentina)
+              </span>
+              <span class="text-[11px] text-slate-500">Impacto en tiempo real de tus decisiones en la economía</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="macro-grid">
+              <!-- Inyectado dinámicamente: Inflación, Riesgo País, Reservas BCRA, Resultado Fiscal, Pobreza -->
+            </div>
+          </div>
+
+          <!-- Termómetro Criollo -->
+          <div class="space-y-1.5 pt-2 border-t border-slate-800">
+            <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+              <span class="font-medium flex items-center gap-1.5 text-amber-400">
+                <i class="fa-solid fa-gauge-high text-amber-400"></i> El Termómetro Criollo: Poder, Calle y Reserva
+              </span>
+              <span class="text-[11px] text-slate-500">Variables de tensión real: Mecha Social al 85% detona crisis total</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="termometro-criollo-grid">
+              <!-- Inyectado dinámicamente: Dólar Blue, Mecha Social, Reservas BCRA, Rosca Federal, Factor Scaloneta -->
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 4: SALUD & DESGASTE DEL SILLÓN (SUPERVIVENCIA BIOLÓGICA) -->
+        <div id="pane-salud" class="tab-pane-content hidden space-y-2">
+          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+            <span class="font-medium flex items-center gap-1.5 text-rose-300">
+              <i class="fa-solid fa-heart-pulse text-rose-400 animate-pulse"></i> El Reloj de Vida & Desgaste del Sillón
+            </span>
+            <div class="flex items-center gap-2">
+              <span id="reloj-vida-resumen" class="text-[11px] text-slate-400 font-mono">55 Años • 0 Días en el Poder</span>
+              <button onclick="abrirModalDashboardUMP()" class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition-all cursor-pointer">
+                <i class="fa-solid fa-stethoscope mr-1"></i> Monitor UMP
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="salud-supervivencia-grid">
+            <!-- Inyectado dinámicamente: Coronarias, Digestivo, Paranoia, Seguridad/Custodia -->
+          </div>
+        </div>
+
+        <!-- PESTAÑA 5: BRÚJULA IDEOLÓGICA EN VIVO (12 EJES DOCTRINARIOS) -->
+        <div id="pane-brujula" class="tab-pane-content hidden space-y-2">
+          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+            <span class="font-medium flex items-center gap-1.5 text-amber-300">
+              <i class="fa-solid fa-compass text-amber-400"></i> Brújula Ideológica en Vivo (12 Ejes Doctrinarios)
+            </span>
+            <span class="text-[11px] text-slate-500">Evolución en tiempo real de tu perfil doctrinal calibrado</span>
+          </div>
+          <div id="brujula-ejes-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-1 border-t border-slate-800/80">
+            <!-- Inyectado dinámicamente con renderizarBrujulaEnVivo() -->
+          </div>
         </div>
 
       </div>
@@ -5614,6 +5682,94 @@
       _arquetipoSeleccionado = arqId;
     }
 
+    let _pestanaConsolaActiva = 'despachos';
+
+    function cambiarPestanaConsola(tabId) {
+      _pestanaConsolaActiva = tabId;
+      const tabs = ['despachos', 'sectores', 'macro', 'salud', 'brujula'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tab-btn-' + t);
+        const pane = document.getElementById('pane-' + t);
+        if (btn) {
+          const isHidden = btn.classList.contains('hidden');
+          if (t === tabId) {
+            btn.className = `tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer${isHidden ? ' hidden' : ''}`;
+          } else {
+            btn.className = `tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer${isHidden ? ' hidden' : ''}`;
+          }
+        }
+        if (pane) {
+          if (t === tabId) {
+            pane.classList.remove('hidden');
+          } else {
+            pane.classList.add('hidden');
+          }
+        }
+      });
+      if (tabId === 'brujula') {
+        const grid = document.getElementById('brujula-ejes-grid');
+        if (grid) grid.classList.remove('hidden');
+        renderizarBrujulaEnVivo();
+      }
+    }
+
+    function scrollOAlternarConsola() {
+      const el = document.getElementById('operations-console');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function actualizarMicroHUD() {
+      if (!window.motorJuego) return;
+
+      // 1. Apoyo social promedio
+      const sec = motorJuego.aprobacionSectores;
+      if (sec) {
+        const vals = Object.values(sec);
+        if (vals.length > 0) {
+          const avg = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+          const el = document.getElementById('hud-apoyo-promedio');
+          if (el) {
+            el.innerText = `${avg}%`;
+            el.className = `font-bold font-mono ${avg >= 50 ? 'text-emerald-400' : (avg >= 35 ? 'text-amber-400' : 'text-rose-400')}`;
+          }
+        }
+      }
+
+      // 2. Dólar Blue y Mecha
+      const tc = motorJuego.termometroCriollo;
+      if (tc) {
+        const elDol = document.getElementById('hud-dolar-val');
+        if (elDol) {
+          elDol.innerText = `$${tc.dolarBlue}`;
+          elDol.className = `font-bold font-mono ${tc.dolarBlue > 1500 ? 'text-rose-400' : 'text-emerald-300'}`;
+        }
+        const elMec = document.getElementById('hud-mecha-val');
+        if (elMec) {
+          elMec.innerText = `${tc.mechaSocial}%`;
+          elMec.className = `font-bold font-mono ${tc.mechaSocial >= 85 ? 'text-red-500 animate-pulse' : (tc.mechaSocial >= 60 ? 'text-rose-400' : 'text-emerald-400')}`;
+        }
+      }
+
+      // 3. Reservas BCRA
+      const m = motorJuego.macro || motorJuego.macroeconomia;
+      if (m) {
+        const elRes = document.getElementById('hud-reservas-val');
+        if (elRes) {
+          elRes.innerText = `USD ${m.reservasNetasBCRA}M`;
+          elRes.className = `font-bold font-mono ${m.reservasNetasBCRA >= 2000 ? 'text-emerald-400' : 'text-amber-400'}`;
+        }
+      }
+
+      // 4. Edad
+      const s = motorJuego.saludSupervivencia;
+      if (s && s.edad !== undefined) {
+        const elEdad = document.getElementById('mandatario-edad-badge');
+        if (elEdad) elEdad.innerText = `${s.edad} Años`;
+      }
+    }
+
     function prepararPantallaJuego(carrera) {
       document.getElementById('screen-welcome').classList.add('hidden');
       document.getElementById('screen-election').classList.add('hidden');
@@ -5632,10 +5788,75 @@
         else badgeDip.classList.add('hidden');
       }
 
+      // Adaptación de Identidad y Rol Dinámico en el HUD
+      const badgeCargo = document.getElementById('mandatario-cargo-badge');
+      const subCargo = document.getElementById('mandatario-cargo-sub');
+      const badgeEdad = document.getElementById('mandatario-edad-badge');
+      const dotStatus = document.getElementById('mandatario-status-dot');
+      const tabDespachos = document.getElementById('tab-btn-despachos');
+      const tabSalud = document.getElementById('tab-btn-salud');
+
+      const edadVal = (motorJuego.saludSupervivencia && motorJuego.saludSupervivencia.edad !== undefined)
+        ? motorJuego.saludSupervivencia.edad
+        : (carrera === 'cuna' ? 0 : (carrera === 'presidente' ? 30 : 25));
+
+      if (badgeEdad) {
+        badgeEdad.innerText = `${edadVal} Años`;
+      }
+
+      if (carrera === 'cuna') {
+        if (badgeCargo) {
+          badgeCargo.innerText = "👶 DESDE LA CUNA: INFANCIA Y JUVENTUD";
+          badgeCargo.className = "text-xs sm:text-sm font-bold text-emerald-300 font-serif-title";
+        }
+        if (subCargo) {
+          const origNom = motorJuego.origenElegido ? motorJuego.origenElegido.nombre : "Hogar Argentino";
+          subCargo.innerText = `${origNom} • Crianza, Escuela y Conciencia Social`;
+        }
+        if (dotStatus) {
+          dotStatus.className = "w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399] shrink-0";
+        }
+        cambiarPestanaConsola('sectores');
+        if (tabDespachos) tabDespachos.classList.add('hidden');
+        if (tabSalud) tabSalud.classList.add('hidden');
+      } else if (carrera === 'militante' || carrera === 'barro') {
+        if (badgeCargo) {
+          badgeCargo.innerText = "🚧 SALTO AL BARRO POLÍTICO";
+          badgeCargo.className = "text-xs sm:text-sm font-bold text-amber-300 font-serif-title";
+        }
+        if (subCargo) {
+          const cargoNom = motorJuego.cargoBarroElegido ? motorJuego.cargoBarroElegido.nombre : "Trinchera Local";
+          subCargo.innerText = `${cargoNom} • Militancia, Territorio y Concejo Deliberante`;
+        }
+        if (dotStatus) {
+          dotStatus.className = "w-3 h-3 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#fbbf24] shrink-0";
+        }
+        cambiarPestanaConsola('sectores');
+        if (tabDespachos) tabDespachos.classList.add('hidden');
+        if (tabSalud) tabSalud.classList.add('hidden');
+      } else {
+        // Modo Mandatario en Ejercicio (Presidencia o Diputado)
+        if (badgeCargo) {
+          badgeCargo.innerText = "🏛️ MANDATARIO EN EJERCICIO";
+          badgeCargo.className = "text-xs sm:text-sm font-bold text-amber-300 font-serif-title";
+        }
+        if (subCargo) {
+          subCargo.innerText = "Despacho Presidencial • Casa Rosada";
+        }
+        if (dotStatus) {
+          dotStatus.className = "w-3 h-3 rounded-full bg-rose-400 animate-pulse shadow-[0_0_8px_#f43f5e] shrink-0";
+        }
+        if (tabDespachos) tabDespachos.classList.remove('hidden');
+        if (tabSalud) tabSalud.classList.remove('hidden');
+        cambiarPestanaConsola('despachos');
+      }
+
       renderizarSectores();
       renderizarMacro();
       renderizarTermometroCriollo();
       renderizarSaludSupervivencia();
+      renderizarBrujulaEnVivo();
+      actualizarMicroHUD();
       renderizarComodoroPyUI();
       renderizarSIDEUI();
       renderizarCancilleriaUI();
@@ -5698,6 +5919,7 @@
         `;
         grid.appendChild(card);
       }
+      actualizarMicroHUD();
     }
 
     function renderizarMacro() {
@@ -5759,6 +5981,7 @@
         `;
         grid.appendChild(card);
       });
+      actualizarMicroHUD();
     }
 
     function renderizarTermometroCriollo() {
@@ -5833,6 +6056,7 @@
         grid.appendChild(card);
       });
       if (typeof renderizarRoscaFederalUI === 'function') renderizarRoscaFederalUI();
+      actualizarMicroHUD();
     }
 
     function renderizarSaludSupervivencia() {
@@ -6019,12 +6243,14 @@
       renderizarSalaCrisisUI();
 
       const etapaLabels = {
+        cuna: "Desde la Cuna (0-18 Años)",
         militante: "Militancia / Concejal",
         diputado: "Congreso Nacional",
         presidente: "Presidencia"
       };
       document.getElementById('badge-etapa-label').innerText = etapaLabels[motorJuego.faseActual] || "Fase";
       document.getElementById('current-turn-num').innerText = motorJuego.indiceDilema + 1;
+      actualizarMicroHUD();
 
       const badgePres = document.getElementById('badge-presidente-sub30');
       const badgeDip = document.getElementById('badge-diputado-sub25');

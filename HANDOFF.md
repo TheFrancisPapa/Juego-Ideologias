@@ -1,7 +1,7 @@
 # 📜 HANDOFF DE PROYECTO: EL SILLÓN DEL PODER
 > **Documento Vivo de Continuidad, Arquitectura y Estado de Trabajo**
 > **Última Actualización:** 2026-10-11
-> **Rama Git:** `main` | **Último Commit:** `d1a2cad` | **Tests:** 126/126 PASADOS
+> **Rama Git:** `main` | **Tests:** 126/126 PASADOS
 
 ---
 
@@ -54,56 +54,43 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
 
 ---
 
-## 4. 🚀 Lo que se Implementó en el Último Sprint (Visual & Audio)
+## 4. 🎨 Rediseño Visual & UX: Dilema al Frente, Telemetría en Pestañas y HUD Adaptativo
 
-1. **La Mesa Chica de la Rosada:**
-   - Se reemplazó la barra de 18 botones apiñados por una **Consola de Mando de 5 Despachos Operativos**:
-     - 🏛️ **Gobierno & Leyes:** Congreso & DNU, Gabinete, Rosca Federal, Estado Cívico.
-     - 💵 **Economía & City:** Mesa BCRA, Pantalla Sillón, Balance Semanal.
-     - 🕵️ **Inteligencia & Ley:** SIDE (25 de Mayo), Comodoro Py, Relaciones Peligrosas, Ficha SEN.
-     - 📺 **Medios & Clan:** Medios & Pauta, Clan Familiar Olivos, Cancillería, Búnker Retorno.
-     - 🚨 **Crisis & UMP:** Sala de Crisis AMBA, Monitor UMP, Evacuación H-01.
-   - Se mantuvieron intactos **todos los IDs y selectores del DOM** que el motor actualiza en tiempo real.
+### El Problema Resuelto (Sobrecarga de Información y Ruptura Narrativa):
+Al iniciar partida en cualquiera de los 3 modos, la pantalla arrojaba 6 paneles gigantescos apilados verticalmente (Mesa Chica de los 5 Despachos, Sectores Sociales, Macroeconomía, Termómetro Criollo, Salud UMP, Brújula de 12 ejes). Esto causaba:
+1. **Dilema Enterrado:** El jugador debía scrollear ~1500px hacia abajo solo para leer su primer dilema.
+2. **Inconsistencia de Rol:** En el modo "Desde la Cuna" (a los 0 años de edad) o en "Salto al Barro" (concejal local), la cabecera proclamaba estáticamente *"MANDATARIO EN EJERCICIO - Despacho Presidencial • Casa Rosada"*, con botones de helicóptero presidencial y monitor de Olivos.
 
-2. **Audio Procedural Criollo (Experimental):**
-   - Creado `sonidos_sillon.js` e integrado en `index.html`.
-   - Botón minimalista de solo icono (`w-8 h-8`, squircle `🔊` / `🔇`) en el header sticky con tooltip experimental y estado persistido en `localStorage`.
-   - Disparadores de audio conectados a:
-     - Selección de opciones en dilemas (`reproducirClick()` en militante/diputado, `reproducirSello()` en presidente).
-     - Firma de DNU, promulgación de leyes o vetos (`reproducirSello()`).
-     - Alerta de Sala de Crisis, protocolo de helicóptero o fallecimiento (`reproducirPlacaCronica()`).
-     - Mesa de Dinero del BCRA (`reproducirCampanaCity()`).
-     - Monitor de signos vitales UMP (`reproducirLatido()`).
-     - Entrevistas y Comodoro Py (`reproducirFlash()`).
+### Arquitectura de la Solución:
+1. **Barra Superior HUD Dinámica (`player-identity-bar`):**
+   - **Identidad según el modo:**
+     - `cuna`: `👶 DESDE LA CUNA: INFANCIA Y JUVENTUD` (con origen familiar específico, ej: *Cuna Militante / Barrio Popular • Crianza, Escuela y Conciencia Social*).
+     - `militante`: `🚧 SALTO AL BARRO POLÍTICO` (con cargo inicial, ej: *Concejal de Municipio del Conurbano • Militancia, Territorio y Concejo Deliberante*).
+     - `presidente`: `🏛️ MANDATARIO EN EJERCICIO` (*Despacho Presidencial • Casa Rosada*).
+   - **Badge de Edad en Vivo:** Se actualiza turno a turno (`0 Años`, `6 Años`, `25 Años`, `30 Años`).
+   - **Micro-Pills de Telemetría Clave:** Indicadores at-a-glance (`👥 Apoyo: X%`, `💵 Dólar: $X`, `💣 Mecha: X%`, `🏦 BCRA: USD XM`).
+   - **Botón de Enlace Rápido:** `[ 📊 Ver Tableros ▾ ]` con smooth scroll hacia la consola inferior.
 
-3. **Brújula Ideológica en Vivo (12 Ejes):**
-   - Widget interactivo desplegable en `screen-game` que actualiza y visualiza en tiempo real cómo impacta cada decisión en los 12 ejes con porcentaje e indicación del polo dominante.
+2. **Tarjeta del Dilema Principal al Frente (`dilemma-card-main`):**
+   - Ubicada inmediatamente debajo del HUD, visible al 100% sin scroll al comenzar el turno.
+   - Contiene el badge de etapa, área de gobierno, título del dilema, descripción pedagógica, glosario interactivo, botón explicativo y opciones de respuesta graduadas.
+   - Aloja el panel de interludio con reacciones de medios, famosos, calle y redes sociales.
 
-4. **Estética Televisiva y Sellos Oficiales:**
-   - Clase `.scanlines` CRT retro para transmisiones de Crónica TV.
-   - Sellos con tinta `.sello-oficial`, `.sello-dnu`, `.sello-aprobado` para trámites del Boletín Oficial.
+3. **Centro de Operaciones y Telemetría en Pestañas (`operations-console`):**
+   - Reorganizado debajo del dilema principal en un contenedor elegante con selector de pestañas:
+     - 🏛️ **Despachos Rosada (`pane-despachos`):** Grilla de 5 despachos de la Rosada (oculta automáticamente en Cuna y Barro).
+     - 👥 **Apoyo Social (`pane-sectores`):** Sectores sociales argentinos (`sectors-grid`).
+     - 📈 **Macro & Mecha (`pane-macro`):** Tablero macroeconómico (`macro-grid`) y Termómetro Criollo (`termometro-criollo-grid`).
+     - 🩺 **Salud & Vida (`pane-salud`):** Monitor UMP y Reloj de Vida (`salud-supervivencia-grid`, oculta en Cuna y Barro).
+     - 🧭 **Brújula 12 Ejes (`pane-brujula`):** Brújula ideológica interactiva en vivo (`brujula-ejes-grid`).
+   - **Contratos DOM 100% Preservados:** Todos los IDs originales se mantuvieron idénticos para que las funciones de renderizado (`renderizarSectores`, `renderizarMacro`, etc.) sigan funcionando de forma impecable sin tocar la lógica de negocio.
 
-5. **Limpieza de Interfaz (Pantalla de Bienvenida):**
-   - Removido el botón de desarrollo `"Ver Cuadro Constitucional: Diputados, Senadores y Presidente (Arts. 48, 54, 55, 56 y 89 CN)"` de `screen-welcome`, despejando la pantalla inicial de accesos puramente teóricos.
+---
 
-6. **Prueba Automatizada #126:**
-   - Agregada en `validar_sistema.js` validando la clase `AudioCriollo` y sus métodos sin fallos en entorno headless.
-
-## 5. 🛠️ Corrección Crítica: Activación de los 3 Botones de Inicio de Partida
-Al presionar cualquiera de los 3 botones de inicio en la pantalla de bienvenida (*Nacer y Crecer [0 Años]*, *Saltar al Barro Político*, *Tomar el Mando Ejecutivo [Art. 89 CN]*), el juego no avanzaba debido a un fallo en el entorno del navegador:
-1. **Causa Raíz Real (Conflicto de Ámbito Léxico Global en Browsers):**
-   - En navegadores web, los bloques `<script>` clásicos comparten el mismo entorno léxico declarativo global.
-   - `motor.js` declaraba al nivel raíz `const ESQUEMAS_PAUTA = ...`, `const SistemaLegislativo = ...`, etc., los cuales **ya habían sido declarados con `const` o `class` en los scripts precedentes** (`prensa_pauta_medios.js`, `sistema_legislativo.js`, etc.).
-   - En Node.js esto no fallaba porque cada archivo es un módulo CommonJS aislado con su propio scope. Pero en el navegador, el motor Chromium (Edge/Chrome) arrojaba de inmediato un `Uncaught SyntaxError: Identifier 'ESQUEMAS_PAUTA' has already been declared` en tiempo de análisis de `motor.js`.
-   - Por culpa de ese SyntaxError, **`motor.js` no se ejecutaba**, `MotorJuego` no existía y `window.motorJuego` jamás se instanciaba en el navegador, provocando que los botones no hicieran nada al hacer clic.
-2. **Solución Implementada:**
-   - Se encapsuló `motor.js` en una **IIFE universal** `(function(global) { ... })(typeof window !== 'undefined' ? window : (typeof global !== 'undefined' ? global : globalThis));`.
-   - Esto aísla todas las constantes internas en el ámbito local de la función sin colisionar con el ámbito global del navegador, al mismo tiempo que preserva `module.exports` para Node.js y expone `window.MotorJuego` y `window.motorJuego` para el cliente web.
-   - En `index.html` se vinculó explícitamente `var motorJuego = window.motorJuego` al inicio del script.
-3. **Verificación en Motor Real Chromium (Microsoft Edge):**
-   - Se ejecutó el navegador Edge headless (`msedge.exe --headless=new --dump-dom`) simulando las llamadas a `iniciarModoCunaUI()`, `iniciarModoBarroUI()` e `iniciarModoPresidenteUI()`.
-   - Resultado verificado: Las 3 pantallas conmutan exitosamente (`Cuna screen switched: true | Barro screen switched: true | Presidente screen switched: true`).
-   - La suite completa de 126 pruebas en `validar_sistema.js` se mantiene 100% aprobada.
+## 5. 🛠️ Corrección Previa: Activación de los 3 Botones de Inicio de Partida
+1. **Causa Raíz Real:** Conflicto de ámbito léxico global en navegadores por redeclaración de constantes (`ESQUEMAS_PAUTA`, etc.) entre scripts.
+2. **Solución Implementada:** Encapsulación de `motor.js` en una IIFE universal y vinculación de `window.motorJuego`.
+3. **Verificación:** Ejecutado en motor real Chromium (Edge headless) con conmutación confirmada en los 3 modos.
 
 ---
 
@@ -117,7 +104,7 @@ Para preservar la estabilidad del proyecto en futuros sprints:
 
 ---
 
-## 6. 📋 Backlog / Próximos Pasos Sugeridos
+## 7. 📋 Backlog / Próximos Pasos Sugeridos
 - [ ] **Guardado y Continuación de Partidas:** Persistir en `localStorage` el snapshot de `motorJuego` para reanudar partidas tras recargar el navegador.
 - [ ] **Modo Acta Oficial / Boletín Oficial:** Estilo visual temático símil papel sellado con tipografía mecanografiada para visualizar decretos y resoluciones.
 - [ ] **Exportación de Veredicto Final:** Botón para copiar resumen del mandato presidencial o descargar tarjeta en imagen para compartir en redes.
@@ -125,7 +112,7 @@ Para preservar la estabilidad del proyecto en futuros sprints:
 
 ---
 
-## 7. 🛠️ Comandos de Verificación Rápida
+## 8. 🛠️ Comandos de Verificación Rápida
 ```bash
 # 1. Ejecutar suite de pruebas completa:
 node validar_sistema.js
