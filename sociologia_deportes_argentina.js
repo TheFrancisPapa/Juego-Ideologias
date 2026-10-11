@@ -114,3 +114,12 @@ const SOCIOLOGIA_DEPORTES = {
     }
   }
 };
+
+// Exportación modular para Node.js y navegador
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { SOCIOLOGIA_DEPORTES };
+}
+
+if (typeof window !== 'undefined') {
+  window.SOCIOLOGIA_DEPORTES = SOCIOLOGIA_DEPORTES;
+}

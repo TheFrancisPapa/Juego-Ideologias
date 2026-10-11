@@ -86,3 +86,12 @@ const SOCIEDAD_PROFUNDA = {
     }
   }
 };
+
+// Exportación modular para Node.js y navegador
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { SOCIEDAD_PROFUNDA };
+}
+
+if (typeof window !== 'undefined') {
+  window.SOCIEDAD_PROFUNDA = SOCIEDAD_PROFUNDA;
+}

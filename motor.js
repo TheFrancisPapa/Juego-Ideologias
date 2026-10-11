@@ -1244,6 +1244,7 @@ class MotorJuego {
     this.climaxCrisis = this.termometroCriollo.mechaSocial >= 85;
 
     // 6. Reloj de Vida y Desgaste del Sillón
+    const edadPrevia = this.saludSupervivencia.edad;
     if (this.faseActual === 'cuna') {
       const dilemaActual = this.dilemasFase[this.indiceDilema];
       if (dilemaActual && dilemaActual.id === 'juv_15_anos') {
@@ -1255,6 +1256,13 @@ class MotorJuego {
       this.saludSupervivencia.diasEnPoder += 60; // ~2 meses por decisión
       if (this.saludSupervivencia.diasEnPoder % 360 === 0) {
         this.saludSupervivencia.edad += 1;
+      }
+    }
+
+    if (this.saludSupervivencia.edad !== edadPrevia) {
+      const hito = this.verificarDesbloqueoConstitucional(this.saludSupervivencia.edad, edadPrevia);
+      if (hito) {
+        this.ultimoHitoCruzado = hito;
       }
     }
 

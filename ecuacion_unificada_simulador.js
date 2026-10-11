@@ -346,11 +346,24 @@ class SistemaEcuacionUnificada {
     // 1. Piso Duro (20% a 35%)
     let pisoDuro = variables.pisoDuro !== undefined ? variables.pisoDuro : 32.0;
     if (motor && motor.aprobacionSectores && variables.pisoDuro === undefined) {
-      const promSectores = (
-        (motor.aprobacionSectores.trabajo || 50) * 0.4 +
-        (motor.aprobacionSectores.claseMedia || 50) * 0.35 +
-        (motor.aprobacionSectores.productivo || 50) * 0.25
-      );
+      const sec = motor.aprobacionSectores;
+      let promSectores;
+      if (sec.estadoCiencia !== undefined || sec.seguridadJusticia !== undefined) {
+        promSectores = (
+          (sec.trabajo ?? 50) * 0.28 +
+          (sec.claseMedia ?? 50) * 0.26 +
+          (sec.productivo ?? 50) * 0.18 +
+          (sec.estadoCiencia ?? 50) * 0.12 +
+          (sec.seguridadJusticia ?? 50) * 0.08 +
+          ((sec.frenteExterno ?? 50) * 0.08)
+        );
+      } else {
+        promSectores = (
+          (sec.trabajo || 50) * 0.4 +
+          (sec.claseMedia || 50) * 0.35 +
+          (sec.productivo || 50) * 0.25
+        );
+      }
       // Mapeo lineal de 0-100 a rango 20% - 35%
       pisoDuro = 20.0 + (promSectores / 100) * 15.0;
     }

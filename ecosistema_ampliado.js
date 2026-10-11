@@ -146,3 +146,12 @@ const ECOSISTEMA_AMPLIADO = {
     }
   ]
 };
+
+// Exportación modular para Node.js y navegador
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { ECOSISTEMA_AMPLIADO };
+}
+
+if (typeof window !== 'undefined') {
+  window.ECOSISTEMA_AMPLIADO = ECOSISTEMA_AMPLIADO;
+}
