@@ -90,14 +90,20 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
    - Agregada en `validar_sistema.js` validando la clase `AudioCriollo` y sus métodos sin fallos en entorno headless.
 
 ## 5. 🛠️ Corrección Crítica: Activación de los 3 Botones de Inicio de Partida
-En la última revisión se detectó que al presionar cualquiera de los 3 botones de inicio en la pantalla de bienvenida (*Nacer y Crecer [0 Años]*, *Saltar al Barro Político*, *Tomar el Mando Ejecutivo [Art. 89 CN]*), el juego no avanzaba debido a un fallo silencioso en el navegador:
-1. **Causa Raíz:** Módulos de datos fundamentales (`sectores.js`, `doce_ejes.js`, `ideologias.js`, `dilemas.js`, `clasicos_futbol_argentino.js`, `famosos_argentinos.js`, `voz_de_la_calle.js`, `glosario.js`) solo exportaban mediante `module.exports` para Node.js, pero no asignaban sus constantes al objeto global `window` en el navegador.
-2. **Consecuencia:** Al invocar `prepararPantallaJuego()`, la función `renderizarSectores()` intentaba acceder a `SECTORES_ARG`, arrojando `ReferenceError: SECTORES_ARG is not defined` antes de ocultar `screen-welcome` y mostrar `screen-game`. Además, `motor.js` quedaba con ejes e ideologías vacíos en el browser.
-3. **Solución Implementada:**
-   - Se incorporó la doble exportación universal en todos los módulos (`if (typeof window !== 'undefined') { window.CONSTANTE = CONSTANTE; }`).
-   - Se blindó `renderizarSectores()` y las lecturas de `SECTORES_ARG` en `index.html` con comprobaciones defensivas de fallback.
-   - Se exportó `activarListenersGlosario` y se securizó su invocación ante entornos sin soporte directo de eventos.
-   - Se verificó con simulación headless DOM y la suite completa de 126 pruebas. Los 3 botones inician la partida de manera impecable e instantánea.
+Al presionar cualquiera de los 3 botones de inicio en la pantalla de bienvenida (*Nacer y Crecer [0 Años]*, *Saltar al Barro Político*, *Tomar el Mando Ejecutivo [Art. 89 CN]*), el juego no avanzaba debido a un fallo en el entorno del navegador:
+1. **Causa Raíz Real (Conflicto de Ámbito Léxico Global en Browsers):**
+   - En navegadores web, los bloques `<script>` clásicos comparten el mismo entorno léxico declarativo global.
+   - `motor.js` declaraba al nivel raíz `const ESQUEMAS_PAUTA = ...`, `const SistemaLegislativo = ...`, etc., los cuales **ya habían sido declarados con `const` o `class` en los scripts precedentes** (`prensa_pauta_medios.js`, `sistema_legislativo.js`, etc.).
+   - En Node.js esto no fallaba porque cada archivo es un módulo CommonJS aislado con su propio scope. Pero en el navegador, el motor Chromium (Edge/Chrome) arrojaba de inmediato un `Uncaught SyntaxError: Identifier 'ESQUEMAS_PAUTA' has already been declared` en tiempo de análisis de `motor.js`.
+   - Por culpa de ese SyntaxError, **`motor.js` no se ejecutaba**, `MotorJuego` no existía y `window.motorJuego` jamás se instanciaba en el navegador, provocando que los botones no hicieran nada al hacer clic.
+2. **Solución Implementada:**
+   - Se encapsuló `motor.js` en una **IIFE universal** `(function(global) { ... })(typeof window !== 'undefined' ? window : (typeof global !== 'undefined' ? global : globalThis));`.
+   - Esto aísla todas las constantes internas en el ámbito local de la función sin colisionar con el ámbito global del navegador, al mismo tiempo que preserva `module.exports` para Node.js y expone `window.MotorJuego` y `window.motorJuego` para el cliente web.
+   - En `index.html` se vinculó explícitamente `var motorJuego = window.motorJuego` al inicio del script.
+3. **Verificación en Motor Real Chromium (Microsoft Edge):**
+   - Se ejecutó el navegador Edge headless (`msedge.exe --headless=new --dump-dom`) simulando las llamadas a `iniciarModoCunaUI()`, `iniciarModoBarroUI()` e `iniciarModoPresidenteUI()`.
+   - Resultado verificado: Las 3 pantallas conmutan exitosamente (`Cuna screen switched: true | Barro screen switched: true | Presidente screen switched: true`).
+   - La suite completa de 126 pruebas en `validar_sistema.js` se mantiene 100% aprobada.
 
 ---
 

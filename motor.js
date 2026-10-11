@@ -1,3 +1,4 @@
+(function(global) {
 let _saludModule = {};
 let _origenesModule = {};
 let _justiciaModule = {};
@@ -1687,6 +1688,7 @@ class MotorJuego {
 }
 
 if (typeof window !== 'undefined') {
+  window.MotorJuego = MotorJuego;
   window.motorJuego = new MotorJuego();
 }
 
@@ -1772,5 +1774,6 @@ if (typeof module !== 'undefined' && module.exports) {
     SECTORES_ARG
   };
 }
+})(typeof window !== 'undefined' ? window : (typeof global !== 'undefined' ? global : globalThis));
 
 

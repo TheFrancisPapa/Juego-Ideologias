@@ -5396,6 +5396,9 @@
 
   <!-- CONTROLADOR PRINCIPAL -->
   <script>
+    // Garantizar disponibilidad global de motorJuego
+    var motorJuego = (typeof window !== 'undefined' && window.motorJuego) ? window.motorJuego : (typeof MotorJuego !== 'undefined' ? new MotorJuego() : null);
+
     // =========================================================================
     // CONTROLADOR DE AUDIO PROCEDURAL CRIOLLO (Web Audio API)
     // =========================================================================
