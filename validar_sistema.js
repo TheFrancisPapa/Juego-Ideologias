@@ -3935,6 +3935,37 @@ test("El Desempate Vicepresidencial en el Senado (Art. 57 CN - 'Mi voto no es po
   assert.ok(LOBBIES_CORPORATIVOS_ARG.techint_rocca, "Debe existir Techint en lobbies corporativos");
 });
 
+console.log("\n🔊 25. VERIFICACIÓN DEL MOTOR DE AUDIO PROCEDURAL CRIOLLO (WEB AUDIO API)...");
+
+test("Motor de Audio Procedural Criollo (Web Audio API & Sonidos del Sillón)", () => {
+  const { AudioCriollo, audioCriollo } = require('./sonidos_sillon.js');
+  assert.ok(AudioCriollo, "Clase AudioCriollo debe existir");
+  assert.ok(audioCriollo, "Instancia singleton audioCriollo debe existir");
+  assert.strictEqual(typeof audioCriollo.reproducirSello, 'function');
+  assert.strictEqual(typeof audioCriollo.reproducirPlacaCronica, 'function');
+  assert.strictEqual(typeof audioCriollo.reproducirCampanaCity, 'function');
+  assert.strictEqual(typeof audioCriollo.reproducirLatido, 'function');
+  assert.strictEqual(typeof audioCriollo.reproducirFlash, 'function');
+  assert.strictEqual(typeof audioCriollo.reproducirClick, 'function');
+  assert.strictEqual(typeof audioCriollo.toggleSilencio, 'function');
+  assert.strictEqual(typeof audioCriollo.estaSilenciado, 'function');
+
+  // En entorno Node (sin AudioContext) no debe lanzar excepciones no controladas
+  assert.doesNotThrow(() => {
+    audioCriollo.reproducirSello();
+    audioCriollo.reproducirPlacaCronica();
+    audioCriollo.reproducirCampanaCity();
+    audioCriollo.reproducirLatido();
+    audioCriollo.reproducirFlash();
+    audioCriollo.reproducirClick();
+  }, "La ejecución en headless Node no debe fallar");
+
+  const estadoPre = audioCriollo.estaSilenciado();
+  const estadoPost = audioCriollo.toggleSilencio();
+  assert.strictEqual(estadoPost, !estadoPre);
+  audioCriollo.toggleSilencio(); // volver al estado original
+});
+
 console.log("\n=================================================================");
 
 console.log(`🏁 RESULTADO FINAL: ${testsPasados} de ${testsTotales} pruebas PASADAS`);

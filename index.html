@@ -15,6 +15,48 @@
       backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
+    /* Estilos visuales inmersivos y televisión */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.04),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.04)
+      );
+      background-size: 100% 4px, 6px 100%;
+    }
+    .sello-oficial {
+      display: inline-block;
+      padding: 6px 14px;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 2px;
+      border: 3px double #ef4444;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+      border-radius: 8px;
+      transform: rotate(-3deg);
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+      font-family: 'Cinzel', serif;
+      text-shadow: 0 0 1px rgba(239, 68, 68, 0.5);
+    }
+    .sello-aprobado {
+      border-color: #10b981;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+      transform: rotate(2deg);
+    }
+    .sello-dnu {
+      border-color: #f59e0b;
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+      transform: rotate(-2deg);
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black relative">
@@ -40,17 +82,24 @@
           <p id="header-subtitle" class="text-xs text-slate-400">Simulación Sociopolítica & 12 Ejes Ideológicos</p>
         </div>
       </div>
-      <div id="turn-badge" class="hidden flex items-center gap-2">
-        <button id="badge-diputado-sub25" onclick="abrirModalConstitucionalDiputado(false)" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" title="Ver Requisitos Constitucionales (Arts. 48 y 50 CN)">
-          <i class="fa-solid fa-users-rectangle text-sky-400"></i>
-          <span>Diputado • 25 años (Art. 48 CN)</span>
+      <div class="flex items-center gap-2">
+        <!-- BOTÓN DE AUDIO PROCEDURAL (CRIOLLO) -->
+        <button id="btn-audio-toggle" onclick="toggleAudioGlobal()" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-400/60 text-slate-300 hover:text-amber-300 transition-all text-xs font-semibold flex items-center gap-1.5 sm:gap-2 shadow-sm cursor-pointer" title="Efectos de sonido procedurables (Web Audio API)">
+          <i id="icono-audio-toggle" class="fa-solid fa-volume-high text-amber-400 text-xs"></i>
+          <span id="label-audio-toggle" class="hidden sm:inline text-[11px]">Audio</span>
         </button>
-        <button id="badge-presidente-sub30" onclick="abrirModalConstitucional(false)" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" title="Ver Requisitos Constitucionales (Arts. 55 y 89 CN)">
-          <i class="fa-solid fa-crown text-amber-400"></i>
-          <span>Presidente • 30 años (Art. 89 CN)</span>
-        </button>
-        <div class="px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-xs font-medium text-slate-300">
-          <span id="badge-etapa-label" class="text-amber-400 font-semibold">Militancia</span> • Dilema <span id="current-turn-num">1</span>
+        <div id="turn-badge" class="hidden flex items-center gap-2">
+          <button id="badge-diputado-sub25" onclick="abrirModalConstitucionalDiputado(false)" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" title="Ver Requisitos Constitucionales (Arts. 48 y 50 CN)">
+            <i class="fa-solid fa-users-rectangle text-sky-400"></i>
+            <span>Diputado • 25 años (Art. 48 CN)</span>
+          </button>
+          <button id="badge-presidente-sub30" onclick="abrirModalConstitucional(false)" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" title="Ver Requisitos Constitucionales (Arts. 55 y 89 CN)">
+            <i class="fa-solid fa-crown text-amber-400"></i>
+            <span>Presidente • 30 años (Art. 89 CN)</span>
+          </button>
+          <div class="px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-xs font-medium text-slate-300">
+            <span id="badge-etapa-label" class="text-amber-400 font-semibold">Militancia</span> • Dilema <span id="current-turn-num">1</span>
+          </div>
         </div>
       </div>
     </div>
@@ -260,85 +309,150 @@
     <!-- PANTALLA 2: JUEGO ACTIVO -->
     <section id="screen-game" class="hidden space-y-4">
       
-      <!-- BARRA SUPERIOR DE PODER, RELACIONES Y COMODORO PY -->
-      <div class="glass-panel p-2.5 sm:p-3 rounded-2xl border border-amber-500/30 bg-slate-900/80 flex flex-wrap items-center justify-between gap-2 shadow-lg">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="mandatario-cargo-badge" class="text-xs font-bold text-amber-300">Mandatario en Ejercicio</span>
+      <!-- MESA CHICA DE LA ROSADA: CONSOLA DE OPERACIONES Y LOS 5 DESPACHOS DEL PODER -->
+      <div class="glass-panel p-3 sm:p-4 rounded-2xl border border-amber-500/30 bg-slate-900/90 shadow-xl space-y-3">
+        
+        <!-- Barra de Estado del Mandatario -->
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div class="flex items-center gap-2.5">
+            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
+            <div>
+              <span id="mandatario-cargo-badge" class="text-xs sm:text-sm font-bold text-amber-300 font-serif-title">MANDATARIO EN EJERCICIO</span>
+              <span class="text-[10px] text-slate-400 block sm:inline sm:ml-2">Despacho Presidencial • Casa Rosada</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-[11px] text-slate-400">
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 font-mono text-slate-300 flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-sliders text-amber-400 text-xs"></i> 5 Despachos Operativos
+            </span>
+          </div>
         </div>
-        <div class="flex items-center gap-2 flex-wrap">
-          <button onclick="abrirModalComodoroPy()" class="px-3 py-1.5 rounded-xl bg-purple-500/15 border border-purple-500/40 hover:bg-purple-500/25 text-purple-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-scale-balanced text-purple-400"></i>
-            <span id="badge-causa-estado">Comodoro Py: Denuncia</span>
-          </button>
-          <button onclick="abrirModalSIDE()" class="px-3 py-1.5 rounded-xl bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-user-secret text-sky-400"></i>
-            <span id="badge-side-estado">SIDE: US$ 14.5M</span>
-          </button>
-          <button onclick="abrirModalCancilleria()" class="px-3 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-earth-americas text-emerald-400"></i>
-            <span id="badge-cancilleria-estado">Mundo: FMI & Swap</span>
-          </button>
-          <button onclick="abrirModalGabinete()" class="px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/40 hover:bg-amber-900/50 text-amber-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-people-roof text-amber-400"></i>
-            <span id="badge-gabinete-estado">Gabinete: Salón Blanco</span>
-          </button>
-          <button onclick="abrirModalMedios()" class="px-3 py-1.5 rounded-xl bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-tv text-purple-400"></i>
-            <span id="badge-medios-estado">Medios: Pauta & Prime Time</span>
-          </button>
-          <button onclick="abrirModalSalaCrisis()" class="px-3 py-1.5 rounded-xl bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-triangle-exclamation text-red-400"></i>
-            <span id="badge-crisis-estado">Crisis: AMBA en Llamas</span>
-          </button>
-          <button onclick="abrirModalEvacuacionHelicoptero()" class="px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-500/60 hover:bg-red-900/70 text-red-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-helicopter text-red-400"></i>
-            <span id="badge-evacuacion-estado">Evacuación H-01</span>
-          </button>
-          <button onclick="abrirModalBunkerRetorno()" class="px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-500/60 hover:bg-purple-900/70 text-purple-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-crown text-purple-400"></i>
-            <span id="badge-bunker-estado">Búnker del Retorno</span>
-          </button>
-          <button onclick="abrirModalMesaDineroBCRA()" class="px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-500/60 hover:bg-emerald-900/70 text-emerald-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-building-columns text-emerald-400"></i>
-            <span id="badge-mesa-bcra-estado">Mesa BCRA ($1.560)</span>
-          </button>
-          <button onclick="abrirModalPantallaSillon()" id="badge-pantalla-sillon-header" class="px-3 py-1.5 rounded-xl bg-amber-600/30 border border-amber-500/60 hover:bg-amber-600/40 text-amber-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer animate-pulse" title="La Pantalla del Sillón: Situación Económica, Mecha Social y Urnas en Tiempo Real">
-            <i class="fa-solid fa-chair text-amber-400"></i>
-            <span id="badge-sillon-estado">Pantalla del Sillón (Sem. 42)</span>
-          </button>
-          <button onclick="abrirModalRoscaFederal()" id="badge-rosca-federal-header" class="px-3 py-1.5 rounded-xl bg-sky-950/50 border border-sky-500/50 hover:bg-sky-900/60 text-sky-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="Tablero Federal de Control: Ligas Provinciales, ATN vs Quórum (34/37)">
-            <i class="fa-solid fa-landmark-dome text-sky-400"></i>
-            <span id="badge-rosca-federal-txt">Rosca Federal (34/37)</span>
-          </button>
-          <button onclick="abrirModalDashboardUMP()" id="badge-ump-salud-header" class="px-3 py-1.5 rounded-xl bg-rose-950/60 border border-rose-500/60 hover:bg-rose-900/60 text-rose-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="Monitor de Signos Vitales - Unidad Médica Presidencial (Olivos)">
-            <i class="fa-solid fa-heart-pulse text-rose-400 animate-pulse"></i>
-            <span id="badge-ump-salud-txt">Monitor UMP (14/9 mmHg)</span>
-          </button>
-          <button onclick="abrirModalClanFamiliar()" id="badge-clan-familiar-header" class="px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-500/60 hover:bg-purple-900/60 text-purple-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="El Living de Olivos: Clan Familiar, Nepotismo Estatal y Resoluciones Domésticas">
-            <i class="fa-solid fa-people-roof text-purple-400"></i>
-            <span id="badge-clan-familiar-txt">Clan Familiar (Nepotismo: 42%)</span>
-          </button>
-          <button onclick="abrirModalFichaMatricular()" id="badge-ficha-candidato-header" class="px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-500/60 hover:bg-emerald-900/60 text-emerald-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="Ficha Matricular de Candidato: SEN - Sistema Electoral Nacional">
-            <i class="fa-solid fa-id-card text-emerald-400"></i>
-            <span id="badge-ficha-candidato-txt">Ficha Candidato</span>
-          </button>
-          <button onclick="abrirModalEstadoCivico()" id="badge-estado-civico-header" class="px-3 py-1.5 rounded-xl bg-blue-950/60 border border-blue-500/60 hover:bg-blue-900/60 text-blue-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="Notificación de Estado Cívico: Ministerio del Interior & Árbol de Desbloqueo Legal">
-            <i class="fa-solid fa-scroll text-blue-400"></i>
-            <span id="badge-estado-civico-txt">Estado Cívico (25a)</span>
-          </button>
-          <button onclick="abrirModalBotoneraNormativa()" id="badge-botonera-normativa-header" class="px-3 py-1.5 rounded-xl bg-violet-950/60 border border-violet-500/60 hover:bg-violet-900/60 text-violet-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="Botonera Normativa: Congreso, DNU (Ley 26.122), Veto y Reforma Constitucional">
-            <i class="fa-solid fa-gavel text-violet-400"></i>
-            <span id="badge-botonera-normativa-txt">Congreso & DNU</span>
-          </button>
-          <button onclick="abrirModalBalanceSemanal()" id="badge-ritmo-semanal-header" class="px-3 py-1.5 rounded-xl bg-amber-950/60 border border-amber-500/60 hover:bg-amber-900/60 text-amber-200 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer" title="Ritmo de Juego Semanal & Radar de Hipocresía (Lunes a Domingo)">
-            <i class="fa-solid fa-calendar-week text-amber-400"></i>
-            <span id="badge-ritmo-semanal-txt">Semana 1 • Lunes (1/7)</span>
-          </button>
-          <button onclick="abrirModalRelaciones()" class="px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/40 hover:bg-amber-500/25 text-amber-300 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer">
-            <i class="fa-solid fa-handshake-angle text-amber-400"></i>
-            <span>Relaciones Peligrosas (5)</span>
-          </button>
+
+        <!-- Grilla de los 5 Despachos del Poder Ejecutivo -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+          
+          <!-- DESPACHO 1: GOBIERNO & LEYES -->
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-violet-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+              <span class="flex items-center gap-1.5 text-violet-300"><i class="fa-solid fa-landmark text-violet-400"></i> Gobierno & Leyes</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="abrirModalBotoneraNormativa()" id="badge-botonera-normativa-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-violet-950/40 border border-violet-500/40 hover:bg-violet-900/50 text-violet-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Botonera Normativa: Congreso, DNU (Ley 26.122), Veto y Reforma Constitucional">
+                <i class="fa-solid fa-gavel text-violet-400 text-xs shrink-0"></i>
+                <span id="badge-botonera-normativa-txt" class="truncate">Congreso & DNU</span>
+              </button>
+              <button onclick="abrirModalGabinete()" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-950/30 border border-amber-500/30 hover:bg-amber-900/40 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-people-roof text-amber-400 text-xs shrink-0"></i>
+                <span id="badge-gabinete-estado" class="truncate">Gabinete: Salón Blanco</span>
+              </button>
+              <button onclick="abrirModalRoscaFederal()" id="badge-rosca-federal-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Tablero Federal de Control: Ligas Provinciales, ATN vs Quórum (34/37)">
+                <i class="fa-solid fa-landmark-dome text-sky-400 text-xs shrink-0"></i>
+                <span id="badge-rosca-federal-txt" class="truncate">Rosca Federal (34/37)</span>
+              </button>
+              <button onclick="abrirModalEstadoCivico()" id="badge-estado-civico-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-blue-950/40 border border-blue-500/40 hover:bg-blue-900/50 text-blue-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Notificación de Estado Cívico: Ministerio del Interior & Árbol de Desbloqueo Legal">
+                <i class="fa-solid fa-scroll text-blue-400 text-xs shrink-0"></i>
+                <span id="badge-estado-civico-txt" class="truncate">Estado Cívico (25a)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- DESPACHO 2: ECONOMÍA & CITY -->
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-emerald-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+              <span class="flex items-center gap-1.5 text-emerald-300"><i class="fa-solid fa-building-columns text-emerald-400"></i> Economía & City</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="abrirModalMesaDineroBCRA()" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-coins text-emerald-400 text-xs shrink-0"></i>
+                <span id="badge-mesa-bcra-estado" class="truncate">Mesa BCRA ($1.560)</span>
+              </button>
+              <button onclick="abrirModalPantallaSillon()" id="badge-pantalla-sillon-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-600/25 border border-amber-500/50 hover:bg-amber-600/35 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm animate-pulse" title="La Pantalla del Sillón: Situación Económica, Mecha Social y Urnas en Tiempo Real">
+                <i class="fa-solid fa-chair text-amber-400 text-xs shrink-0"></i>
+                <span id="badge-sillon-estado" class="truncate">Pantalla Sillón (Sem. 42)</span>
+              </button>
+              <button onclick="abrirModalBalanceSemanal()" id="badge-ritmo-semanal-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-950/40 border border-amber-500/40 hover:bg-amber-900/50 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Ritmo de Juego Semanal & Radar de Hipocresía (Lunes a Domingo)">
+                <i class="fa-solid fa-calendar-week text-amber-400 text-xs shrink-0"></i>
+                <span id="badge-ritmo-semanal-txt" class="truncate">Semana 1 • Lunes (1/7)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- DESPACHO 3: RETIRO, SIDE & TRIBUNALES -->
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+              <span class="flex items-center gap-1.5 text-purple-300"><i class="fa-solid fa-user-secret text-purple-400"></i> Inteligencia & Ley</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="abrirModalSIDE()" class="w-full text-left px-2 py-1.5 rounded-lg bg-sky-950/40 border border-sky-500/40 hover:bg-sky-900/50 text-sky-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-user-secret text-sky-400 text-xs shrink-0"></i>
+                <span id="badge-side-estado" class="truncate">SIDE: US$ 14.5M</span>
+              </button>
+              <button onclick="abrirModalComodoroPy()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/40 hover:bg-purple-500/25 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-scale-balanced text-purple-400 text-xs shrink-0"></i>
+                <span id="badge-causa-estado" class="truncate">Comodoro Py: Denuncia</span>
+              </button>
+              <button onclick="abrirModalRelaciones()" class="w-full text-left px-2 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 hover:bg-amber-500/25 text-amber-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-handshake-angle text-amber-400 text-xs shrink-0"></i>
+                <span class="truncate">Relaciones Peligrosas (5)</span>
+              </button>
+              <button onclick="abrirModalFichaMatricular()" id="badge-ficha-candidato-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Ficha Matricular de Candidato: SEN - Sistema Electoral Nacional">
+                <i class="fa-solid fa-id-card text-emerald-400 text-xs shrink-0"></i>
+                <span id="badge-ficha-candidato-txt" class="truncate">Ficha Candidato</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- DESPACHO 4: MEDIOS, CLAN & MUNDO -->
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-sky-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+              <span class="flex items-center gap-1.5 text-sky-300"><i class="fa-solid fa-tv text-sky-400"></i> Medios & Clan</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="abrirModalMedios()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-tv text-purple-400 text-xs shrink-0"></i>
+                <span id="badge-medios-estado" class="truncate">Medios: Pauta & Prime</span>
+              </button>
+              <button onclick="abrirModalClanFamiliar()" id="badge-clan-familiar-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="El Living de Olivos: Clan Familiar, Nepotismo Estatal y Resoluciones Domésticas">
+                <i class="fa-solid fa-people-roof text-purple-400 text-xs shrink-0"></i>
+                <span id="badge-clan-familiar-txt" class="truncate">Clan Familiar</span>
+              </button>
+              <button onclick="abrirModalCancilleria()" class="w-full text-left px-2 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-earth-americas text-emerald-400 text-xs shrink-0"></i>
+                <span id="badge-cancilleria-estado" class="truncate">Mundo: FMI & Swap</span>
+              </button>
+              <button onclick="abrirModalBunkerRetorno()" class="w-full text-left px-2 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/40 hover:bg-purple-900/50 text-purple-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-crown text-purple-400 text-xs shrink-0"></i>
+                <span id="badge-bunker-estado" class="truncate">Búnker del Retorno</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- DESPACHO 5: CRISIS & SUPERVIVENCIA -->
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 hover:border-red-500/50 transition-all space-y-1.5 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 border-b border-slate-800/80 pb-1">
+              <span class="flex items-center gap-1.5 text-rose-300"><i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Crisis & UMP</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="abrirModalSalaCrisis()" class="w-full text-left px-2 py-1.5 rounded-lg bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-fire text-red-400 text-xs shrink-0"></i>
+                <span id="badge-crisis-estado" class="truncate">Crisis: AMBA en Llamas</span>
+              </button>
+              <button onclick="abrirModalDashboardUMP()" id="badge-ump-salud-header" class="w-full text-left px-2 py-1.5 rounded-lg bg-rose-950/40 border border-rose-500/40 hover:bg-rose-900/50 text-rose-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm" title="Monitor de Signos Vitales - Unidad Médica Presidencial (Olivos)">
+                <i class="fa-solid fa-heart-pulse text-rose-400 text-xs shrink-0 animate-pulse"></i>
+                <span id="badge-ump-salud-txt" class="truncate">Monitor UMP (14/9)</span>
+              </button>
+              <button onclick="abrirModalEvacuacionHelicoptero()" class="w-full text-left px-2 py-1.5 rounded-lg bg-red-950/50 border border-red-500/50 hover:bg-red-900/60 text-red-200 text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-helicopter text-red-400 text-xs shrink-0"></i>
+                <span id="badge-evacuacion-estado" class="truncate">Evacuación H-01</span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -394,6 +508,22 @@
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="salud-supervivencia-grid">
           <!-- Inyectado dinámicamente: Coronarias, Paranoia, Seguridad/Custodia, Médico Presidencial -->
+        </div>
+      </div>
+
+      <!-- BRÚJULA IDEOLÓGICA EN VIVO (12 EJES DOCTRINARIOS) -->
+      <div class="glass-panel p-3 sm:p-3.5 rounded-2xl border border-amber-500/30 bg-slate-900/80 space-y-2">
+        <div class="flex justify-between items-center text-xs text-slate-400 px-1 cursor-pointer select-none" onclick="toggleBrujulaEnVivo()">
+          <span class="font-medium flex items-center gap-1.5 text-amber-300">
+            <i class="fa-solid fa-compass text-amber-400"></i> Brújula Ideológica en Vivo (12 Ejes Doctrinarios)
+          </span>
+          <div class="flex items-center gap-2">
+            <span id="brujula-toggle-label" class="text-[11px] font-semibold text-amber-400 hover:text-amber-300 transition-colors">Desplegar</span>
+            <i id="brujula-toggle-icon" class="fa-solid fa-chevron-down text-amber-400 text-xs transition-transform duration-200"></i>
+          </div>
+        </div>
+        <div id="brujula-ejes-grid" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-1 border-t border-slate-800/80">
+          <!-- Inyectado dinámicamente con renderizarBrujulaEnVivo() -->
         </div>
       </div>
 
@@ -5234,6 +5364,7 @@
   </footer>
 
   <!-- CARGA DE MÓDULOS -->
+  <script src="sonidos_sillon.js"></script>
   <script src="glosario.js"></script>
   <script src="deportes_glosario.js"></script>
   <script src="medios_glosario.js"></script>
@@ -5272,6 +5403,122 @@
 
   <!-- CONTROLADOR PRINCIPAL -->
   <script>
+    // =========================================================================
+    // CONTROLADOR DE AUDIO PROCEDURAL CRIOLLO (Web Audio API)
+    // =========================================================================
+    function toggleAudioGlobal() {
+      if (!window.audioCriollo) return;
+      const silenciado = window.audioCriollo.toggleSilencio();
+      actualizarBotonAudioUI(silenciado);
+      if (!silenciado) {
+        window.audioCriollo.reproducirClick();
+      }
+    }
+
+    function actualizarBotonAudioUI(silenciado) {
+      const ico = document.getElementById('icono-audio-toggle');
+      const lbl = document.getElementById('label-audio-toggle');
+      const btn = document.getElementById('btn-audio-toggle');
+      if (!ico || !lbl || !btn) return;
+      if (silenciado) {
+        ico.className = 'fa-solid fa-volume-xmark text-slate-500 text-xs';
+        lbl.innerText = 'Silenciado';
+        btn.classList.add('opacity-60');
+      } else {
+        ico.className = 'fa-solid fa-volume-high text-amber-400 text-xs';
+        lbl.innerText = 'Audio';
+        btn.classList.remove('opacity-60');
+      }
+    }
+
+    // Inicializar estado visual del audio si el motor ya cargó
+    if (typeof window !== 'undefined' && window.audioCriollo) {
+      setTimeout(() => {
+        actualizarBotonAudioUI(window.audioCriollo.estaSilenciado());
+      }, 50);
+    }
+
+    // =========================================================================
+    // CONTROLADOR DE LA BRÚJULA IDEOLÓGICA EN VIVO (12 EJES)
+    // =========================================================================
+    let _brujulaEnVivoAbierta = false;
+
+    function toggleBrujulaEnVivo() {
+      _brujulaEnVivoAbierta = !_brujulaEnVivoAbierta;
+      const grid = document.getElementById('brujula-ejes-grid');
+      const lbl = document.getElementById('brujula-toggle-label');
+      const ico = document.getElementById('brujula-toggle-icon');
+      if (grid) {
+        grid.classList.toggle('hidden', !_brujulaEnVivoAbierta);
+      }
+      if (lbl) {
+        lbl.innerText = _brujulaEnVivoAbierta ? 'Plegar' : 'Desplegar';
+      }
+      if (ico) {
+        ico.style.transform = _brujulaEnVivoAbierta ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+      if (_brujulaEnVivoAbierta) {
+        renderizarBrujulaEnVivo();
+      }
+      if (window.audioCriollo) {
+        window.audioCriollo.reproducirClick();
+      }
+    }
+
+    function renderizarBrujulaEnVivo() {
+      const container = document.getElementById('brujula-ejes-grid');
+      if (!container || typeof DOCE_EJES === 'undefined' || !window.motorJuego) return;
+
+      container.innerHTML = '';
+      const vector = motorJuego.vector12Axes || {};
+
+      for (const k in DOCE_EJES) {
+        const eje = DOCE_EJES[k];
+        const val = vector[k];
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-950/80 border border-slate-800 p-2 rounded-xl space-y-1 hover:border-slate-700 transition-colors shadow-inner";
+
+        if (val === null || val === undefined) {
+          card.innerHTML = `
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="font-semibold text-slate-400 flex items-center gap-1.5 truncate">
+                <i class="${eje.icono} text-slate-500 text-[10px]"></i> ${eje.nombre}
+              </span>
+              <span class="text-slate-500 text-[10px] italic shrink-0">Sin definir</span>
+            </div>
+            <div class="flex justify-between text-[9px] text-slate-500 px-0.5">
+              <span>${eje.poloA.nombre}</span>
+              <span>${eje.poloB.nombre}</span>
+            </div>
+            <div class="w-full bg-slate-800/50 h-1.5 rounded-full overflow-hidden border border-dashed border-slate-700"></div>
+          `;
+        } else {
+          const poloDominante = val >= 50 ? eje.poloB.nombre : eje.poloA.nombre;
+          const intensidad = Math.abs(val - 50) * 2;
+          const colorBarra = val >= 50 ? 'bg-sky-400' : 'bg-amber-400';
+
+          card.innerHTML = `
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="font-semibold text-slate-200 flex items-center gap-1.5 truncate">
+                <i class="${eje.icono} text-amber-400 text-[10px]"></i> ${eje.nombre}
+              </span>
+              <span class="text-amber-300 font-bold text-[10px] shrink-0">${poloDominante} (${intensidad}%)</span>
+            </div>
+            <div class="flex justify-between text-[9px] text-slate-400 px-0.5">
+              <span class="${val < 50 ? 'font-bold text-amber-300' : ''}">${eje.poloA.nombre}</span>
+              <span class="${val >= 50 ? 'font-bold text-sky-300' : ''}">${eje.poloB.nombre}</span>
+            </div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden relative">
+              <div class="absolute top-0 bottom-0 w-0.5 bg-slate-600 left-1/2 -translate-x-1/2"></div>
+              <div class="${colorBarra} h-full rounded-full transition-all duration-300" style="width: ${val}%"></div>
+            </div>
+          `;
+        }
+        container.appendChild(card);
+      }
+    }
+
     let _inauguracionEnCurso = false;
     let _inauguracionDiputadoEnCurso = false;
 
@@ -5696,6 +5943,7 @@
       if (!muerteObj) return;
       const modal = document.getElementById('modal-muerte-politica');
       if (!modal) return;
+      if (window.audioCriollo) window.audioCriollo.reproducirPlacaCronica();
 
       document.getElementById('necrologica-placa-cronica').innerText = muerteObj.placaCronica;
       document.getElementById('necrologica-titulo-muerte').innerHTML = `
@@ -5823,6 +6071,13 @@
           <span class="leading-relaxed flex-grow">${opc.texto}</span>
         `;
         btn.onclick = () => {
+          if (window.audioCriollo) {
+            if (motorJuego.faseActual === 'presidente') {
+              window.audioCriollo.reproducirSello();
+            } else {
+              window.audioCriollo.reproducirClick();
+            }
+          }
           if (motorJuego.faseActual === 'presidente') {
             abrirModalPresidencial(opc);
           } else {
@@ -5843,6 +6098,7 @@
             renderizarGabineteUI();
             renderizarMediosUI();
             renderizarSalaCrisisUI();
+            if (_brujulaEnVivoAbierta) renderizarBrujulaEnVivo();
             mostrarInterludio(opc, snapPrevio);
           }
         };
@@ -5850,6 +6106,7 @@
       });
 
       activarListenersGlosario();
+      if (_brujulaEnVivoAbierta) renderizarBrujulaEnVivo();
     }
 
     // Modal Presidencial (30 años) para instrumentar leyes, DNU o Plebiscito
@@ -5871,6 +6128,7 @@
       document.getElementById('pres-modal-options-step').classList.add('hidden');
 
       if (via === 'congreso') {
+        if (window.audioCriollo) window.audioCriollo.reproducirSello();
         const res = window.sistemaLegislativo.simularVotacionLey(dilema, opcionPresidencialPendiente, motorJuego.aprobacionSectores);
         const dipPct = Math.round((res.diputados.aFavor / 257) * 100);
         const senPct = Math.round((res.senadores.aFavor / 72) * 100);
@@ -5882,6 +6140,12 @@
             </span>
             <span class="text-[11px] font-bold ${res.aprobada ? 'text-emerald-400' : 'text-rose-400'}">
               ${res.aprobada ? '¡PROYECTO SANCIONADO!' : '¡TRABADO EN EL RECINTO!'}
+            </span>
+          </div>
+
+          <div class="text-center my-2">
+            <span class="sello-oficial ${res.aprobada ? 'sello-aprobado' : ''}">
+              ${res.aprobada ? 'SANCIONADO • CONGRESO DE LA NACIÓN' : 'TRABADO EN COMISIONES / RECINTO'}
             </span>
           </div>
 
@@ -5946,6 +6210,7 @@
           </div>
         `;
       } else if (via === 'dnu') {
+        if (window.audioCriollo) window.audioCriollo.reproducirSello();
         const evalDNU = window.sistemaLegislativo.evaluarDNU(dilema, opcionPresidencialPendiente);
         box.innerHTML = `
           <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
@@ -5954,6 +6219,11 @@
             </span>
             <span class="text-[11px] font-bold ${evalDNU.esMateriaVedada ? 'text-rose-400' : 'text-yellow-400'}">
               ${evalDNU.esMateriaVedada ? 'ALERTA JUDICIAL' : 'BOLETÍN OFICIAL'}
+            </span>
+          </div>
+          <div class="text-center my-2">
+            <span class="sello-oficial sello-dnu">
+              DECRETO DNU • PODER EJECUTIVO NACIONAL
             </span>
           </div>
           <p class="text-xs text-slate-300 leading-relaxed">
@@ -5965,6 +6235,7 @@
         `;
       } else {
         // Consulta popular no vinculante (Art. 40 párr. 2 CN)
+        if (window.audioCriollo) window.audioCriollo.reproducirClick();
         const res = window.sistemaLegislativo.simularConsultaPopular(dilema, opcionPresidencialPendiente, motorJuego.aprobacionSectores);
         box.innerHTML = `
           <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
@@ -5998,6 +6269,7 @@
     }
 
     function ejecutarVetoUI() {
+      if (window.audioCriollo) window.audioCriollo.reproducirSello();
       const dilema = motorJuego.obtenerDilemaActual();
       const resVeto = window.sistemaLegislativo.simularVetoPresidencial(dilema, "total", motorJuego.aprobacionSectores);
       
@@ -6010,6 +6282,11 @@
             <div class="flex items-center justify-between font-bold ${resVeto.insistenciaLograda ? 'text-rose-300' : 'text-emerald-300'}">
               <span><i class="fa-solid fa-scale-balanced"></i> Trámite de Insistencia Parlamentaria (Art. 83 CN)</span>
               <span>${resVeto.insistenciaLograda ? '¡VETO DERRIBADO (2/3)!' : '¡VETO FIRME!'}</span>
+            </div>
+            <div class="text-center my-1.5">
+              <span class="sello-oficial ${resVeto.insistenciaLograda ? '' : 'sello-dnu'}">
+                ${resVeto.insistenciaLograda ? 'VETO DERRIBADO POR 2/3' : 'VETO PRESIDENCIAL FIRME (ART. 83 CN)'}
+              </span>
             </div>
             <p class="text-slate-300 text-[11px] leading-snug">${resVeto.detalle}</p>
             <div class="text-[10px] text-slate-400 flex justify-between pt-1 border-t border-slate-800">
@@ -6964,6 +7241,7 @@
     // CONTROLADORES DE COMODORO PY, FUEROS PARLAMENTARIOS Y EZEIZA
     // =========================================================================
     function abrirModalComodoroPy() {
+      if (window.audioCriollo) window.audioCriollo.reproducirFlash();
       renderizarComodoroPyUI();
       const m = document.getElementById('modal-comodoro-py');
       if (m) m.classList.remove('hidden');
@@ -8006,6 +8284,7 @@
     let _acreditadoSeleccionadoConferencia = 'cronista_tradicional';
 
     function abrirModalMedios() {
+      if (window.audioCriollo) window.audioCriollo.reproducirFlash();
       renderizarMediosUI();
       const m = document.getElementById('modal-medios');
       if (m) m.classList.remove('hidden');
@@ -8404,6 +8683,7 @@
     // CONTROLADORES DE SALA DE CRISIS, ESTALLIDO SOCIAL, ESTADO DE SITIO Y HELICÓPTERO
     // =========================================================================
     function abrirModalSalaCrisis() {
+      if (window.audioCriollo) window.audioCriollo.reproducirPlacaCronica();
       renderizarSalaCrisisUI();
       const m = document.getElementById('modal-sala-crisis');
       if (m) m.classList.remove('hidden');
@@ -8661,6 +8941,7 @@
     // CONTROLADORES DE CAÍDA PRESIDENCIAL, EVACUACIÓN H-01, ASAMBLEA Y EXPRESIDENTE
     // =========================================================================
     function abrirModalEvacuacionHelicoptero() {
+      if (window.audioCriollo) window.audioCriollo.reproducirPlacaCronica();
       renderizarEvacuacionUI();
       const m = document.getElementById('modal-evacuacion-helicoptero');
       if (m) m.classList.remove('hidden');
@@ -9210,6 +9491,7 @@
     // =========================================================================
 
     function abrirModalMesaDineroBCRA() {
+      if (window.audioCriollo) window.audioCriollo.reproducirCampanaCity();
       if (typeof motorJuego !== 'undefined' && motorJuego && motorJuego.sistemaMacroBCRA) {
         motorJuego.sistemaMacroBCRA.sincronizarConMotor(motorJuego);
       }
@@ -9787,6 +10069,7 @@
     // =========================================================================
 
     function abrirModalDashboardUMP() {
+      if (window.audioCriollo) window.audioCriollo.reproducirLatido();
       renderizarDashboardUMPUI();
       const m = document.getElementById('modal-dashboard-ump');
       if (m) m.classList.remove('hidden');
@@ -10575,6 +10858,7 @@
     // CONTROLADORES: BOTONERA NORMATIVA & CONGRESO DE LA NACIÓN
     // =========================================================================
     function abrirModalBotoneraNormativa() {
+      if (window.audioCriollo) window.audioCriollo.reproducirSello();
       renderizarBotoneraNormativaUI();
       const modal = document.getElementById('modal-botonera-normativa');
       if (modal) modal.classList.remove('hidden');
