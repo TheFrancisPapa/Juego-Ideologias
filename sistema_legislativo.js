@@ -649,18 +649,34 @@ class SistemaLegislativo {
 
   // Simular Veto Presidencial y trámite de insistencia parlamentaria (Art. 83 CN)
   simularVetoPresidencial(dilema, tipoVeto = "total", aprobacionSectores = {}) {
-    const descontentoGeneral = aprobacionSectores.claseMedia !== undefined ? (100 - aprobacionSectores.claseMedia) / 100 : 0.5;
+    let descontentoGeneral = 0.5;
+    if (aprobacionSectores.claseMedia !== undefined || aprobacionSectores.estadoCiencia !== undefined || aprobacionSectores.trabajo !== undefined) {
+      const cm = aprobacionSectores.claseMedia ?? 50;
+      const ec = aprobacionSectores.estadoCiencia ?? cm;
+      const tr = aprobacionSectores.trabajo ?? cm;
+      const pr = aprobacionSectores.productivo ?? cm;
+      const promedioAprob = (cm * 0.35 + ec * 0.25 + tr * 0.25 + pr * 0.15);
+      descontentoGeneral = Math.max(0, Math.min(1, (100 - promedioAprob) / 100));
+    }
 
     let afinesOposicionDip = this.diputados.oposicion + Math.round(this.diputados.neutros * (0.5 + descontentoGeneral * 0.5));
     let afinesOposicionSen = this.senadores.oposicion + Math.round(this.senadores.neutros * (0.6 + descontentoGeneral * 0.4));
 
     if (descontentoGeneral >= 0.70) {
-      afinesOposicionDip += Math.round(this.diputados.aliados * 0.75) + 30;
-      afinesOposicionSen += Math.round(this.senadores.aliados * 0.75) + 10;
+      const fugaAliadosDip = Math.round(this.diputados.aliados * 0.90);
+      const fugaOficialismoDip = Math.round(this.diputados.oficialismo * 0.18);
+      afinesOposicionDip += fugaAliadosDip + fugaOficialismoDip;
+
+      const fugaAliadosSen = Math.round(this.senadores.aliados * 0.90);
+      const fugaOficialismoSen = Math.round(this.senadores.oficialismo * 0.20);
+      afinesOposicionSen += fugaAliadosSen + fugaOficialismoSen;
     }
 
-    const insistenciaDiputados = afinesOposicionDip >= 172; // 2/3 de 257
-    const insistenciaSenadores = afinesOposicionSen >= 48;  // 2/3 de 72
+    afinesOposicionDip = Math.min(this.diputados.total || 257, Math.max(0, afinesOposicionDip));
+    afinesOposicionSen = Math.min(this.senadores.total || 72, Math.max(0, afinesOposicionSen));
+
+    const insistenciaDiputados = afinesOposicionDip >= (this.diputados.dosTerciosTotales || 172); // 2/3 de 257
+    const insistenciaSenadores = afinesOposicionSen >= (this.senadores.dosTerciosTotales || 48);  // 2/3 de 72
     const vetoDerribado = insistenciaDiputados && insistenciaSenadores;
 
     const res = {
@@ -731,7 +747,12 @@ class SistemaLegislativo {
 
       case "aplicar_veto": {
         const normaPrevisional = this.normasEnTramite.find(n => n.id === "aumento_jubilatorio") || this.normasEnTramite[0];
-        const resVeto = this.simularVetoPresidencial({ titulo: normaPrevisional.titulo }, params.subtipo || "total");
+        const aprobacionSectores = params.aprobacionSectores || params.motor?.sectores || {};
+        const resVeto = this.simularVetoPresidencial(
+          { titulo: normaPrevisional ? normaPrevisional.titulo : "Ley de Gasto Previsional" },
+          params.subtipo || "total",
+          aprobacionSectores
+        );
         if (normaPrevisional) {
           normaPrevisional.vetadoPorPresidente = true;
           normaPrevisional.vigencia = resVeto.vetoFirme ? "VETADA - VETO FIRME" : "PROMULGADA POR INSISTENCIA DE 2/3";

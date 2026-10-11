@@ -174,11 +174,11 @@ const ACCIONES_GABINETE = {
   girar_atn_gobernadores: {
     id: "girar_atn_gobernadores",
     nombre: "Girar Aportes del Tesoro (ATN) a las Provincias",
-    subtitulo: "Desembolsar US$ 50M para blindar los acuerdos del Ministro del Interior",
+    subtitulo: "Desembolsar $45.000 M del Tesoro para blindar acuerdos del Ministro del Interior",
     icono: "fa-solid fa-money-bill-transfer",
     color: "emerald",
-    descripcion: "Abrir la billetera discrecional de ATN para los gobernadores aliados. Desactiva la renuncia de Interior y garantiza votos para leyes clave en el Senado.",
-    impacto: { reservasBCRA: -50, reservasNetasBCRA: -50, roscaGobernadores: +15, lealtadInterior: +25, relato: "Se giran fondos de emergencia a cinco gobernadores patagónicos y norteños. El Ministro del Interior archiva su carta de renuncia y el bloque del Senado queda blindado." }
+    descripcion: "Abrir la billetera discrecional de ATN en pesos para los gobernadores aliados. Desactiva la renuncia de Interior y garantiza votos para leyes clave en el Senado a costa del resultado fiscal.",
+    impacto: { resultadoFiscalPBI: -0.15, roscaGobernadores: +15, lealtadInterior: +25, relato: "Se giran fondos de emergencia a cinco gobernadores patagónicos y norteños. El Ministro del Interior archiva su carta de renuncia y el bloque del Senado queda blindado." }
   },
 
   carpetazo_disciplinador_side: {
@@ -515,11 +515,10 @@ class SistemaGabinete {
       }
       if (motor) {
         if (motor.termometroCriollo) {
-          motor.termometroCriollo.reservasBCRA = Math.max(0, motor.termometroCriollo.reservasBCRA - 50);
           motor.termometroCriollo.roscaGobernadores = Math.min(100, motor.termometroCriollo.roscaGobernadores + 15);
         }
         if (motor.macroeconomia) {
-          motor.macroeconomia.reservasNetasBCRA -= 50;
+          motor.macroeconomia.resultadoFiscalPBI = Math.max(-8.0, Math.min(5.0, Math.round((motor.macroeconomia.resultadoFiscalPBI - 0.15) * 10) / 10));
         }
       }
       const relato = accion.impacto.relato;

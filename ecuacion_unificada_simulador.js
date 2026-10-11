@@ -386,7 +386,8 @@ class SistemaEcuacionUnificada {
     // 5. Blindaje Mediático (pauta oficial amortigua hasta +4%)
     let blindajeMediatico = variables.blindajeMediatico !== undefined ? variables.blindajeMediatico : 1.5;
     if (motor && motor.sistemaMedios) {
-      blindajeMediatico = (motor.sistemaMedios.blindajeOficial || 30) / 100 * 4.0;
+      const blindajeVal = motor.sistemaMedios.blindajeMediatico !== undefined ? motor.sistemaMedios.blindajeMediatico : (motor.sistemaMedios.blindajeOficial || 30);
+      blindajeMediatico = (blindajeVal / 100) * 4.0;
     }
     blindajeMediatico = Math.min(4.0, Math.max(0, Math.round(blindajeMediatico * 10) / 10));
 
@@ -402,7 +403,10 @@ class SistemaEcuacionUnificada {
     // Indecisos y oposición
     const indecisos = Math.min(22.0, Math.max(8.0, Math.round((14.0 + (penalizacionIPC * 0.2) - (blindajeMediatico * 0.5)) * 10) / 10));
     let votoOposicion = Math.round((100.0 - votoOficialista - indecisos) * 10) / 10;
-    if (votoOposicion < 15.0) votoOposicion = 15.0;
+    if (votoOposicion < 15.0) {
+      votoOposicion = 15.0;
+      votoOficialista = Math.round((100.0 - votoOposicion - indecisos) * 10) / 10;
+    }
 
     const votoBolsillo = Math.round((deltaPoderAdquisitivo - penalizacionIPC - penalizacionBrecha) * 10) / 10;
 
@@ -563,7 +567,7 @@ class SistemaEcuacionUnificada {
     const reservasNetas = macroBCRA?.reservasNetas || macroGral?.reservasNetasBCRA || this.estadoSemanaCritica.estadoInicial.reservasNetas;
     const inflacion = macroBCRA?.inflacionMensual || macroGral?.inflacionMensual || this.estadoSemanaCritica.estadoInicial.inflacionProyectada;
     const tasa = macroBCRA?.tasaNominalAnual || this.estadoSemanaCritica.estadoInicial.tasaBCRA;
-    const pases = macroBCRA?.bolaPasivosBillones ? `${macroBCRA.bolaPasivosBillones} B` : "2.8x Base Monetaria";
+    const pases = macroBCRA?.bolaPasivosBillones !== undefined ? `${macroBCRA.bolaPasivosBillones} B` : "2.8x Base Monetaria";
 
     // Ecuación de votos y mecha en tiempo real
     const votoCalc = this.calcularIntencionVoto(motor, { brecha, ipc: inflacion });

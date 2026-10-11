@@ -8,7 +8,7 @@ const LIGAS_PROVINCIALES = {
   norte_grande: {
     id: "norte_grande",
     nombre: "Liga del Norte Grande (Los Feudales / El Chaco Seco)",
-    provincias: ["Formosa", "Santiago del Estero", "Catamarca", "La Rioja", "Tucumán", "Chaco", "Jujuy", "Salta"],
+    provincias: ["Formosa", "Santiago del Estero", "Catamarca", "La Rioja", "Tucumán", "Chaco", "Jujuy", "Salta", "Misiones", "Corrientes"],
     senadoresTotales: 14,
     diputadosAproximados: 32,
     dependenciaCoparticipacionPct: 85,
@@ -24,7 +24,7 @@ const LIGAS_PROVINCIALES = {
   region_centro: {
     id: "region_centro",
     nombre: "Región Centro y Pampa Húmeda (Los Productivos / El Cordobesismo)",
-    provincias: ["Córdoba", "Santa Fe", "Entre Ríos", "Mendoza"],
+    provincias: ["Córdoba", "Santa Fe", "Entre Ríos", "Mendoza", "San Juan", "San Luis", "La Pampa"],
     senadoresTotales: 8,
     diputadosAproximados: 48,
     dependenciaCoparticipacionPct: 45,
@@ -562,7 +562,9 @@ if (typeof module !== 'undefined' && module.exports) {
     ACCIONES_ROSCA_FEDERAL,
     SistemaRoscaFederal
   };
-} else if (typeof window !== 'undefined') {
+}
+
+if (typeof window !== 'undefined') {
   window.LIGAS_PROVINCIALES = LIGAS_PROVINCIALES;
   window.PALANCAS_FINANCIERAS_EJECUTIVO = PALANCAS_FINANCIERAS_EJECUTIVO;
   window.calcularAlgoritmoCorteBoleta = calcularAlgoritmoCorteBoleta;

@@ -5684,7 +5684,7 @@
 
     function toggleMedicoPresidencial() {
       if (!motorJuego || !motorJuego.saludSupervivencia) return;
-      motorJuego.saludSupervivencia.medicoTipo = motorJuego.saludSupervivencia.medicoTipo === 'favaloro' ? 'militante' : 'favaloro';
+      motorJuego.saludSupervivencia.medicoTipo = motorJuego.saludSupervivencia.medicoTipo === 'cardenal_medicina' ? 'doctor_militante' : 'cardenal_medicina';
       renderizarSaludSupervivencia();
     }
 
@@ -6378,8 +6378,12 @@
 
       // 4. Etiqueta del botón de avance
       const btnLabel = document.getElementById('btn-advance-interlude-label');
-      const dilemasFase = DILEMAS_DATA[motorJuego.faseActual] || [];
-      const esUltimo = motorJuego.indiceDilema >= dilemasFase.length;
+      const totalDilemas = (motorJuego.dilemasFase && motorJuego.dilemasFase.length)
+        ? motorJuego.dilemasFase.length
+        : (DILEMAS_DATA[motorJuego.faseActual] || []).length;
+      const esUltimo = typeof motorJuego.esFinDeFase === 'function'
+        ? motorJuego.esFinDeFase()
+        : (motorJuego.indiceDilema >= totalDilemas);
 
       if (esUltimo) {
         if (motorJuego.faseActual === 'presidente') {
@@ -7652,7 +7656,7 @@
               <i class="fa-solid fa-earth-americas"></i> GESTIÓN DIPLOMÁTICA: ${res.accion.nombre}
             </div>
             <div>${res.relato}</div>
-            <div class="text-[11px] text-emerald-400 pt-1">Riesgo País: ${motorJuego.macroeconomia.riesgoPais} bps • Swap: ${motorJuego.sistemaGeopolitica.semaforoSwap.toUpperCase()} • FMI: ${motorJuego.sistemaGeopolitica.posicionFMI.replace(/_/g, ' ')}</div>
+            <div class="text-[11px] text-emerald-400 pt-1">Riesgo País: ${motorJuego.macroeconomia?.riesgoPais || motorJuego.termometroCriollo?.riesgoPais || 1500} bps • Swap: ${motorJuego.sistemaGeopolitica?.semaforoSwap?.toUpperCase() || 'AMARILLO'} • FMI: ${(motorJuego.sistemaGeopolitica?.posicionFMI || 'dialogo_frio').replace(/_/g, ' ')}</div>
           `;
         } else {
           resBox.className = "p-3.5 rounded-xl border border-rose-500/50 bg-rose-950/40 text-rose-200 text-xs leading-relaxed space-y-1 font-mono";
@@ -8653,9 +8657,6 @@
     // CONTROLADORES DE CAÍDA PRESIDENCIAL, EVACUACIÓN H-01, ASAMBLEA Y EXPRESIDENTE
     // =========================================================================
     function abrirModalEvacuacionHelicoptero() {
-      if (typeof motorJuego !== 'undefined' && motorJuego && motorJuego.evaluarColapsoPresidencial) {
-        motorJuego.evaluarColapsoPresidencial();
-      }
       renderizarEvacuacionUI();
       const m = document.getElementById('modal-evacuacion-helicoptero');
       if (m) m.classList.remove('hidden');
@@ -8710,10 +8711,14 @@
           bTerritorial.innerText = "QUEBRADA";
           bTerritorial.className = "text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/30 text-amber-200 animate-pulse";
           cardTerritorial.className = "p-2.5 rounded-xl bg-amber-950/40 border-2 border-amber-500/60 space-y-1 shadow-md";
-          if (cuasiTags && sys.cuasimonedasEmitidas.length > 0) {
-            cuasiTags.innerHTML = sys.cuasimonedasEmitidas.map(c =>
-              `<span class="inline-block px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 mr-1 mb-1 font-mono text-[9px]">${c.nombre}</span>`
-            ).join('');
+          if (cuasiTags) {
+            if (sys.cuasimonedasEmitidas && sys.cuasimonedasEmitidas.length > 0) {
+              cuasiTags.innerHTML = sys.cuasimonedasEmitidas.map(c =>
+                `<span class="inline-block px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 mr-1 mb-1 font-mono text-[9px]">${c.nombre}</span>`
+              ).join('');
+            } else {
+              cuasiTags.innerHTML = "<span class='text-amber-400'>Rebelión declarada sin emisión registrada</span>";
+            }
           }
         } else {
           bTerritorial.innerText = "MONITOREANDO";
@@ -9764,7 +9769,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[10px] font-mono pt-1 border-t border-slate-800">
             <div>Votos Favor: <strong class="${res.votosFavor >= 37 ? 'text-emerald-300' : 'text-amber-300'}">${res.votosFavor} / 37</strong></div>
             <div>Mecha Social: <strong class="${motorJuego.sistemaEcuacionUnificada?.mechaSocial > 70 ? 'text-rose-400' : 'text-slate-300'}">${motorJuego.sistemaEcuacionUnificada?.mechaSocial || 35}%</strong></div>
-            <div>Dólar Blue: <strong class="text-amber-300">$ ${motorJuego.sistemaMesaDinero?.dolarBlue || 1280}</strong></div>
+            <div>Dólar Blue: <strong class="text-amber-300">$ ${motorJuego.sistemaMacroBCRA?.dolarBlue || motorJuego.termometroCriollo?.dolarBlue || 1280}</strong></div>
           </div>
         `;
       }
@@ -10870,9 +10875,14 @@
     }
 
     function ejecutarEscrutinioUrnasUI() {
+      const mecha = motorJuego.termometroCriollo?.mechaSocial || 40;
+      const opereta = window.sistemaSIDE?.amenazaOpereta || 0;
+      const tieneCausa = window.sistemaComodoroPy?.causaActiva?.estado === 'procesado';
+      const escandaloReal = opereta > 45 || mecha > 60 || tieneCausa || (Math.random() < 0.40);
+
       const res = motorJuego.ejecutarEleccionUrnas({
         respuestaVeda: _respuestaVedaSeleccionada,
-        huboEscandalo: true
+        huboEscandalo: escandaloReal
       });
 
       if (window.sistemaLegislativo && typeof window.sistemaLegislativo.calibrarConElecciones === 'function') {

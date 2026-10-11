@@ -207,7 +207,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_moreno_gendarmeria_choque",
         texto: "Ordenar a la Gendarmería Nacional entrar con gases y postas de goma a recuperar el predio",
-        impacto12: { ordenPublico: 18, estadoDeDerecho: -10, soberaniaNacional: 5 },
+        impacto12Axes: { seguridad: 20, institucionalidad: 70 },
         impactoCriollo: { mechaSocial: -10 },
         impactoSalud: { seguridad: 10, paranoia: 15 },
         impactoCrisis: {
@@ -220,7 +220,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_moreno_cordon_perimetral",
         texto: "Ordenar un cordón perimetral externo y dejar que vacíen las góndolas sin intervenir adentro",
-        impacto12: { ordenPublico: -15, estadoDeDerecho: -12, mercadoLibre: -10 },
+        impacto12Axes: { seguridad: 80, regulacion: 30 },
         impactoCriollo: { mechaSocial: 8 },
         impactoMacro: { riesgoPais: 70 },
         impactoCrisis: {
@@ -231,8 +231,8 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_moreno_compra_urgencia_víveres",
         texto: "Autorizar al Ministerio de Capital Humano a comprar de urgencia toda la mercadería del local y repartirla",
-        impacto12: { estatismo: 15, pragmatismo: 12, mercadoLibre: -15 },
-        impactoMacro: { deficitFiscalPct: 0.3, reservasNetasBCRA: -150 },
+        impacto12Axes: { estatismo: 20, regulacion: 20 },
+        impactoMacro: { resultadoFiscalPBI: -0.3, reservasNetasBCRA: -150 },
         impactoCriollo: { mechaSocial: -14 },
         impactoCrisis: {
           fondosDelta: 8000,
@@ -242,7 +242,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_moreno_negociar_punteros",
         texto: "Mandar a la Policía Bonaerense a negociar con los punteros que comandan el ataque",
-        impacto12: { pragmatismo: 15, republicanismo: -15, ordenPublico: -8 },
+        impacto12Axes: { federalismo: 30, institucionalidad: 80, seguridad: 65 },
         impactoCriollo: { roscaGobernadores: 10, mechaSocial: -6 },
         impactoCrisis: {
           fondosDelta: 3000,
@@ -264,7 +264,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_olivos_megafono_cara_a_cara",
         texto: "Salir en persona al portón con un megáfono a hablar cara a cara con la multitud",
-        impacto12: { corajeTemerario: 25, liderazgoDirecto: 20, institucionalidad: -5 },
+        impacto12Axes: { institucionalidad: 40, seguridad: 70 },
         impactoSalud: { coronarias: -8, paranoia: -10, seguridad: -15 },
         impactoCriollo: { mechaSocial: -15 },
         impactoCrisis: {
@@ -274,7 +274,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_olivos_hidrantes_gases",
         texto: "Ordenar a la Guardia Presidencial disparar camiones hidrantes con agua química y gases",
-        impacto12: { ordenPublico: 18, represionEstatal: 20, estadoDeDerecho: -10 },
+        impacto12Axes: { seguridad: 15, institucionalidad: 75 },
         impactoSalud: { seguridad: 15, paranoia: 15 },
         impactoCriollo: { mechaSocial: 12 },
         impactoCrisis: {
@@ -286,7 +286,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_olivos_evacuacion_helicoptero",
         texto: "Evacuar la Quinta de urgencia en el helicóptero presidencial hacia la Casa Rosada",
-        impacto12: { cobardiaEstrategica: 20, supervivencia: 25, ordenPublico: -20 },
+        impacto12Axes: { institucionalidad: 85, seguridad: 60 },
         impactoSalud: { seguridad: 25, paranoia: 25, coronarias: -12 },
         impactoCriollo: { mechaSocial: 20 },
         impactoCrisis: {
@@ -297,7 +297,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_olivos_apagar_luces_silencio",
         texto: "Apagar todas las luces del complejo, no responder y dejar que golpeen las rejas hasta que se cansen",
-        impacto12: { tibieza: 15, pasividad: 20, autoridad: -20 },
+        impacto12Axes: { institucionalidad: 50, seguridad: 50 },
         impactoMacro: { riesgoPais: 110 },
         impactoSalud: { paranoia: 20, coronarias: -6 },
         impactoCriollo: { mechaSocial: 5 },
@@ -319,8 +319,8 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_motin_ceder_aumento_echar_ministro",
         texto: "Ceder al reclamo corporativo, firmar el aumento salarial por decreto y echar al Ministro de Seguridad",
-        impacto12: { corporativismoPolicial: 20, pragmatismo: 15, autoridad: -15 },
-        impactoMacro: { deficitFiscalPct: 0.4 },
+        impacto12Axes: { institucionalidad: 70, estatismo: 35 },
+        impactoMacro: { resultadoFiscalPBI: -0.4 },
         impactoCriollo: { mechaSocial: -8 },
         impactoCrisis: {
           focosDelta: -5,
@@ -330,7 +330,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_motin_desarmar_con_gendarmeria",
         texto: "Mandar a la Gendarmería Nacional a rodear la central y desarmar a los policías amotinados",
-        impacto12: { autoridadCivil: 25, ordenPublico: 10, riesgoGuerraInterna: 25 },
+        impacto12Axes: { institucionalidad: 30, seguridad: 15 },
         impactoSalud: { paranoia: 25, coronarias: -10 },
         impactoCrisis: {
           muertosCivilesDelta: 2,
@@ -341,7 +341,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_motin_exoneracion_masiva",
         texto: "Declarar la exoneración masiva y baja deshonrosa de todos los policías amotinados",
-        impacto12: { purgaInstitucional: 25, republicanismo: 15, ordenPublico: -25 },
+        impacto12Axes: { institucionalidad: 20, seguridad: 40 },
         impactoCriollo: { mechaSocial: 18 },
         impactoCrisis: {
           focosDelta: 6,
@@ -351,7 +351,7 @@ const DILEMAS_SALA_CRISIS = [
       {
         id: "opt_motin_bono_parche_dialogo",
         texto: "Prometer una mesa de diálogo a 72 horas con un bono transitorio en efectivo no remunerativo",
-        impacto12: { parcheCriollo: 20, tibieza: 15, ordenPublico: -5 },
+        impacto12Axes: { institucionalidad: 60, regulacion: 40 },
         impactoMacro: { reservasNetasBCRA: -80 },
         impactoCriollo: { mechaSocial: 2 },
         impactoCrisis: {
@@ -556,7 +556,7 @@ class SistemaSalaCrisis {
           motor.termometroCriollo.mechaSocial = Math.max(10, motor.termometroCriollo.mechaSocial - 15);
         }
         if (motor.macroeconomia) {
-          motor.macroeconomia.deficitFiscalPct += 0.3;
+          motor.macroeconomia.resultadoFiscalPBI = Math.max(-8.0, Math.min(5.0, Math.round((motor.macroeconomia.resultadoFiscalPBI - 0.3) * 10) / 10));
           motor.macroeconomia.reservasNetasBCRA -= 200;
         }
       }

@@ -29,10 +29,11 @@ function generarFeedRedes(dilemaId, opcionElegida, vectorActual) {
   const posts = [];
 
   // 1. Post de X (Twitter) - Picanteada política / Trending Topic
-  if (opcionElegida.impacto12Axes) {
-    const esProMercado = (opcionElegida.impacto12Axes.controle || 50) > 60 || (opcionElegida.impacto12Axes.economia || 50) > 60;
-    const esProEstado = (opcionElegida.impacto12Axes.controle || 50) < 40 || (opcionElegida.impacto12Axes.economia || 50) < 40;
-    const esManoDura = (opcionElegida.impacto12Axes.poder || 50) < 35;
+  if (opcionElegida && opcionElegida.impacto12Axes) {
+    const axes = opcionElegida.impacto12Axes;
+    const esProMercado = (axes.regulacion !== undefined && axes.regulacion > 60) || (axes.estatismo !== undefined && axes.estatismo > 60) || (axes.comercio !== undefined && axes.comercio > 60);
+    const esProEstado = (axes.regulacion !== undefined && axes.regulacion < 40) || (axes.estatismo !== undefined && axes.estatismo < 40) || (axes.comercio !== undefined && axes.comercio < 40);
+    const esManoDura = (axes.seguridad !== undefined && axes.seguridad < 35);
 
     if (esProMercado) {
       posts.push({
@@ -137,4 +138,16 @@ function generarFeedRedes(dilemaId, opcionElegida, vectorActual) {
   });
 
   return posts;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    REDES_CONFIG,
+    generarFeedRedes
+  };
+}
+
+if (typeof window !== 'undefined') {
+  window.REDES_CONFIG = REDES_CONFIG;
+  window.generarFeedRedes = generarFeedRedes;
 }

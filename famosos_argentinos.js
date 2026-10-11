@@ -30,7 +30,7 @@ const FAMOSOS_ARGENTINOS = {
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
       const esLuchaObrero = decTxt.includes("salario") || decTxt.includes("huelga") || decTxt.includes("desalojo") || decTxt.includes("obrero") || (decision?.impactoSectores?.trabajo || 0) > 10;
-      const esRepresionOAjuste = decTxt.includes("reprim") || decTxt.includes("patruller") || decTxt.includes("polic") || decTxt.includes("despido") || decTxt.includes("plan") || decTxt.includes("ajuste") || decTxt.includes("decreto") || decTxt.includes("dnu") || _valEje(decision, 'seguridad') > 65 || _valEje(decision, 'estatismo') > 65;
+      const esRepresionOAjuste = decTxt.includes("reprim") || decTxt.includes("patruller") || decTxt.includes("polic") || decTxt.includes("despido") || decTxt.includes("plan") || decTxt.includes("ajuste") || decTxt.includes("decreto") || decTxt.includes("dnu") || _valEje(decision, 'seguridad') < 35 || _valEje(decision, 'estatismo') > 65;
 
       if (esLuchaObrero && !esRepresionOAjuste) {
         return {
@@ -147,7 +147,7 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('DL', '%23450a0a', '%23f87171'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const censuraOCultura = decTxt.includes("cultura") || decTxt.includes("festival") || decTxt.includes("cine") || decTxt.includes("arte") || (decision?.impactoSectores?.cultura || 0) < 0 || _valEje(decision, 'seguridad') > 70;
+      const censuraOCultura = decTxt.includes("cultura") || decTxt.includes("festival") || decTxt.includes("cine") || decTxt.includes("arte") || (decision?.impactoSectores?.cultura || 0) < 0 || _valEje(decision, 'seguridad') < 35;
       if (censuraOCultura) {
         return {
           tipo: "bardea",
@@ -173,7 +173,7 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('JG', '%2314532d', '%2386efac'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const ajustaPopulares = (decision?.impactoSectores?.movimientosSociales || 0) < -10 || decTxt.includes("corte") || decTxt.includes("piquete") || decTxt.includes("comedor") || _valEje(decision, 'seguridad') > 70;
+      const ajustaPopulares = (decision?.impactoSectores?.movimientosSociales || 0) < -10 || decTxt.includes("corte") || decTxt.includes("piquete") || decTxt.includes("comedor") || _valEje(decision, 'seguridad') < 35;
       if (ajustaPopulares) {
         return {
           tipo: "bardea",
@@ -402,7 +402,7 @@ const FAMOSOS_ARGENTINOS = {
         };
       }
 
-      const esRadicalLibertario = _valEje(decision, 'estatismo') > 65 || _valEje(decision, 'seguridad') > 65 || decTxt.includes("cerr") || decTxt.includes("privat") || decTxt.includes("patruller");
+      const esRadicalLibertario = _valEje(decision, 'estatismo') > 65 || _valEje(decision, 'seguridad') < 35 || decTxt.includes("cerr") || decTxt.includes("privat") || decTxt.includes("patruller");
       const esTibio = _valEje(decision, 'estatismo') < 45 || decTxt.includes("consenso") || decTxt.includes("diálogo");
 
       if (esRadicalLibertario) {
@@ -436,7 +436,7 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('BE', '%23451a03', '%23f59e0b'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const ordenYPolicia = decTxt.includes("corte") || decTxt.includes("desaloj") || decTxt.includes("trapito") || decTxt.includes("polic") || decTxt.includes("patruller") || _valEje(decision, 'seguridad') > 65;
+      const ordenYPolicia = decTxt.includes("corte") || decTxt.includes("desaloj") || decTxt.includes("trapito") || decTxt.includes("polic") || decTxt.includes("patruller") || _valEje(decision, 'seguridad') < 35;
       const masImpuestos = decTxt.includes("inmobiliari") || decTxt.includes("patente") || decTxt.includes("impuesto") || (decision?.impactoSectores?.claseMedia || 0) < -10;
 
       if (ordenYPolicia && !masImpuestos) {
@@ -464,7 +464,7 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('EF', '%230f172a', '%2338bdf8'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esManoDura = _valEje(decision, 'seguridad') > 65 || decTxt.includes("protocolo") || decTxt.includes("corte") || decTxt.includes("patruller") || decTxt.includes("orden");
+      const esManoDura = _valEje(decision, 'seguridad') < 35 || decTxt.includes("protocolo") || decTxt.includes("corte") || decTxt.includes("patruller") || decTxt.includes("orden");
       if (esManoDura) {
         return {
           tipo: "banca",
@@ -490,7 +490,7 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('CF', '%23581c87', '%23e879f9'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const manoDura = _valEje(decision, 'seguridad') > 65 || decTxt.includes("cárcel") || decTxt.includes("patruller") || decTxt.includes("polic") || decTxt.includes("delit");
+      const manoDura = _valEje(decision, 'seguridad') < 35 || decTxt.includes("cárcel") || decTxt.includes("patruller") || decTxt.includes("polic") || decTxt.includes("delit");
       if (manoDura) {
         return {
           tipo: "banca",
@@ -542,7 +542,7 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('ST', '%231e293b', '%23f59e0b'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const aflojaAlPrivado = _valEje(decision, 'estatismo') > 60 || _valEje(decision, 'seguridad') > 65 || decTxt.includes("patruller");
+      const aflojaAlPrivado = _valEje(decision, 'estatismo') > 60 || _valEje(decision, 'seguridad') < 35 || decTxt.includes("patruller");
       if (aflojaAlPrivado) {
         return {
           tipo: "banca",
@@ -563,12 +563,30 @@ const FAMOSOS_ARGENTINOS = {
     nombre: "Marcos Galperin",
     usuario: "@marcos_galperin",
     instagram: "@marcosgalperin",
-    rol: "Fundador de Mercado Libre (Parodia)",
+    rol: "Fundador de Mercado Libre / Unicornio Tecnológico (Parodia)",
     ejeCultural: "empresariado_tech",
     avatar: _svgAvatar('MG', '%231e3a8a', '%23facc15'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esCompetitivo = _valEje(decision, 'regulacion') > 60 || _valEje(decision, 'comercio') > 60 || _valEje(decision, 'estatismo') >= 65 || decTxt.includes("cerr") || decTxt.includes("privatiz");
+      const tocaFintech = decTxt.includes("qr") || decTxt.includes("interoperab") || decTxt.includes("billetera") || decTxt.includes("mercado pago") || decTxt.includes("retenci") || decTxt.includes("arca") || decTxt.includes("afip");
+
+      if (tocaFintech) {
+        if (decTxt.includes("interoperabilidad") || decTxt.includes("obligatoria") || decTxt.includes("estatal") || decTxt.includes("impuesto") || decTxt.includes("congel")) {
+          return {
+            tipo: "bardea",
+            badge: "🐦 Tweet desde Uruguay",
+            texto: "Increíble el afán de los burócratas por destruir lo único que funciona en este país. Regulando el aire y la innovación desde 1945. Suerte con eso."
+          };
+        } else {
+          return {
+            tipo: "banca",
+            badge: "🚀 Innovación & Capital",
+            texto: "El libre comercio y la tecnología siempre terminan ganando contra el atraso corporativo. A seguir democratizando el comercio y los pagos digitales."
+          };
+        }
+      }
+
+      const esCompetitivo = _valEje(decision, 'regulacion') > 60 || _valEje(decision, 'comercio') > 60 || _valEje(decision, 'estatismo') >= 65 || decTxt.includes("cerr") || decTxt.includes("privatiz") || decTxt.includes("desregul");
       if (esCompetitivo) {
         return {
           tipo: "banca",
@@ -837,8 +855,8 @@ const FAMOSOS_ARGENTINOS = {
     avatar: _svgAvatar('CG', '%23991b1b', '%23fca5a5'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const manoDuraPatrulleros = decTxt.includes("patruller") || decTxt.includes("delit") || decTxt.includes("polic") || decTxt.includes("espos") || _valEje(decision, 'seguridad') > 65;
-      const desordenOProtesta = decTxt.includes("colaps") || decTxt.includes("tierra de nadie") || decTxt.includes("concesi") || _valEje(decision, 'seguridad') < 40;
+      const manoDuraPatrulleros = decTxt.includes("patruller") || decTxt.includes("delit") || decTxt.includes("polic") || decTxt.includes("espos") || _valEje(decision, 'seguridad') < 35;
+      const desordenOProtesta = decTxt.includes("colaps") || decTxt.includes("tierra de nadie") || decTxt.includes("concesi") || _valEje(decision, 'seguridad') > 65;
 
       if (manoDuraPatrulleros) {
         return {
@@ -1339,42 +1357,42 @@ const FAMOSOS_ARGENTINOS = {
   // ==========================================
   // EJE CORPORATIVO, PLATAFORMAS & CONSUMO
   // ==========================================
-  marcos_galperin: {
-    nombre: "Marcos Galperin",
-    usuario: "@marcos_galperin",
-    instagram: "@marcosgalperin",
-    rol: "Fundador de Mercado Libre / Unicornio Tecnológico (Parodia)",
-    ejeCultural: "empresariado_tech",
-    avatar: _svgAvatar('MG', '%23facc15', '%231e3a8a'),
+  paolo_rocca: {
+    nombre: "Paolo Rocca",
+    usuario: "@TechintOficial",
+    instagram: "@techint_group",
+    rol: "CEO de Grupo Techint / Acero & Vaca Muerta (Parodia)",
+    ejeCultural: "industria_pesada",
+    avatar: _svgAvatar('PR', '%230f172a', '%2338bdf8'),
     generarReaccion: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const tocaFintech = decTxt.includes("qr") || decTxt.includes("interoperab") || decTxt.includes("billetera") || decTxt.includes("mercado pago") || decTxt.includes("retenci") || decTxt.includes("arca") || decTxt.includes("afip");
+      const tocaGasOIndustria = decTxt.includes("gasoducto") || decTxt.includes("tubo") || decTxt.includes("vaca muerta") || decTxt.includes("obra pública") || decTxt.includes("acero") || decTxt.includes("arancel");
 
-      if (tocaFintech) {
-        if (decTxt.includes("interoperabilidad") || decTxt.includes("obligatoria") || decTxt.includes("estatal") || decTxt.includes("impuesto") || decTxt.includes("congel")) {
+      if (tocaGasOIndustria) {
+        if (decTxt.includes("freno") || decTxt.includes("china") || decTxt.includes("apertura") || decTxt.includes("suspensión")) {
           return {
             tipo: "bardea",
-            badge: "🐦 Tweet desde Uruguay",
-            texto: "Increíble el afán de los burócratas por destruir lo único que funciona en este país. Regulando el aire y la innovación desde 1945. Suerte con eso."
+            badge: "🏭 Advertencia industrial",
+            texto: "La apertura indiscriminada y el ingreso de acero subsidiado de China destruyen la cadena de valor nacional. Vaca Muerta necesita previsibilidad estratégica y caños argentinos."
           };
         } else {
           return {
             tipo: "banca",
-            badge: "🚀 Innovación & Capital",
-            texto: "El libre comercio y la tecnología siempre terminan ganando contra el atraso corporativo. A seguir democratizando el comercio y los pagos digitales."
+            badge: "⚡ Inversión energética",
+            texto: "La infraestructura energética y los gasoductos son política de Estado. Donde hay caños y desarrollo industrial, hay competitividad y divisas para el país."
           };
         }
-      } else if (_valEje(decision, 'estatismo') > 65 || decTxt.includes("privatiz") || decTxt.includes("desregul")) {
+      } else if (_valEje(decision, 'comercio') < 40 || decTxt.includes("industria") || decTxt.includes("obra pública")) {
         return {
           tipo: "banca",
-          badge: "🚀 Reglas claras",
-          texto: "Menos burocracia, más competencia y reglas claras de mercado. Es el único camino para salir de la decadencia secular de Argentina."
+          badge: "🏗️ Respaldo corporativo",
+          texto: "Priorizar la producción y el empleo industrial calificado es la base de cualquier país soberano que pretenda integrarse con fuerza al mundo."
         };
       } else {
         return {
-          tipo: "bardea",
-          badge: "🐦 Reflexión liberal",
-          texto: "La adicción fiscal y regulatoria de la política argentina es incurable. Cuando el mundo avanza hacia la inteligencia artificial acá discuten cómo cazar en el zoológico."
+          tipo: "ironico",
+          badge: "👔 Silencio de cúpula",
+          texto: "Miramos con atención las señales macroeconómicas. Las inversiones de capital intensivo requieren seguridad jurídica a treinta años, no parches de coyuntura."
         };
       }
     }

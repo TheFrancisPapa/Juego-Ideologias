@@ -14,7 +14,24 @@ let _roscaFederalModule = {};
 let _dinastiasModule = {};
 let _ritmoSemanalModule = {};
 let _legislativoModule = {};
+let _doceEjesModule = {};
+let _dilemasModule = {};
+let _ideologiasModule = {};
+let _sectoresModule = {};
+
 if (typeof require !== 'undefined') {
+  try {
+    _doceEjesModule = require('./doce_ejes.js');
+  } catch (e) {}
+  try {
+    _dilemasModule = require('./dilemas.js');
+  } catch (e) {}
+  try {
+    _ideologiasModule = require('./ideologias.js');
+  } catch (e) {}
+  try {
+    _sectoresModule = require('./sectores.js');
+  } catch (e) {}
   try {
     _saludModule = require('./salud_supervivencia.js');
   } catch (e) {}
@@ -64,6 +81,14 @@ if (typeof require !== 'undefined') {
     _ritmoSemanalModule = require('./ritmo_cadena_semanal.js');
   } catch (e) {}
 }
+
+const DOCE_EJES = (typeof window !== 'undefined' && window.DOCE_EJES) || _doceEjesModule.DOCE_EJES || {};
+const PERIODOS_ARGENTINOS = (typeof window !== 'undefined' && window.PERIODOS_ARGENTINOS) || _doceEjesModule.PERIODOS_ARGENTINOS || [];
+const LIDERES_ARGENTINOS = (typeof window !== 'undefined' && window.LIDERES_ARGENTINOS) || _doceEjesModule.LIDERES_ARGENTINOS || [];
+const DILEMAS_DATA = (typeof window !== 'undefined' && window.DILEMAS_DATA) || _dilemasModule.DILEMAS_DATA || {};
+const IDEOLOGIAS_DB = (typeof window !== 'undefined' && window.IDEOLOGIAS_DB) || _ideologiasModule.IDEOLOGIAS_DB || [];
+const SECTORES_ARG = (typeof window !== 'undefined' && window.SECTORES_ARG) || _sectoresModule.SECTORES_ARG || {};
+
 
 const ARQUETIPOS_EDAD = (typeof window !== 'undefined' && window.ARQUETIPOS_EDAD) || _saludModule.ARQUETIPOS_EDAD || {};
 const CATALOGO_MUERTES = (typeof window !== 'undefined' && window.CATALOGO_MUERTES) || _saludModule.CATALOGO_MUERTES || {};
@@ -909,8 +934,9 @@ class MotorJuego {
   // =========================================================================
   // ÁRBOL DE DESBLOQUEO LEGAL Y POLÍTICO (HITOS POR EDAD)
   // =========================================================================
-  obtenerTramoLegalActual(edad = this.edad) {
-    const edadNum = Number(edad !== undefined ? edad : (this.edad || 35));
+  obtenerTramoLegalActual(edad) {
+    const edadEfectiva = edad !== undefined ? edad : (this.saludSupervivencia?.edad || 35);
+    const edadNum = Number(edadEfectiva);
     let tramoKey = "cuna_jardin";
     if (edadNum >= 70) tramoKey = "regimen_patriarca_domiciliaria";
     else if (edadNum >= 30) tramoKey = "sillon_rivadavia_senado";
@@ -922,13 +948,15 @@ class MotorJuego {
     return TRAMOS_DESBLOQUEO_LEGAL[tramoKey] || null;
   }
 
-  obtenerNotificacionEstadoCivico(edad = this.edad) {
+  obtenerNotificacionEstadoCivico(edad) {
+    const edadEfectiva = edad !== undefined ? edad : (this.saludSupervivencia?.edad || 35);
+    const edadNum = Number(edadEfectiva);
     const personaje = this.fichaMatricular || {
-      nombre: this.candidato || "Carlos 'El Vasco' Etchegoyen",
-      edad: Number(edad !== undefined ? edad : (this.edad || 35))
+      nombre: this.saludSupervivencia?.nombreMandatario || "Carlos 'El Vasco' Etchegoyen",
+      edad: edadNum
     };
     const causas = this.expedienteJudicial ? this.expedienteJudicial.causasAbiertas : [];
-    return generarNotificacionEstadoCivico(personaje, edad, causas);
+    return generarNotificacionEstadoCivico(personaje, edadNum, causas);
   }
 
   obtenerDilemasHitosLegales() {
@@ -1160,7 +1188,7 @@ class MotorJuego {
       }
       const dRes = m.reservasNetasBCRA !== undefined ? m.reservasNetasBCRA : m.reservas;
       if (dRes !== undefined) {
-        this.macroeconomia.reservasNetasBCRA += dRes;
+        this.macroeconomia.reservasNetasBCRA = Math.max(-15000, Math.min(60000, this.macroeconomia.reservasNetasBCRA + dRes));
       }
       const dFisc = m.resultadoFiscalPBI !== undefined ? m.resultadoFiscalPBI : m.fiscal;
       if (dFisc !== undefined) {
@@ -1189,7 +1217,7 @@ class MotorJuego {
       } else if (m.riesgoPais && m.riesgoPais < 0) {
         this.termometroCriollo.dolarBlue = Math.max(950, this.termometroCriollo.dolarBlue + Math.round(m.riesgoPais * 0.2));
       }
-      if (m.reservasNetasBCRA !== undefined) {
+      if (m.reservasNetasBCRA !== undefined && (!opcion.impactoCriollo || opcion.impactoCriollo.reservasBCRA === undefined)) {
         this.termometroCriollo.reservasBCRA += m.reservasNetasBCRA;
       }
       const dInf = m.inflacionMensual !== undefined ? m.inflacionMensual : 0;
@@ -1206,6 +1234,7 @@ class MotorJuego {
     }
 
     // Clamping de variables del Termómetro Criollo
+    this.termometroCriollo.reservasBCRA = Math.max(-5000, Math.min(60000, this.termometroCriollo.reservasBCRA));
     this.termometroCriollo.mechaSocial = Math.max(0, Math.min(100, this.termometroCriollo.mechaSocial));
     this.termometroCriollo.roscaGobernadores = Math.max(0, Math.min(100, this.termometroCriollo.roscaGobernadores));
     this.termometroCriollo.humorAfaScaloneta = Math.max(0, Math.min(100, this.termometroCriollo.humorAfaScaloneta));
@@ -1726,7 +1755,13 @@ if (typeof module !== 'undefined' && module.exports) {
     NORMAS_EN_TRAMITE_INICIALES,
     ACCIONES_NORMATIVAS,
     DILEMAS_LEGISLATIVOS,
-    SistemaLegislativo
+    SistemaLegislativo,
+    DOCE_EJES,
+    PERIODOS_ARGENTINOS,
+    LIDERES_ARGENTINOS,
+    DILEMAS_DATA,
+    IDEOLOGIAS_DB,
+    SECTORES_ARG
   };
 }
 

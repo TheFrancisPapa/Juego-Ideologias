@@ -633,3 +633,13 @@ if (typeof module !== 'undefined' && module.exports) {
     SistemaComodoroPy
   };
 }
+
+if (typeof window !== 'undefined') {
+  window.FASES_PROCESALES = FASES_PROCESALES;
+  window.FAUNA_COMODORO_PY = FAUNA_COMODORO_PY;
+  window.DILEMAS_JUDICIALES = DILEMAS_JUDICIALES;
+  window.ESTRATEGIAS_DESAFUERO = ESTRATEGIAS_DESAFUERO;
+  window.ACCIONES_EZEIZA = ACCIONES_EZEIZA;
+  window.DESTINOS_JUDICIALES = DESTINOS_JUDICIALES;
+  window.SistemaComodoroPy = SistemaComodoroPy;
+}

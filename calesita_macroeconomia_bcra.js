@@ -549,7 +549,8 @@ class SistemaMacroCalesitaBCRA {
    * Recalcula la brecha cambiaria y las cotizaciones relativas.
    */
   actualizarCotizaciones() {
-    this.brechaCambiaria = Math.round(((this.dolarBlue - this.dolarOficial) / this.dolarOficial) * 100);
+    const oficialSeguro = Math.max(1, this.dolarOficial || 1000);
+    this.brechaCambiaria = Math.round(((this.dolarBlue - oficialSeguro) / oficialSeguro) * 100);
     this.dolarMep = Math.round(this.dolarBlue * 0.94);
     
     // Sincronizar zoológico
@@ -821,7 +822,7 @@ class SistemaMacroCalesitaBCRA {
     this.faseCalesita = 4;
     const saltoOficialPct = 0.75; // +75% de devaluación en una rueda
     this.dolarOficial = Math.round(this.dolarOficial * (1 + saltoOficialPct));
-    this.dolarBlue = Math.round(this.dolarOficial * 1.22); // La brecha se achica al 22% por salto oficial
+    this.dolarBlue = Math.max(this.dolarBlue, Math.round(this.dolarOficial * 1.22)); // La brecha se achica por salto oficial sin bajar el paralelo
     this.inflacionMensual = Math.min(35.0, this.inflacionMensual + 14.5);
     this.tcrm = 125; // Salto de competitividad cambiaria
 

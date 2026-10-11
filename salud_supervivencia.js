@@ -25,6 +25,18 @@ const ARQUETIPOS_EDAD = {
     avatarIcono: "fa-solid fa-briefcase",
     badge: "Maduro de Carrera • 55 años"
   },
+  pibe_disruptivo: {
+    id: "pibe_disruptivo",
+    nombre: "El Pibe Disruptivo (Desde la Cuna / Juventud)",
+    edadInicial: 0,
+    descripcion: "Nacido en una clínica u hospital argentino. Atraviesa infancia, club barrial y militancia antes de pisar un comité.",
+    coronarias: 100,
+    paranoia: 5,
+    seguridad: 40,
+    roscaInicialMod: -15,
+    avatarIcono: "fa-solid fa-baby",
+    badge: "Desde la Cuna • 0 años"
+  },
   caudillo_historico: {
     id: "caudillo_historico",
     nombre: "El Caudillo Histórico (68 Años)",
@@ -795,8 +807,8 @@ function evaluarMuertePolitica(saludObj, motor) {
   const blue = motor?.termometroCriollo?.dolarBlue || 1280;
 
   // 1. CONDICIÓN DE PATRIARCA INMORTAL (EL FINAL MENEM)
-  // Superar los 75 años habiendo ganado o completado mandatos sin estallido social
-  if (edad >= 78 && mecha < 60 && coronarias > 20) {
+  // Superar los 78 años habiendo completado su trayectoria
+  if (edad >= 78 && coronarias > 0) {
     return CATALOGO_MUERTES.patriarca_inmortal;
   }
 
@@ -860,10 +872,13 @@ class SistemaSaludSupervivencia {
     this.diasEnGestionSemana = 0; // Acumulador de días hacia el próximo año biológico
 
     // Las 4 Barras Fisiológicas (0 a 100)
-    this.coronarias = config.coronarias !== undefined ? config.coronarias : arq.coronarias;
-    this.digestivo = config.digestivo !== undefined ? config.digestivo : (this.arquetipo === 'pibe_maravilla' ? 88 : (this.arquetipo === 'maduro_carrera' ? 68 : 50));
+    const esInfante = this.edad < 15;
+    const esJoven = this.arquetipo === 'pibe_maravilla' || this.arquetipo === 'pibe_disruptivo';
+
+    this.coronarias = config.coronarias !== undefined ? config.coronarias : (esInfante ? 100 : arq.coronarias);
+    this.digestivo = config.digestivo !== undefined ? config.digestivo : (esInfante ? 100 : (esJoven ? 88 : (this.arquetipo === 'maduro_carrera' ? 68 : 50)));
     this.cabeza = config.cabeza !== undefined ? config.cabeza : (100 - (config.paranoia !== undefined ? config.paranoia : arq.paranoia));
-    this.vigorPublico = config.vigorPublico !== undefined ? config.vigorPublico : (this.arquetipo === 'pibe_maravilla' ? 95 : (this.arquetipo === 'maduro_carrera' ? 70 : 45));
+    this.vigorPublico = config.vigorPublico !== undefined ? config.vigorPublico : (esInfante ? 100 : (esJoven ? 95 : (this.arquetipo === 'maduro_carrera' ? 70 : 45)));
 
     // Seguridad & Custodia
     this.seguridad = config.seguridad !== undefined ? config.seguridad : arq.seguridad;
@@ -871,12 +886,22 @@ class SistemaSaludSupervivencia {
     // Médico de cabecera UMP
     this.medicoTipo = config.medicoTipo || 'cardenal_medicina';
 
-    // Signos y variables clínicas
-    this.pesoKg = config.pesoKg || (this.arquetipo === 'pibe_maravilla' ? 78 : (this.arquetipo === 'maduro_carrera' ? 94 : 88));
+    // Signos y variables clínicas calibradas
+    if (this.edad === 0) {
+      this.pesoKg = config.pesoKg || 3.8;
+      this.dosisClonazepamMg = config.dosisClonazepamMg || 0;
+      this.obstruccionCoronaria = config.obstruccionCoronaria || 0;
+    } else if (this.edad < 15) {
+      this.pesoKg = config.pesoKg || 42;
+      this.dosisClonazepamMg = config.dosisClonazepamMg || 0;
+      this.obstruccionCoronaria = config.obstruccionCoronaria || 5;
+    } else {
+      this.pesoKg = config.pesoKg || (esJoven ? 76 : (this.arquetipo === 'maduro_carrera' ? 94 : 88));
+      this.dosisClonazepamMg = config.dosisClonazepamMg || (esJoven ? 0.5 : (this.arquetipo === 'maduro_carrera' ? 2.0 : 3.0));
+      this.obstruccionCoronaria = config.obstruccionCoronaria || (esJoven ? 15 : (this.arquetipo === 'maduro_carrera' ? 65 : 82));
+    }
     this.pesoInicial = this.pesoKg;
-    this.dosisClonazepamMg = config.dosisClonazepamMg || (this.arquetipo === 'pibe_maravilla' ? 0.5 : (this.arquetipo === 'maduro_carrera' ? 2.0 : 3.0));
-    this.horasSueno = config.horasSueno || 4.2;
-    this.obstruccionCoronaria = config.obstruccionCoronaria || (this.arquetipo === 'pibe_maravilla' ? 20 : (this.arquetipo === 'maduro_carrera' ? 65 : 82));
+    this.horasSueno = config.horasSueno || (esInfante ? 9.5 : 4.2);
     this.stentColocado = config.stentColocado || false;
 
     // Estado institucional y biológico
@@ -1260,7 +1285,13 @@ if (typeof module !== 'undefined' && module.exports) {
     SistemaSaludSupervivencia,
     evaluarMuertePolitica
   };
-} else if (typeof window !== 'undefined') {
+}
+
+if (typeof window !== 'undefined') {
+  window.ARQUETIPOS_EDAD = ARQUETIPOS_EDAD;
+  window.CATALOGO_MUERTES = CATALOGO_MUERTES;
+  window.SUCESORES_PRESIDENCIALES = SUCESORES_PRESIDENCIALES;
+  window.DILEMAS_SALUD = DILEMAS_SALUD;
   window.COEFICIENTE_OLIVOS = COEFICIENTE_OLIVOS;
   window.BARRAS_FISIOLOGICAS = BARRAS_FISIOLOGICAS;
   window.FASES_BIOLOGICAS_DIRIGENTE = FASES_BIOLOGICAS_DIRIGENTE;

@@ -801,3 +801,14 @@ if (typeof module !== 'undefined' && module.exports) {
     SistemaInteligenciaSIDE
   };
 }
+
+if (typeof window !== 'undefined') {
+  window.ESTRUCTURA_CASA_SIDE = ESTRUCTURA_CASA_SIDE;
+  window.USOS_FONDOS_RESERVADOS = USOS_FONDOS_RESERVADOS;
+  window.OPERACIONES_NEGRAS = OPERACIONES_NEGRAS;
+  window.EVENTOS_BOOMERANG_SIDE = EVENTOS_BOOMERANG_SIDE;
+  window.DILEMAS_INTELIGENCIA = DILEMAS_INTELIGENCIA;
+  window.ESTRATEGIAS_BICAMERAL = ESTRATEGIAS_BICAMERAL;
+  window.DESTINOS_INTELIGENCIA_FINAL = DESTINOS_INTELIGENCIA_FINAL;
+  window.SistemaInteligenciaSIDE = SistemaInteligenciaSIDE;
+}

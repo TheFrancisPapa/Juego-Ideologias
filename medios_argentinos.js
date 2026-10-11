@@ -27,7 +27,7 @@ const MEDIOS_ARGENTINOS = {
       const tocaFutbol = decTxt.includes("sad") || decTxt.includes("fútbol") || decTxt.includes("club") || decTxt.includes("afa");
       const esPiquete9DeJulio = decTxt.includes("piquete") || (decTxt.includes("9 de julio") && decTxt.includes("repres"));
       const esCongelamientoBono = decTxt.includes("congelamiento de tarifas") || decTxt.includes("billeteras virtuales");
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul");
 
       if (tocaFutbol) {
         return {
@@ -149,7 +149,7 @@ const MEDIOS_ARGENTINOS = {
       const decTxt = (decision?.texto || "").toLowerCase();
       const esPiquete9DeJulio = decTxt.includes("piquete") || (decTxt.includes("9 de julio") && decTxt.includes("repres"));
       const esCongelamientoBono = decTxt.includes("congelamiento de tarifas") || decTxt.includes("billeteras virtuales");
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul") || decTxt.includes("patruller");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul") || decTxt.includes("patruller");
 
       if (esPiquete9DeJulio) {
         return {
@@ -250,7 +250,7 @@ const MEDIOS_ARGENTINOS = {
       const decTxt = (decision?.texto || "").toLowerCase();
       const esPiquete9DeJulio = decTxt.includes("piquete") || (decTxt.includes("9 de julio") && decTxt.includes("repres"));
       const esCongelamientoBono = decTxt.includes("congelamiento de tarifas") || decTxt.includes("billeteras virtuales");
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul") || decTxt.includes("patruller");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul") || decTxt.includes("patruller");
 
       if (esPiquete9DeJulio) {
         return {
@@ -349,7 +349,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "periodismo_servicio",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta");
 
       if (esAjusteOManoDura) {
         return {
@@ -378,7 +378,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "sensacionalismo_rosca",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste");
 
       if (esAjusteOManoDura) {
         return {
@@ -410,7 +410,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "indignacion_neura",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("corte") || decTxt.includes("polic") || decTxt.includes("patruller");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("corte") || decTxt.includes("polic") || decTxt.includes("patruller");
 
       if (esAjusteOManoDura) {
         return {
@@ -439,7 +439,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "militancia_digital",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'estatismo') > 60 || _valEjeMedio(decision, 'seguridad') > 60 || decTxt.includes("privat") || decTxt.includes("cerr") || decTxt.includes("patruller");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'estatismo') > 60 || _valEjeMedio(decision, 'seguridad') < 40 || decTxt.includes("privat") || decTxt.includes("cerr") || decTxt.includes("patruller");
 
       if (esAjusteOManoDura) {
         return {
@@ -468,7 +468,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "humor_politico",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'estatismo') > 60 || _valEjeMedio(decision, 'seguridad') > 60 || decTxt.includes("ajuste") || decTxt.includes("cine");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'estatismo') > 60 || _valEjeMedio(decision, 'seguridad') < 40 || decTxt.includes("ajuste") || decTxt.includes("cine");
 
       if (decTxt.includes("apagón") || decTxt.includes("edesur") || decTxt.includes("vela") || decTxt.includes("cuadrilla") || (decTxt.includes("calor") && decTxt.includes("tarifa"))) {
         return {
@@ -511,7 +511,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "ironia_posmoderna",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'estatismo') > 60 || _valEjeMedio(decision, 'seguridad') > 60 || decTxt.includes("ajuste");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'estatismo') > 60 || _valEjeMedio(decision, 'seguridad') < 40 || decTxt.includes("ajuste");
 
       if (esAjusteOManoDura) {
         return {
@@ -676,7 +676,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "alarma_republicana",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || decTxt.includes("corte") || decTxt.includes("piquet");
+      const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || decTxt.includes("corte") || decTxt.includes("piquet");
 
       if (esAjusteOManoDura) {
         return {
@@ -705,7 +705,7 @@ const MEDIOS_ARGENTINOS = {
     sesgo: "indignacion_callejera",
     generarGraph: function(decision, flags, vector) {
       const decTxt = (decision?.texto || "").toLowerCase();
-      const esManoDura = _valEjeMedio(decision, 'seguridad') > 60 || decTxt.includes("polic") || decTxt.includes("orden");
+      const esManoDura = _valEjeMedio(decision, 'seguridad') < 40 || decTxt.includes("polic") || decTxt.includes("orden");
 
       if (esManoDura) {
         return {
@@ -788,7 +788,7 @@ const MEDIOS_ARGENTINOS = {
 function generarMuroDeMedios(decision, flags, vector) {
   decision = decision || { texto: "" };
   const decTxt = (decision.texto || "").toLowerCase();
-  const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') > 60 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul") || decTxt.includes("patruller");
+  const esAjusteOManoDura = _valEjeMedio(decision, 'seguridad') < 40 || _valEjeMedio(decision, 'estatismo') > 60 || decTxt.includes("reprim") || decTxt.includes("corte") || decTxt.includes("ajuste") || decTxt.includes("nafta") || decTxt.includes("desregul") || decTxt.includes("patruller");
   const tocaFutbol = decTxt.includes("sad") || decTxt.includes("club") || decTxt.includes("fútbol") || decTxt.includes("afa") || decTxt.includes("asociación");
 
   // 1. Canal Oficialista / Afín
@@ -853,7 +853,12 @@ function generarMuroDeMedios(decision, flags, vector) {
   return resultado;
 }
 
-// Exportación compatible para Node.js
+// Exportación compatible para Node.js y Navegador
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { MEDIOS_ARGENTINOS, generarMuroDeMedios };
+}
+
+if (typeof window !== 'undefined') {
+  window.MEDIOS_ARGENTINOS = MEDIOS_ARGENTINOS;
+  window.generarMuroDeMedios = generarMuroDeMedios;
 }

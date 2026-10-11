@@ -797,14 +797,14 @@ const DILEMAS_DATA = {
         {
           id: "priorizar_shows_turismo",
           texto: "Priorizar el negocio cultural y turismo: Avalar las fechas, desestimar los reclamos ambientales y declarar los recitales de interés turístico nacional.",
-          impacto12Axes: { regulacion: 85, estatismo: 75, comercio: 80, ambiente: 80 },
+          impacto12Axes: { regulacion: 85, estatismo: 75, comercio: 80, ambiente: 20 },
           impactoSectores: { productivo: 30, claseMedia: -20, trabajo: 10, estadoCiencia: -5, seguridadJusticia: -20 },
           impactoMacro: { reservasNetasBCRA: +50, riesgoPais: -10 }
         },
         {
           id: "clausura_relocalizacion_shows",
           texto: "Clausura preventiva o relocalización forzada a la periferia: Prohibir shows en estadios ubicados en zonas densamente pobladas y obligar a trasladarlos a autódromos o descampados del conurbano.",
-          impacto12Axes: { regulacion: 15, estatismo: 30, comercio: 20, ambiente: 20 },
+          impacto12Axes: { regulacion: 15, estatismo: 30, comercio: 20, ambiente: 85 },
           impactoSectores: { productivo: -30, claseMedia: 20, trabajo: -15, estadoCiencia: 10, seguridadJusticia: 15 },
           impactoMacro: { reservasNetasBCRA: -40, riesgoPais: +20 }
         },
@@ -1272,7 +1272,7 @@ const DILEMAS_DATA = {
         {
           id: "arancel_extranjeros_auditoria",
           texto: "Arancelamiento a extranjeros y estudiantes crónicos + Auditoría integral: Decretar que extranjeros sin residencia permanente paguen cuota mensual y cobrar tasa por rematriculación a quienes aprueben menos de 2 materias por año.",
-          impacto12Axes: { estatismo: 85, regulacion: 85, inmigracion: 80, valores: 70 },
+          impacto12Axes: { estatismo: 85, regulacion: 85, inmigracion: 15, valores: 70 },
           impactoSectores: { estadoCiencia: -45, claseMedia: -25, trabajo: -20, productivo: 25, seguridadJusticia: 20, frenteExterno: 15 },
           impactoMacro: { resultadoFiscalPBI: +0.3, riesgoPais: -30 }
         },
@@ -1444,14 +1444,14 @@ const DILEMAS_DATA = {
         {
           id: "derogar_ley_tierras_dnu",
           texto: "Derogar restricciones de la Ley de Tierras por DNU y autorizar la venta en la Patagonia a cambio de 500 millones de dólares de inversión.",
-          impacto12Axes: { geopolitica: 85, comercio: 90, estatismo: 85, ambiente: 75, defensa: 30 },
+          impacto12Axes: { geopolitica: 15, comercio: 90, estatismo: 85, ambiente: 20, defensa: 30 },
           impactoSectores: { frenteExterno: 35, productivo: 30, trabajo: -15, claseMedia: -10, estadoCiencia: -20, seguridadJusticia: -15 },
           impactoMacro: { reservasNetasBCRA: +500, riesgoPais: -80, resultadoFiscalPBI: +0.1 }
         },
         {
           id: "rechazar_expropiar_parque",
           texto: "Rechazar la oferta y expropiar las tierras adyacentes para Parque Nacional: Denegar la autorización y blindar toda la cuenca hídrica bajo protección estricta del Estado.",
-          impacto12Axes: { geopolitica: 15, comercio: 15, estatismo: 15, ambiente: 10, defensa: 85 },
+          impacto12Axes: { geopolitica: 85, comercio: 15, estatismo: 15, ambiente: 90, defensa: 85 },
           impactoSectores: { frenteExterno: -35, productivo: -25, trabajo: 15, claseMedia: 10, estadoCiencia: 30, seguridadJusticia: 15 },
           impactoMacro: { reservasNetasBCRA: -100, riesgoPais: +90, resultadoFiscalPBI: -0.1 }
         },
