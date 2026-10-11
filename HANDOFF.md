@@ -83,7 +83,10 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
    - Clase `.scanlines` CRT retro para transmisiones de Crónica TV.
    - Sellos con tinta `.sello-oficial`, `.sello-dnu`, `.sello-aprobado` para trámites del Boletín Oficial.
 
-5. **Prueba Automatizada #126:**
+5. **Limpieza de Interfaz (Pantalla de Bienvenida):**
+   - Removido el botón de desarrollo `"Ver Cuadro Constitucional: Diputados, Senadores y Presidente (Arts. 48, 54, 55, 56 y 89 CN)"` de `screen-welcome`, despejando la pantalla inicial de accesos puramente teóricos.
+
+6. **Prueba Automatizada #126:**
    - Agregada en `validar_sistema.js` validando la clase `AudioCriollo` y sus métodos sin fallos en entorno headless.
 
 ---
