@@ -232,6 +232,11 @@ const OTROS_DEPORTES_ARGENTINOS = {
   }
 };
 
+if (typeof window !== 'undefined') {
+  window.CLASICOS_ARGENTINOS = CLASICOS_ARGENTINOS;
+  window.OTROS_DEPORTES_ARGENTINOS = OTROS_DEPORTES_ARGENTINOS;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { CLASICOS_ARGENTINOS, OTROS_DEPORTES_ARGENTINOS };
 }

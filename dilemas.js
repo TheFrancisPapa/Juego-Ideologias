@@ -1842,6 +1842,10 @@ const DILEMAS_DATA = {
   ]
 };
 
+if (typeof window !== 'undefined') {
+  window.DILEMAS_DATA = DILEMAS_DATA;
+}
+
 // Exportar para entornos Node
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { DILEMAS_DATA };

@@ -64,6 +64,10 @@ const SECTORES_ARG = {
   }
 };
 
+if (typeof window !== 'undefined') {
+  window.SECTORES_ARG = SECTORES_ARG;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { SECTORES_ARG };
 }

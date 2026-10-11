@@ -359,3 +359,11 @@ const GLOSARIO_DEPORTES = {
 if (typeof GLOSARIO !== 'undefined') {
   Object.assign(GLOSARIO, GLOSARIO_DEPORTES);
 }
+
+if (typeof window !== 'undefined') {
+  window.GLOSARIO_DEPORTES = GLOSARIO_DEPORTES;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { GLOSARIO_DEPORTES };
+}

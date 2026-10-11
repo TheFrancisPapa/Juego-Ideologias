@@ -74,3 +74,11 @@ const GLOSARIO_MEDIOS = {
 if (typeof GLOSARIO !== 'undefined') {
   Object.assign(GLOSARIO, GLOSARIO_MEDIOS);
 }
+
+if (typeof window !== 'undefined') {
+  window.GLOSARIO_MEDIOS = GLOSARIO_MEDIOS;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { GLOSARIO_MEDIOS };
+}

@@ -660,6 +660,11 @@ function obtenerVocesDeLaCalle(dilemaId, opcionElegida, flags, vector) {
   return resultado;
 }
 
+if (typeof window !== 'undefined') {
+  window.CIUDADANOS_ARGENTINOS = CIUDADANOS_ARGENTINOS;
+  window.obtenerVocesDeLaCalle = obtenerVocesDeLaCalle;
+}
+
 // Exportación para entornos Node.js
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { CIUDADANOS_ARGENTINOS, obtenerVocesDeLaCalle };

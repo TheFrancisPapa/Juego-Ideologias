@@ -89,9 +89,19 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
 6. **Prueba Automatizada #126:**
    - Agregada en `validar_sistema.js` validando la clase `AudioCriollo` y sus métodos sin fallos en entorno headless.
 
+## 5. 🛠️ Corrección Crítica: Activación de los 3 Botones de Inicio de Partida
+En la última revisión se detectó que al presionar cualquiera de los 3 botones de inicio en la pantalla de bienvenida (*Nacer y Crecer [0 Años]*, *Saltar al Barro Político*, *Tomar el Mando Ejecutivo [Art. 89 CN]*), el juego no avanzaba debido a un fallo silencioso en el navegador:
+1. **Causa Raíz:** Módulos de datos fundamentales (`sectores.js`, `doce_ejes.js`, `ideologias.js`, `dilemas.js`, `clasicos_futbol_argentino.js`, `famosos_argentinos.js`, `voz_de_la_calle.js`, `glosario.js`) solo exportaban mediante `module.exports` para Node.js, pero no asignaban sus constantes al objeto global `window` en el navegador.
+2. **Consecuencia:** Al invocar `prepararPantallaJuego()`, la función `renderizarSectores()` intentaba acceder a `SECTORES_ARG`, arrojando `ReferenceError: SECTORES_ARG is not defined` antes de ocultar `screen-welcome` y mostrar `screen-game`. Además, `motor.js` quedaba con ejes e ideologías vacíos en el browser.
+3. **Solución Implementada:**
+   - Se incorporó la doble exportación universal en todos los módulos (`if (typeof window !== 'undefined') { window.CONSTANTE = CONSTANTE; }`).
+   - Se blindó `renderizarSectores()` y las lecturas de `SECTORES_ARG` en `index.html` con comprobaciones defensivas de fallback.
+   - Se exportó `activarListenersGlosario` y se securizó su invocación ante entornos sin soporte directo de eventos.
+   - Se verificó con simulación headless DOM y la suite completa de 126 pruebas. Los 3 botones inician la partida de manera impecable e instantánea.
+
 ---
 
-## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
+## 6. ⚠️ Reglas Técnicas y Contratos Inmutables
 Para preservar la estabilidad del proyecto en futuros sprints:
 1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **126 de 126 pruebas PASADAS**.
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.

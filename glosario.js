@@ -336,26 +336,35 @@ function activarListenersGlosario() {
   // Cerrar tooltip al tocar en cualquier otra parte de la pantalla (solo registrar una vez)
   if (typeof window !== 'undefined' && !window._glosarioDocumentListenersActivos) {
     window._glosarioDocumentListenersActivos = true;
-    document.addEventListener('click', (e) => {
-      const tt = document.getElementById('glossary-tooltip');
-      if (!tt) return;
-      if (!e.target.closest('.glosario-termino') && !e.target.closest('#glossary-tooltip')) {
-        tt.classList.add('hidden');
-        tt.removeAttribute('data-active-termino');
-      }
-    });
-    document.addEventListener('touchstart', (e) => {
-      const tt = document.getElementById('glossary-tooltip');
-      if (!tt) return;
-      if (!e.target.closest('.glosario-termino') && !e.target.closest('#glossary-tooltip')) {
-        tt.classList.add('hidden');
-        tt.removeAttribute('data-active-termino');
-      }
-    }, { passive: true });
+    if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
+      document.addEventListener('click', (e) => {
+        const tt = document.getElementById('glossary-tooltip');
+        if (!tt) return;
+        if (!e.target.closest('.glosario-termino') && !e.target.closest('#glossary-tooltip')) {
+          tt.classList.add('hidden');
+          tt.removeAttribute('data-active-termino');
+        }
+      });
+      document.addEventListener('touchstart', (e) => {
+        const tt = document.getElementById('glossary-tooltip');
+        if (!tt) return;
+        if (!e.target.closest('.glosario-termino') && !e.target.closest('#glossary-tooltip')) {
+          tt.classList.add('hidden');
+          tt.removeAttribute('data-active-termino');
+        }
+      }, { passive: true });
+    }
   }
+}
+
+if (typeof window !== 'undefined') {
+  window.GLOSARIO = GLOSARIO;
+  window.procesarTextoConGlosario = procesarTextoConGlosario;
+  window.escaparRegExp = escaparRegExp;
+  window.activarListenersGlosario = activarListenersGlosario;
 }
 
 // Exportar para entornos Node si aplica
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { GLOSARIO, procesarTextoConGlosario, escaparRegExp };
+  module.exports = { GLOSARIO, procesarTextoConGlosario, escaparRegExp, activarListenersGlosario };
 }

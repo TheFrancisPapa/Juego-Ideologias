@@ -5673,10 +5673,11 @@
 
     function renderizarSectores() {
       const grid = document.getElementById('sectors-grid');
+      if (!grid) return;
       grid.innerHTML = '';
-
-      for (const key in SECTORES_ARG) {
-        const sec = SECTORES_ARG[key];
+      const sectores = (typeof SECTORES_ARG !== 'undefined' ? SECTORES_ARG : (typeof window !== 'undefined' ? window.SECTORES_ARG : null)) || {};
+      for (const key in sectores) {
+        const sec = sectores[key];
         const val = motorJuego.aprobacionSectores[key];
 
         const card = document.createElement('div');
@@ -6097,7 +6098,11 @@
         optsContainer.appendChild(btn);
       });
 
-      activarListenersGlosario();
+      if (typeof activarListenersGlosario === 'function') {
+        activarListenersGlosario();
+      } else if (typeof window !== 'undefined' && typeof window.activarListenersGlosario === 'function') {
+        window.activarListenersGlosario();
+      }
       if (_brujulaEnVivoAbierta) renderizarBrujulaEnVivo();
     }
 
@@ -6447,8 +6452,9 @@
       diffBox.innerHTML = '';
 
       if (snapshotPrevio && snapshotPrevio.sectores) {
-        for (const key in SECTORES_ARG) {
-          const sec = SECTORES_ARG[key];
+        const sectores = (typeof SECTORES_ARG !== 'undefined' ? SECTORES_ARG : (typeof window !== 'undefined' ? window.SECTORES_ARG : null)) || {};
+        for (const key in sectores) {
+          const sec = sectores[key];
           const prev = snapshotPrevio.sectores[key];
           const act = motorJuego.aprobacionSectores[key];
           const diff = act - prev;

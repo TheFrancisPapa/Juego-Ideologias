@@ -1762,6 +1762,11 @@ function obtenerReaccionesFamosos(dilemaId, opcionElegida, flags, vector) {
   return resultado;
 }
 
+if (typeof window !== 'undefined') {
+  window.FAMOSOS_ARGENTINOS = FAMOSOS_ARGENTINOS;
+  window.obtenerReaccionesFamosos = obtenerReaccionesFamosos;
+}
+
 // Exportación para entornos Node.js
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { FAMOSOS_ARGENTINOS, obtenerReaccionesFamosos };

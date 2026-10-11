@@ -204,6 +204,10 @@ const IDEOLOGIAS_DB = [
   }
 ];
 
+if (typeof window !== 'undefined') {
+  window.IDEOLOGIAS_DB = IDEOLOGIAS_DB;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { IDEOLOGIAS_DB };
 }

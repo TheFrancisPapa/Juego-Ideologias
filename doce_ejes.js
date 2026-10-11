@@ -298,6 +298,12 @@ const LIDERES_ARGENTINOS = [
   }
 ];
 
+if (typeof window !== 'undefined') {
+  window.DOCE_EJES = DOCE_EJES;
+  window.PERIODOS_ARGENTINOS = PERIODOS_ARGENTINOS;
+  window.LIDERES_ARGENTINOS = LIDERES_ARGENTINOS;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { DOCE_EJES, PERIODOS_ARGENTINOS, LIDERES_ARGENTINOS };
 }
