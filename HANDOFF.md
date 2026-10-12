@@ -99,6 +99,17 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
   - **WhatsApp en Vivo:** Mensajes de chat en el celular con compañeros de aula, amigos de inferiores y familia.
 - **Corrección de Bug `Paranoia NaN%`:** Resuelto el bug por el cual desestructurar `{ ...motorJuego.saludSupervivencia }` perdía el getter prototípico `paranoia`, asegurando valores numéricos limpios y diffs 100% seguros tanto en modo cuna como en mandatos adultos.
 
+### F. Muro de Medios en Vivo Auténtico y Aleatorio (Zapping Multitemático):
+- **Problema Previo:** En el modo adulto/mandatario, todas las tarjetas del Muro de Medios hablaban monográficamente sobre la misma decisión política (ej. 4 zócalos del tarifazo o bono).
+- **Nueva Experiencia de Zapping Criollo:**
+  - La función `armarMuroVariado` en `medios_argentinos.js` ahora organiza 4 canales simultáneos que reflejan el zapping real de la televisión argentina:
+    1. 🏛️ **Política & Gestión:** Canales de noticias (C5N, LN+, TN, A24) cubriendo la medida de gobierno adoptada.
+    2. ⚽ **Deportes:** TyC Sports y ESPN F90 con debates de fútbol argentino (Boca, River, Riquelme, Gallardo, Scaloneta, Chiqui Tapia / AFA, Colapinto en F1, etc.).
+    3. 💅 **Chismes & Farándula:** Nuevos medios integrados `america_lam` (LAM con Ángel de Brito y Yanina Latorre) e `intrusos` (América TV con Flor de la V / Marcela Tauro), con primicias de Wanda Nara, L-Gante, Pampita, Gran Hermano y escándalos de la farándula.
+    4. 📺 **Bizarro / Crónica / Streaming:** Placas rojas insólitas de Crónica TV o emisiones de streaming argentino (Olga, Luzu, Blender, Neura, Gelatina, Carajo).
+  - **Botón Zapping (`zappingMedios`):** Permite cambiar de canal al instante desde el interludio o la pantalla de despacho, refrescando titulares y canales de forma totalmente aleatoria.
+  - **Compatibilidad Total:** Se conserva la estructura de datos base de `generarMuroDeMedios` para asegurar compatibilidad estricta con los 126 tests de `validar_sistema.js`.
+
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables

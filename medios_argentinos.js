@@ -618,12 +618,45 @@ const MEDIOS_ARGENTINOS = {
           subZocalo: "Escándalo en AFA: dirigentes denuncian aprietes del gobierno nacional y amenazan con parar la fecha"
         };
       } else {
-        return {
-          badge: "⚽ DEBATE AL ROJO VIVO",
-          extra: "PULSO DE LOS CLUBES",
-          titular: "BOCHORNO EN LA CANCHA: ¿CÓMO AFECTA LA CRISIS A LAS ENTRADAS Y LA CUOTA SOCIAL?",
-          subZocalo: "Hinchas furiosos en la puerta del club: 'No llegamos a fin de mes y nos aumentan la popular'"
-        };
+        const debatesFutbol = [
+          {
+            badge: "⚽ LÍBERO // BOCA",
+            extra: "MÓVIL EN EZEIZA",
+            titular: "CLIMA CALIENTE EN BOCA: ¿RIQUELME TIENE QUE RENOVARLE A LAS FIGURAS O VIENE LIMPIEZA DE VESTUARIO?",
+            subZocalo: "Pagani a los gritos en el piso de TyC: '¡No juegan a nada, viejo! ¡El 9 no toca una pelota en 90 minutos!'"
+          },
+          {
+            badge: "⚽ PASO A PASO",
+            extra: "MÓVIL EN EL MONUMENTAL",
+            titular: "RIVER A TODO O NADA: GALLARDO CAMBIA MEDIO EQUIPO TRAS EL SUPERCLÁSICO",
+            subZocalo: "Exigencia total de la hinchada: 'Acá hay que transpirar la camiseta y clasificar a la Copa'"
+          },
+          {
+            badge: "⚽ BOMBAZO AFA",
+            extra: "CALLE VIAMONTE",
+            titular: "CHIQUI TAPIA RATIFICA EL TORNEO DE 30 EQUIPOS Y VUELVEN A ANULAR DESCENSOS",
+            subZocalo: "Guerra de dirigentes: los hinchas explotan en redes sociales por el insólito formato del campeonato"
+          },
+          {
+            badge: "⭐ LA SCALONETA",
+            extra: "ELIMINATORIAS",
+            titular: "LA SCALONETA NO PARA: MESSI HABLÓ DE SU FUTURO Y ENLOQUECIÓ A LOS HINCHAS",
+            subZocalo: "La Selección Argentina lidera con autoridad y agota entradas en menos de dos horas en el Monumental"
+          },
+          {
+            badge: "🏁 FÓRMULA 1 FUROR",
+            extra: "DESDE EL PADDOCK",
+            titular: "COLAPINTO MANÍA: EL FENÓMENO ARGENTINO EN LA F1 QUE TIENE A TODO UN PAÍS DESVELADO",
+            subZocalo: "Récord de rating y banderas argentinas copando los circuitos internacionales"
+          },
+          {
+            badge: "⚽ DEBATE AL ROJO VIVO",
+            extra: "PULSO DE LOS CLUBES",
+            titular: "BOCHORNO EN LA CANCHA: ¿CÓMO AFECTA LA CRISIS A LAS ENTRADAS Y LA CUOTA SOCIAL?",
+            subZocalo: "Hinchas furiosos en la puerta del club: 'No llegamos a fin de mes y nos aumentan la popular'"
+          }
+        ];
+        return debatesFutbol[Math.floor(Math.random() * debatesFutbol.length)];
       }
     }
   },
@@ -654,13 +687,125 @@ const MEDIOS_ARGENTINOS = {
           subZocalo: "Vignolo: 'Si le sacás el club a la gente de barrio, matás la esencia de este juego. No entiendan todo con guita'"
         };
       } else {
-        return {
-          badge: "🎙️ F90 EDITORIAL",
-          extra: "DEBATE EN LA MESA",
-          titular: "EL PULSO DEL VESTUARIO: 'CUANDO EL PAÍS SE PRENDE FUEGO, EN LA CANCHA SE SIENTE'",
-          subZocalo: "Debate profundo en la mesa sobre el rol social y barrial de las instituciones deportivas"
-        };
+        const debatesESPN = [
+          {
+            badge: "🎙️ F90 EDITORIAL",
+            extra: "PAUSA DRAMÁTICA DEL POLLO",
+            titular: "¿ESTE EQUIPO TIENE ALMA PARA SALIR CAMPEÓN? EL DEBATE CRUCIAL EN LA MESA DE F90",
+            subZocalo: "Vignolo mira fijo a cámara: 'Vos podés jugar mal, pero en este club no podés no dejar la piel en la cancha'"
+          },
+          {
+            badge: "🎙️ F90 EN VIVO",
+            extra: "CRUCE EN LA MESA",
+            titular: "¿EL SUPERCLÁSICO DEFINE EL AÑO? LA PRESIÓN ASFIXIANTE SOBRE LOS TÉCNICOS",
+            subZocalo: "El Chavo Fucks contra Bulos: 'Si quedan afuera el fin de semana, el ciclo entra en zona de terapia intensiva'"
+          },
+          {
+            badge: "🎙️ F90 DEBATE",
+            extra: "EDITORIAL DE RUGGERI",
+            titular: "LA GENERACIÓN DE ORO DE LA SCALONETA: 'DISFRUTEN AHORA PORQUE NO VUELVE NUNCA MÁS'",
+            subZocalo: "Oscar Ruggeri: 'Muchachos, estos pibes nos hicieron felices a todos. No le busquen pelo al huevo'"
+          },
+          {
+            badge: "🎙️ F90 EDITORIAL",
+            extra: "DEBATE EN LA MESA",
+            titular: "EL PULSO DEL VESTUARIO: 'CUANDO EL PAÍS SE PRENDE FUEGO, EN LA CANCHA SE SIENTE'",
+            subZocalo: "Debate profundo en la mesa sobre el rol social y barrial de las instituciones deportivas"
+          }
+        ];
+        return debatesESPN[Math.floor(Math.random() * debatesESPN.length)];
       }
+    }
+  },
+
+  // ========================================================
+  // 4. PROGRAMAS DE ESPECTÁCULOS, CHIMENTOS Y FARÁNDULA
+  // ========================================================
+  america_lam: {
+    id: "america_lam",
+    nombre: "LAM (Ángel de Brito / América TV)",
+    tipo: "Espectáculos y Chimentos",
+    formato: "chimentos",
+    estiloVisual: "chimentos_lam",
+    sesgo: "farandula_chimentos",
+    generarGraph: function(decision, flags, vector) {
+      const primicias = [
+        {
+          badge: "💣 BOMBA EN LAM",
+          extra: "MÓVIL EN PALERMO",
+          titular: "WANDA NARA Y L-GANTE A LOS BESOS EN UN BOLICHE // SE FILTRARON FOTOS Y HAY CRISIS TOTAL CON ICARDI",
+          subZocalo: "Yanina Latorre con el teléfono en la mano: 'Tengo los audios de las 5 de la mañana y no saben lo que dicen, es un escándalo mundial'"
+        },
+        {
+          badge: "💣 BOMBA EN LAM",
+          extra: "EXCLUSIVO",
+          titular: "ESCÁNDALO EN GRAN HERMANO: UNA PARTICIPANTE ROMPIÓ EL AISLAMIENTO Y EVALÚAN EXPULSIÓN INMEDIATA",
+          subZocalo: "Ángel de Brito: 'Entró información de afuera y los tapeos muestran una traición que cambia el juego por completo'"
+        },
+        {
+          badge: "💣 BOMBA EN LAM",
+          extra: "INCÓGNITA",
+          titular: "SE SEPARÓ LA PAREJA MÁS FAMOSA TRAS UN VIAJE A PUNTA DEL ESTE // MENSAJES SOSPECHOSOS Y MUDANZA EXPRESS",
+          subZocalo: "Nazarena Vélez: 'Ella le revisó los chats en el aeropuerto y encontró lo que nadie quería encontrar'"
+        },
+        {
+          badge: "💣 BOMBA EN LAM",
+          extra: "GUERRA JUDICIAL",
+          titular: "FAMOSA MODELO AMENAZA CON JUICIO MILLONARIO A SU EX POR LA MANSIÓN DE NORDELTA",
+          subZocalo: "Yanina: 'No se ponen de acuerdo con la división de bienes y ya intervinieron los abogados más caros de la City'"
+        },
+        {
+          badge: "💣 BOMBA EN LAM",
+          extra: "PRIMICIA AL AIRE",
+          titular: "MARCELO TINELLI Y OTRA PELEA EN EL BAILANDO: 'SI NO QUIEREN ENSAYAR, QUE SE BUSQUEN OTRO PROGRAMA'",
+          subZocalo: "Renuncias de jurados y furia de los coaches: se picó feo en los pasillos de los estudios de Cuyo"
+        }
+      ];
+      return primicias[Math.floor(Math.random() * primicias.length)];
+    }
+  },
+
+  intrusos: {
+    id: "intrusos",
+    nombre: "Intrusos (América TV)",
+    tipo: "Farándula y Primicias",
+    formato: "chimentos",
+    estiloVisual: "chimentos_intrusos",
+    sesgo: "farandula_chimentos",
+    generarGraph: function(decision, flags, vector) {
+      const primicias = [
+        {
+          badge: "🔥 PRIMICIA EXCLUSIVA",
+          extra: "MÓVIL EN TRIBUNALES",
+          titular: "PAMPITA ROMPIÓ EL SILENCIO TRAS EL ESCÁNDALO: 'DE ACÁ SE SALE ADELANTE CON DIGNIDAD Y TRABAJO'",
+          subZocalo: "Flor de la V y Marcela Tauro al rojo vivo: 'La traición fue en su propia casa y ya sacaron las valijas a la vereda'"
+        },
+        {
+          badge: "🔥 PRIMICIA EXCLUSIVA",
+          extra: "ALERTA FARÁNDULA",
+          titular: "LA CHINA SUÁREZ Y OTRA INDIRECTA EN TIKTOK // EXPLOTARON LAS REDES Y HUBO CRUCE EN VIVO",
+          subZocalo: "La mesa de Intrusos analiza los likes y las historias eliminadas: 'Se hacen los desentendidos pero se tiran con todo'"
+        },
+        {
+          badge: "🔥 PRIMICIA EXCLUSIVA",
+          extra: "URGENTE SHOW",
+          titular: "SUSANA GIMÉNEZ VUELVE AL PAÍS Y DISPARÓ CON MUNICIÓN GRUESA: 'LA GUITA NO ALCANZA NI PARA EL ALIMENTO DE LOS PERROS'",
+          subZocalo: "La diva en Ezeiza rodeada de micrófonos: 'Amo a la Argentina pero me da tristeza ver cómo está la gente en la calle'"
+        },
+        {
+          badge: "🔥 PRIMICIA EXCLUSIVA",
+          extra: "CRISIS Y RECONCILIACIÓN",
+          titular: "BENJAMÍN VICUÑA FUE VISTO CON SU NUEVA PAREJA EN SAN ISIDRO // FOTOS EXCLUSIVAS",
+          subZocalo: "Pampito: 'Fueron a merendar a un café de especialidad y se fueron juntos en la camioneta'"
+        },
+        {
+          badge: "🔥 PRIMICIA EXCLUSIVA",
+          extra: "GUERRA FAMILIAR",
+          titular: "CARMEN BARBIERI Y FEDE BAL: SE PUDRIÓ TODO EN EL ALMUERZO Y HUBO PORTAZO",
+          subZocalo: "Tauro: 'Ella le reprochó sus últimas salidas nocturnas y él no se lo bancó, terminaron a los gritos'"
+        }
+      ];
+      return primicias[Math.floor(Math.random() * primicias.length)];
     }
   },
 
@@ -853,12 +998,43 @@ function generarMuroDeMedios(decision, flags, vector) {
   return resultado;
 }
 
+// Selecciona un zapping auténtico y aleatorio de la televisión argentina:
+// 1 canal de Política (noticia de la gestión), 1 canal de Deportes (fútbol/AFA),
+// 1 canal de Chismes/Farándula (LAM/Intrusos), 1 canal de Crónica Bizarro / Streaming.
+function armarMuroVariado(muro, decision = null) {
+  if (!muro) return [];
+  const todos = muro.todos || (Array.isArray(muro) ? Object.fromEntries(muro.map(m => [m.id, m])) : {});
+
+  // 1. POLÍTICA (noticias y zócalo de la medida de gobierno)
+  const poolPolitica = ['c5n', 'ln_mas', 'tn', 'a24'].filter(id => todos[id]);
+  const idPolitica = poolPolitica.length > 0 ? poolPolitica[Math.floor(Math.random() * poolPolitica.length)] : 'c5n';
+  const canalPolitica = todos[idPolitica] || todos.c5n || todos.ln_mas;
+
+  // 2. DEPORTES (TyC Sports o ESPN F90)
+  const poolDeportes = ['tyc_sports', 'espn'].filter(id => todos[id]);
+  const idDeportes = poolDeportes.length > 0 ? poolDeportes[Math.floor(Math.random() * poolDeportes.length)] : 'tyc_sports';
+  const canalDeportes = todos[idDeportes] || todos.tyc_sports;
+
+  // 3. CHISMES / FARÁNDULA (LAM / Intrusos con primicias y escándalos)
+  const poolChismes = ['america_lam', 'intrusos'].filter(id => todos[id]);
+  const idChismes = poolChismes.length > 0 ? poolChismes[Math.floor(Math.random() * poolChismes.length)] : 'america_lam';
+  const canalChismes = todos[idChismes] || todos.america_lam;
+
+  // 4. BIZARRO / STREAMING / CRÓNICA (Crónica TV con placa insólita, Olga, Luzu, Blender, Neura, etc.)
+  const poolBizarro = ['cronica', 'olga', 'luzu', 'blender', 'gelatina', 'carajo', 'neura'].filter(id => todos[id] && id !== idPolitica);
+  const idBizarro = poolBizarro.length > 0 ? poolBizarro[Math.floor(Math.random() * poolBizarro.length)] : 'cronica';
+  const canalBizarro = todos[idBizarro] || todos.cronica;
+
+  return [canalPolitica, canalDeportes, canalChismes, canalBizarro].filter(Boolean);
+}
+
 // Exportación compatible para Node.js y Navegador
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { MEDIOS_ARGENTINOS, generarMuroDeMedios };
+  module.exports = { MEDIOS_ARGENTINOS, generarMuroDeMedios, armarMuroVariado };
 }
 
 if (typeof window !== 'undefined') {
   window.MEDIOS_ARGENTINOS = MEDIOS_ARGENTINOS;
   window.generarMuroDeMedios = generarMuroDeMedios;
+  window.armarMuroVariado = armarMuroVariado;
 }

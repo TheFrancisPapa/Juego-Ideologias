@@ -7454,7 +7454,11 @@
       const muro = generarMuroDeMedios(opcionElegida, motorJuego.flags, motorJuego.vector12Axes);
       window._muroMediosCache = muro;
 
-      pintarTarjetasMedios(muro);
+      const mixVariado = (typeof armarMuroVariado === 'function')
+        ? armarMuroVariado(muro, opcionElegida)
+        : muro;
+
+      pintarTarjetasMedios(mixVariado);
     }
 
     function pintarTarjetasMedios(listaMedios) {
@@ -7563,6 +7567,26 @@
               </p>
             </div>
           `;
+        } else if (m.formato === 'chimentos' || m.estiloVisual === 'chimentos_lam' || m.estiloVisual === 'chimentos_intrusos') {
+          // LAM / Intrusos: Farándula y chimentos, zócalos magenta/fucsia con primicias exclusivas
+          item.className = "rounded-xl overflow-hidden border-2 border-fuchsia-600 bg-slate-950 shadow-xl text-white";
+          item.innerHTML = `
+            <div class="bg-gradient-to-r from-fuchsia-700 via-pink-600 to-purple-900 px-3 py-1 flex items-center justify-between text-xs font-black">
+              <div class="flex items-center gap-2">
+                <span class="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded font-black tracking-wider animate-pulse">${m.badge || '💣 BOMBA'}</span>
+                <span class="tracking-wider uppercase">${m.nombre}</span>
+              </div>
+              <span class="text-[10px] text-fuchsia-200 font-mono">${m.extra || 'PRIMICIA EXCLUSIVA'}</span>
+            </div>
+            <div class="p-3 bg-black/95 space-y-1">
+              <p class="text-xs sm:text-sm font-black text-yellow-300 leading-snug tracking-tight uppercase">
+                ${m.titular}
+              </p>
+              <p class="text-[11px] sm:text-xs text-pink-100 font-medium leading-relaxed border-t border-fuchsia-900/50 pt-1">
+                ${m.subZocalo}
+              </p>
+            </div>
+          `;
         } else if (m.formato === 'streaming') {
           // Canales de Streaming (Neura, Carajo, Gelatina, Blender, Olga, Luzu)
           item.className = "rounded-xl overflow-hidden border border-slate-700 bg-slate-900 shadow-xl text-white";
@@ -7625,13 +7649,18 @@
 
     function zappingMedios() {
       if (!window._muroMediosCache || !window._muroMediosCache.todos) return;
-      const todosKeys = Object.keys(window._muroMediosCache.todos);
-      const seleccionados = [];
-      const mezclados = todosKeys.sort(() => 0.5 - Math.random());
-      for (let i = 0; i < Math.min(3, mezclados.length); i++) {
-        seleccionados.push(window._muroMediosCache.todos[mezclados[i]]);
+      if (typeof armarMuroVariado === 'function') {
+        const mix = armarMuroVariado(window._muroMediosCache);
+        pintarTarjetasMedios(mix);
+      } else {
+        const todosKeys = Object.keys(window._muroMediosCache.todos);
+        const seleccionados = [];
+        const mezclados = todosKeys.sort(() => 0.5 - Math.random());
+        for (let i = 0; i < Math.min(4, mezclados.length); i++) {
+          seleccionados.push(window._muroMediosCache.todos[mezclados[i]]);
+        }
+        pintarTarjetasMedios(seleccionados);
       }
-      pintarTarjetasMedios(seleccionados);
     }
 
     window._famososCache = null;
