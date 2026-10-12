@@ -20,9 +20,18 @@ const ORIGENES_CUNA = {
       roscaGobernadores: -10
     },
     vectorEjesBase: {
+      federalismo: 70,
+      institucionalidad: 35,
+      seguridad: 30,
+      inmigracion: 40,
+      defensa: 35,
+      geopolitica: 25,
       estatismo: 75,
+      regulacion: 80,
+      comercio: 70,
+      laicismo: 65,
       valores: 65,
-      comercio: 70
+      ambiente: 30
     }
   },
 
@@ -42,9 +51,18 @@ const ORIGENES_CUNA = {
       roscaGobernadores: +10
     },
     vectorEjesBase: {
+      federalismo: 45,
+      institucionalidad: 60,
+      seguridad: 65,
+      inmigracion: 70,
+      defensa: 65,
+      geopolitica: 75,
       estatismo: 25,
+      regulacion: 20,
+      comercio: 30,
+      laicismo: 50,
       valores: 35,
-      comercio: 30
+      ambiente: 60
     }
   },
 
@@ -73,8 +91,17 @@ const ORIGENES_CUNA = {
     },
     vectorEjesBase: {
       federalismo: 20,
-      institucionalidad: 25,
-      estatismo: 40
+      institucionalidad: 70,
+      seguridad: 35,
+      inmigracion: 50,
+      defensa: 45,
+      geopolitica: 55,
+      estatismo: 40,
+      regulacion: 45,
+      comercio: 40,
+      laicismo: 75,
+      valores: 70,
+      ambiente: 35
     }
   },
 
@@ -102,9 +129,18 @@ const ORIGENES_CUNA = {
       mechaSocial: -5
     },
     vectorEjesBase: {
-      institucionalidad: 80,
+      federalismo: 50,
+      institucionalidad: 25,
+      seguridad: 55,
+      inmigracion: 65,
+      defensa: 70,
+      geopolitica: 40,
+      estatismo: 55,
+      regulacion: 50,
+      comercio: 55,
+      laicismo: 20,
       valores: 30,
-      estatismo: 55
+      ambiente: 65
     }
   },
 
@@ -132,9 +168,18 @@ const ORIGENES_CUNA = {
       roscaGobernadores: +10
     },
     vectorEjesBase: {
-      comercio: 85,
+      federalismo: 25,
+      institucionalidad: 40,
+      seguridad: 25,
+      inmigracion: 45,
+      defensa: 40,
+      geopolitica: 30,
       estatismo: 80,
-      federalismo: 75
+      regulacion: 85,
+      comercio: 85,
+      laicismo: 55,
+      valores: 65,
+      ambiente: 25
     }
   }
 };
@@ -180,6 +225,20 @@ const CARGOS_BARRO = {
       trabajo: +15,
       seguridadJusticia: -10,
       mechaSocial: +10
+    },
+    vectorEjesBase: {
+      federalismo: 45,
+      institucionalidad: 65,
+      seguridad: 45,
+      inmigracion: 60,
+      defensa: 55,
+      geopolitica: 65,
+      estatismo: 35,
+      regulacion: 30,
+      comercio: 35,
+      laicismo: 55,
+      valores: 45,
+      ambiente: 50
     }
   },
 
@@ -195,6 +254,20 @@ const CARGOS_BARRO = {
       productivo: +20,
       roscaGobernadores: +15,
       mechaSocial: -5
+    },
+    vectorEjesBase: {
+      federalismo: 30,
+      institucionalidad: 50,
+      seguridad: 40,
+      inmigracion: 45,
+      defensa: 45,
+      geopolitica: 40,
+      estatismo: 50,
+      regulacion: 55,
+      comercio: 60,
+      laicismo: 60,
+      valores: 60,
+      ambiente: 40
     }
   },
 
@@ -210,6 +283,20 @@ const CARGOS_BARRO = {
       claseMedia: +10,
       estadoCiencia: +10,
       riesgoPais: -10
+    },
+    vectorEjesBase: {
+      federalismo: 40,
+      institucionalidad: 35,
+      seguridad: 50,
+      inmigracion: 55,
+      defensa: 50,
+      geopolitica: 45,
+      estatismo: 50,
+      regulacion: 45,
+      comercio: 50,
+      laicismo: 40,
+      valores: 40,
+      ambiente: 55
     }
   },
 
@@ -225,6 +312,20 @@ const CARGOS_BARRO = {
       institucionalidad: +15,
       seguridadJusticia: +15,
       mechaSocial: -5
+    },
+    vectorEjesBase: {
+      federalismo: 60,
+      institucionalidad: 20,
+      seguridad: 30,
+      inmigracion: 40,
+      defensa: 45,
+      geopolitica: 35,
+      estatismo: 55,
+      regulacion: 50,
+      comercio: 55,
+      laicismo: 35,
+      valores: 45,
+      ambiente: 50
     }
   },
 
@@ -240,6 +341,20 @@ const CARGOS_BARRO = {
       trabajo: +20,
       claseMedia: -15,
       mechaSocial: +15
+    },
+    vectorEjesBase: {
+      federalismo: 40,
+      institucionalidad: 75,
+      seguridad: 60,
+      inmigracion: 75,
+      defensa: 60,
+      geopolitica: 70,
+      estatismo: 20,
+      regulacion: 20,
+      comercio: 25,
+      laicismo: 60,
+      valores: 40,
+      ambiente: 50
     }
   }
 };
@@ -261,6 +376,20 @@ const RANGOS_PRESIDENTE = {
       roscaGobernadores: -15,
       mechaSocial: +10,
       dolarBlue: -30
+    },
+    vectorEjesBase: {
+      federalismo: 45,
+      institucionalidad: 55,
+      seguridad: 35,
+      inmigracion: 45,
+      defensa: 40,
+      geopolitica: 20,
+      estatismo: 85,
+      regulacion: 90,
+      comercio: 90,
+      laicismo: 30,
+      valores: 35,
+      ambiente: 30
     }
   },
 
@@ -277,6 +406,20 @@ const RANGOS_PRESIDENTE = {
       roscaGobernadores: +10,
       mechaSocial: 0,
       riesgoPais: 0
+    },
+    vectorEjesBase: {
+      federalismo: 45,
+      institucionalidad: 45,
+      seguridad: 45,
+      inmigracion: 50,
+      defensa: 50,
+      geopolitica: 50,
+      estatismo: 50,
+      regulacion: 50,
+      comercio: 50,
+      laicismo: 50,
+      valores: 50,
+      ambiente: 50
     }
   },
 
@@ -293,6 +436,20 @@ const RANGOS_PRESIDENTE = {
       roscaGobernadores: +25,
       mechaSocial: -10,
       dolarBlue: +40
+    },
+    vectorEjesBase: {
+      federalismo: 30,
+      institucionalidad: 70,
+      seguridad: 35,
+      inmigracion: 55,
+      defensa: 45,
+      geopolitica: 65,
+      estatismo: 35,
+      regulacion: 35,
+      comercio: 35,
+      laicismo: 65,
+      valores: 65,
+      ambiente: 45
     }
   }
 };

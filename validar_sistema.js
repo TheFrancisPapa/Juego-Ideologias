@@ -4156,6 +4156,64 @@ test("Vida Personal Aleatoria por Destino (Pareja y Entrenador fijados por el az
   assert.ok(golpe.texto, "El golpe de suerte debe tener texto descriptivo");
 });
 
+// 28. AUDITORÍA DE EVALUACIÓN COMPLETA DE LOS 12 EJES DEL ESPECTRO POLÍTICO
+console.log("\n📊 28. VERIFICACIÓN DE EVALUACIÓN INTEGRAL DE LOS 12 EJES DEL ESPECTRO POLÍTICO...");
+
+test("Diagnóstico Final garantiza los 12 ejes evaluados sin null bajo cualquier ritmo o carrera", () => {
+  const motor = new MotorJuego();
+  motor.iniciarModoCuna('cuna_popular', 3);
+
+  // Juventud
+  while (!motor.esFinDeFase()) {
+    const d = motor.obtenerDilemaActual();
+    if (!d) break;
+    motor.aplicarDecision(d.opciones[0]);
+  }
+
+  // Militancia
+  motor.avanzarSiguienteFase();
+  while (!motor.esFinDeFase()) {
+    const d = motor.obtenerDilemaActual();
+    if (!d) break;
+    motor.aplicarDecision(d.opciones[0]);
+  }
+
+  // Diputado
+  motor.avanzarSiguienteFase();
+  while (!motor.esFinDeFase()) {
+    const d = motor.obtenerDilemaActual();
+    if (!d) break;
+    motor.aplicarDecision(d.opciones[0]);
+  }
+
+  // Presidente
+  motor.avanzarSiguienteFase();
+  while (!motor.esFinDeFase()) {
+    const d = motor.obtenerDilemaActual();
+    if (!d) break;
+    motor.aplicarDecision(d.opciones[0]);
+  }
+
+  const diag = motor.generarDiagnosticoFinal();
+  for (const k of EJES_VALIDOS) {
+    const val = diag.vector12[k];
+    assert.ok(val !== null && val !== undefined, `Eje ${k} no debe ser null en diagnóstico final`);
+    assert.ok(typeof val === 'number' && val >= 0 && val <= 100, `Eje ${k} debe ser un número válido entre 0 y 100`);
+  }
+
+  // Partida rápida directa en presidente con 1 dilema
+  const mRapido = new MotorJuego();
+  mRapido.iniciarModoPresidente('pibe_disruptivo', null, 1);
+  const dPres = mRapido.obtenerDilemaActual();
+  mRapido.aplicarDecision(dPres.opciones[0]);
+  const diagRapido = mRapido.generarDiagnosticoFinal();
+  for (const k of EJES_VALIDOS) {
+    const val = diagRapido.vector12[k];
+    assert.ok(val !== null && val !== undefined, `Eje ${k} en modo rápido no debe ser null`);
+    assert.ok(typeof val === 'number' && val >= 0 && val <= 100, `Eje ${k} en modo rápido debe ser entre 0 y 100`);
+  }
+});
+
 console.log("\n=================================================================");
 
 console.log(`🏁 RESULTADO FINAL: ${testsPasados} de ${testsTotales} pruebas PASADAS`);

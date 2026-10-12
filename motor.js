@@ -471,6 +471,16 @@ class MotorJuego {
       }
     }
 
+    if (cargo.vectorEjesBase) {
+      for (const e in cargo.vectorEjesBase) {
+        if (this.axisSum[e] !== undefined) {
+          this.axisSum[e] += cargo.vectorEjesBase[e];
+          this.axisN[e] += 1;
+          this.vector12Axes[e] = cargo.vectorEjesBase[e];
+        }
+      }
+    }
+
     this.cargarDilemasDeFase('militante');
     return cargo;
   }
@@ -500,6 +510,16 @@ class MotorJuego {
       for (const s in rango.modificadores) {
         if (this.termometroCriollo[s] !== undefined) {
           this.termometroCriollo[s] += rango.modificadores[s];
+        }
+      }
+    }
+
+    if (rango.vectorEjesBase) {
+      for (const e in rango.vectorEjesBase) {
+        if (this.axisSum[e] !== undefined) {
+          this.axisSum[e] += rango.vectorEjesBase[e];
+          this.axisN[e] += 1;
+          this.vector12Axes[e] = rango.vectorEjesBase[e];
         }
       }
     }
@@ -1145,6 +1165,47 @@ class MotorJuego {
     } else {
       this.dilemasFase = base;
     }
+
+    // Si el jugador eligió un ritmo condensado (ej. 3 dilemas o 7 dilemas),
+    // asegurar que la selección al frente cubra los 12 ejes temáticos del Estado
+    if (this.limiteDilemasPorFase === 3) {
+      if (fase === 'presidente') {
+        const dEco = this.dilemasFase.find(d => d.id === 'pres_cepo_dolarizacion') || this.dilemasFase.find(d => d.id === 'pres_transporte');
+        const dDef = this.dilemasFase.find(d => d.id === 'pres_malvinas_defensa') || this.dilemasFase.find(d => d.id === 'pres_inmigracion_salud_educacion');
+        const dSoc = this.dilemasFase.find(d => d.id === 'pres_culto_educacion_laica') || this.dilemasFase.find(d => d.id === 'pres_energia_vaca_muerta');
+        if (dEco && dDef && dSoc) {
+          const seleccionados = [dEco, dDef, dSoc];
+          const resto = this.dilemasFase.filter(d => !seleccionados.includes(d));
+          this.dilemasFase = [...seleccionados, ...resto];
+        }
+      } else if (fase === 'diputado') {
+        const dCampo = this.dilemasFase.find(d => d.id === 'dip_retenciones');
+        const dAmb = this.dilemasFase.find(d => d.id === 'dip_glaciares_mineria');
+        const dLab = this.dilemasFase.find(d => d.id === 'dip_reforma_laboral') || this.dilemasFase.find(d => d.id === 'jud_arrepentido_cuadernos');
+        if (dCampo && dAmb && dLab) {
+          const seleccionados = [dCampo, dAmb, dLab];
+          const resto = this.dilemasFase.filter(d => !seleccionados.includes(d));
+          this.dilemasFase = [...seleccionados, ...resto];
+        }
+      }
+    } else if (this.limiteDilemasPorFase === 7) {
+      if (fase === 'presidente') {
+        const idsClave = [
+          'pres_transporte',
+          'pres_prepagas_salud',
+          'pres_cepo_dolarizacion',
+          'pres_malvinas_defensa',
+          'pres_inmigracion_salud_educacion',
+          'pres_culto_educacion_laica',
+          'pres_energia_vaca_muerta'
+        ];
+        const encontrados = idsClave.map(id => this.dilemasFase.find(d => d.id === id)).filter(Boolean);
+        if (encontrados.length >= 5) {
+          const resto = this.dilemasFase.filter(d => !encontrados.includes(d));
+          this.dilemasFase = [...encontrados, ...resto];
+        }
+      }
+    }
   }
 
   obtenerDilemaActual() {
@@ -1184,13 +1245,32 @@ class MotorJuego {
 
     // 2. Convergencia del vector de 12 ejes: promedio exacto solo por las veces que se tocó cada eje
     if (opcion.impacto12Axes) {
+      const ALIAS_EJES_12 = {
+        centralismo: 'federalismo',
+        justicia: 'institucionalidad',
+        legalismo: 'institucionalidad',
+        republicano: 'institucionalidad',
+        autocracia: 'institucionalidad',
+        caudillismo: 'institucionalidad',
+        pragmatismoMetodo: 'institucionalidad',
+        pragmatismo: 'institucionalidad',
+        alternanciaRepublicana: 'institucionalidad',
+        ordenSeguridad: 'seguridad',
+        orden: 'seguridad',
+        soberania: 'geopolitica',
+        diplomacia: 'defensa',
+        libre_mercado: 'regulacion',
+        libreMercado: 'regulacion',
+        proteccionismo: 'comercio'
+      };
       for (const eje in opcion.impacto12Axes) {
-        if (this.axisSum[eje] !== undefined) {
+        const ejeDestino = ALIAS_EJES_12[eje] || eje;
+        if (this.axisSum[ejeDestino] !== undefined) {
           const val = opcion.impacto12Axes[eje];
-          this.axisSum[eje] += val;
-          this.axisN[eje] += 1;
-          this.vector12Axes[eje] = Math.round(this.axisSum[eje] / this.axisN[eje]);
-          this.vector12Axes[eje] = Math.max(0, Math.min(100, this.vector12Axes[eje]));
+          this.axisSum[ejeDestino] += val;
+          this.axisN[ejeDestino] += 1;
+          this.vector12Axes[ejeDestino] = Math.round(this.axisSum[ejeDestino] / this.axisN[ejeDestino]);
+          this.vector12Axes[ejeDestino] = Math.max(0, Math.min(100, this.vector12Axes[ejeDestino]));
         }
       }
     }
@@ -1797,7 +1877,7 @@ class MotorJuego {
         ambiente: (ideol.coords.V + 100) / 2,          // V: -100 Productivismo (0) <---> +100 Ecologismo (100)
         federalismo: 50
       };
-      return { ...ideol, afinidad: this.calcularCompatibilidad(targetVec) };
+      return { ...ideol, targetVec, afinidad: this.calcularCompatibilidad(targetVec) };
     }).sort((a, b) => b.afinidad - a.afinidad);
 
     // Detección de perfil mixto si el top 2 está muy parejo
@@ -1814,8 +1894,38 @@ class MotorJuego {
       return { ...l, afinidad: this.calcularCompatibilidad(l.vector) };
     }).sort((a, b) => b.afinidad - a.afinidad);
 
+    const topIdeol = rankingIdeologias[0];
+    const topPeriodo = rankingPeriodos[0];
+    const topLider = rankingLideres[0];
+
+    // Construcción del vector de 12 ejes garantizando que NINGÚN eje quede sin evaluar (null)
+    const vector12Final = {};
+    for (const k in DOCE_EJES) {
+      if (this.vector12Axes[k] !== null && this.vector12Axes[k] !== undefined) {
+        // El jugador tomó decisiones directas sobre este eje
+        vector12Final[k] = this.vector12Axes[k];
+      } else {
+        // Eje no evaluado por dilemas directos: proyectar orgánicamente
+        const baseCuna = (this.origenElegido && this.origenElegido.vectorEjesBase && this.origenElegido.vectorEjesBase[k] !== undefined)
+          ? this.origenElegido.vectorEjesBase[k]
+          : ((this.cargoBarroElegido && this.cargoBarroElegido.vectorEjesBase && this.cargoBarroElegido.vectorEjesBase[k] !== undefined)
+            ? this.cargoBarroElegido.vectorEjesBase[k]
+            : ((this.rangoPresidenteElegido && this.rangoPresidenteElegido.vectorEjesBase && this.rangoPresidenteElegido.vectorEjesBase[k] !== undefined)
+              ? this.rangoPresidenteElegido.vectorEjesBase[k]
+              : 50));
+
+        const baseIdeol = (topIdeol && topIdeol.targetVec && topIdeol.targetVec[k] !== undefined)
+          ? topIdeol.targetVec[k]
+          : ((topPeriodo && topPeriodo.vector && topPeriodo.vector[k] !== undefined)
+            ? topPeriodo.vector[k]
+            : ((topLider && topLider.vector && topLider.vector[k] !== undefined) ? topLider.vector[k] : 50));
+
+        vector12Final[k] = Math.max(0, Math.min(100, Math.round((baseCuna * 0.4) + (baseIdeol * 0.6))));
+      }
+    }
+
     return {
-      vector12: { ...this.vector12Axes },
+      vector12: vector12Final,
       axisN: { ...this.axisN },
       macroeconomia: { ...this.macroeconomia },
       termometroCriollo: { ...this.termometroCriollo },

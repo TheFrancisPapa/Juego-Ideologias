@@ -158,11 +158,21 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
   - **Explicación Contextual Unificada:** Al desplegarse, muestra un único panel limpio con el encabezado "¿Qué se evalúa en esta decisión?" y un párrafo aclaratorio directo (`#expl-que-mide`), eliminando por completo las cajas binarias `expl-si-favor` y `expl-si-contra`.
   - **Manejo Robusto de Datos (`renderizarDilemaActual`):** Adapta fluidamente tanto objetos `{ queMide, siFavor, ... }` como strings directos de dilemas históricos o de cuna, asegurando que jamás se imprima `undefined`.
 
+### L. Evaluación Integral de los 12 Ejes del Espectro Político (Sin Ejes Incompletos al Finalizar):
+- **Problema Observado:** Al finalizar la partida, la pantalla de "Tus 12 Ejes del Espectro Político" mostraba varios ejes (típicamente `federalismo`, `inmigracion`, `defensa`, `laicismo` y `ambiente`) como *"Sin datos suficientes (no evaluado)"* con barras punteadas vacías, porque en partidas de ritmo corto (1 o 3 dilemas por fase) los dilemas que tocaban esos ejes quedaban más adelante en la lista secuencial, varias submódulos usaban nombres de ejes no normalizados (`centralismo`, `justicia`, `soberania`), y las cunas/cargos carecían de baselines para los 12 ejes.
+- **Solución Implementada (`motor.js`, `origenes_relaciones.js`, `index.html`, `validar_sistema.js`):**
+  - **Garantía Total en `generarDiagnosticoFinal()`:** Si el jugador no tomó decisiones directas en algún eje particular durante una partida corta, el motor proyecta su alineamiento combinando la línea base de su cuna/cargo (40%) y las coordenadas exactas de su ideología y líder histórico más afín (60%). NINGÚN eje se devuelve jamás en `null`.
+  - **Curación y Rotación Temática Equilibrada:** Cuando se eligen 3 dilemas por etapa, la selección rota al frente dilemas representativos de los distintos pilares del Estado (en Diputados incluye Glaciares/Minería; en Presidencia incluye Dólar/Macro, Malvinas/Defensa y Culto/Laicismo).
+  - **Mapeo de Alias de Ejes (`aplicarDecision`):** Mapeo de términos como `centralismo` -> `federalismo`, `justicia` -> `institucionalidad`, `diplomacia` -> `defensa`, `libre_mercado` -> `regulacion`, etc., activando dilemas de SIDE, Cancillería y Gabinete.
+  - **Baselines Completos de 12 Ejes (`vectorEjesBase`):** Incorporados en los 5 Orígenes de Cuna, los 5 Cargos del Barro y los 3 Rangos Presidenciales.
+  - **Renderizado de Interfaz Robusto (`index.html`):** Erradicadas las barras vacías de "Sin datos suficientes"; todos los 12 ejes se muestran con su polo dominante, intensidad porcentual y barra dorada.
+  - **Prueba Unitaria 133 (`validar_sistema.js`):** Verifica que bajo cualquier ritmo o carrera, el diagnóstico final retorne 12/12 ejes numéricos válidos [0, 100].
+
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
 Para preservar la estabilidad del proyecto en futuros sprints:
-1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **132 de 132 pruebas PASADAS**.
+1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **133 de 133 pruebas PASADAS**.
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.
 3. **Vanilla JS Nativo:** No añadir scripts de empaquetado o dependencias npm requeridas para correr en el navegador; el juego debe poder jugarse abriendo directamente `index.html` en cualquier navegador web moderno.
 4. **Handoff Permanente:** Ante cualquier modificación sustancial, actualizar este archivo `HANDOFF.md` y los artefactos de sesión para mantener la trazabilidad completa.
