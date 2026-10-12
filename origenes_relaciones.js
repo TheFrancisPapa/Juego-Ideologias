@@ -1014,7 +1014,7 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { mechaSocial: -5 },
         impactoSalud: { coronarias: +5, paranoia: +5, seguridad: +5 },
-        impactoAdolescente: { estudios: +20, saludFisica: -5, saludMental: +5, relaciones: +5, deportes: -5 },
+        impactoAdolescente: { estudios: +18, saludFisica: -4, saludMental: +6, relaciones: +3, deportes: -7 },
         consecuenciaAdolescente: {
           titulo: "Boletín de Honor y Recomendación Académica vs. Pérdida del Club",
           narrativa: "Clavaste un 9.5 en el boletín trimestral. Tu profesor de Historia y la vicedirectora quedaron fascinados con tu redacción y te propusieron para representar a la escuela en las Olimpíadas académicas. Sin embargo, al dedicarle todas las tardes al estudio, faltaste a los entrenamientos del club y el DT te mandó al banco de suplentes: perdiste la oportunidad de que te viera un reclutador de un club grande que vino a ver el partido del sábado.",
@@ -1035,7 +1035,7 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { humorAfaScaloneta: +15 },
         impactoSalud: { coronarias: +15, paranoia: -10, seguridad: +10 },
-        impactoAdolescente: { estudios: -5, saludFisica: +25, saludMental: +10, relaciones: +10, deportes: +25 },
+        impactoAdolescente: { estudios: -6, saludFisica: +23, saludMental: +9, relaciones: +11, deportes: +24 },
         consecuenciaAdolescente: {
           titulo: "Capitán en Inferiores y Prueba en Reserva vs. Riesgo en Diciembre",
           narrativa: "La rompiste toda en el torneo de la liga juvenil. Tu potencia física y liderazgo llamaron la atención de un reclutador de un club grande de Primera División que te consiguió una prueba en la Reserva. Tu estado físico y autoestima están en el punto más alto. Sin embargo, por viajar a los partidos descuidaste Matemática y Literatura: te llevaste dos materias a diciembre y tus viejos te pusieron los puntos, advirtiéndote que si no aprobás se suspende el fútbol.",
@@ -1056,7 +1056,7 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { mechaSocial: -10 },
         impactoSalud: { coronarias: +10, paranoia: -15, seguridad: +5 },
-        impactoAdolescente: { estudios: +5, saludFisica: +5, saludMental: +20, relaciones: +25, deportes: +5 },
+        impactoAdolescente: { estudios: +4, saludFisica: +3, saludMental: +21, relaciones: +26, deportes: +4 },
         consecuenciaAdolescente: {
           titulo: "Amigo de Fierro para Toda la Vida vs. Oportunidad en Stand-by",
           narrativa: "Estuviste al pie del cañón cuando tu mejor amigo atravesaba una crisis familiar pesada y te convertiste en el pilar de confianza de tu grupo de pares. Te ganaste la lealtad incondicional de tus compañeros. Ese amigo que bancaste resultará ser una persona clave en el futuro que recordará tu lealtad y te abrirá puertas decisivas cuando ingreses a la vida adulta. Tu salud mental y paz interior están intactas, aunque en la escuela y en el club quedaste en un cómodo segundo plano.",
@@ -1093,7 +1093,7 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { roscaGobernadores: +10 },
         impactoSalud: { coronarias: +5, paranoia: +5, seguridad: +5 },
-        impactoAdolescente: { estudios: +25, saludFisica: 0, saludMental: +10, relaciones: +15, deportes: 0 },
+        impactoAdolescente: { estudios: +23, saludFisica: -2, saludMental: +8, relaciones: +14, deportes: -3 },
         consecuenciaAdolescente: {
           titulo: "Ingreso a la Universidad Pública & Primeros Contactos",
           narrativa: "Comenzaste las cursadas universitarias. En los pasillos y comisiones conociste a profesores destacados y a tus primeros pares de militancia y debate académico. Empezaste a construir capital intelectual y legitimidad técnica. Vivís con lo justo y resignás independencia económica inmediata, pero tu cabeza y tus contactos crecen exponencialmente.",
@@ -1114,7 +1114,7 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: { riesgoPais: -20 },
         impactoCriollo: { dolarBlue: -15 },
         impactoSalud: { coronarias: 0, paranoia: +5, seguridad: +10 },
-        impactoAdolescente: { estudios: +20, saludFisica: +5, saludMental: +5, relaciones: +5, deportes: +5 },
+        impactoAdolescente: { estudios: +17, saludFisica: +4, saludMental: +6, relaciones: +3, deportes: +6 },
         consecuenciaAdolescente: {
           titulo: "Pasantía en el Sector Privado & Primer Sueldo",
           narrativa: "Entraste como pasante en una compañía privada de servicios financieros y consultoría. Aprendiste a manejar herramientas de análisis de datos y el lenguaje de los negocios. Tu primer sueldo te dio autonomía para comprarte tus cosas y pagar tus gastos. Sin embargo, tus viejos amigos del barrio sienten que tus horarios de oficina te alejaron y que te volviste un poco distante.",
@@ -1135,7 +1135,7 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { mechaSocial: -5, roscaGobernadores: +10 },
         impactoSalud: { coronarias: +10, paranoia: 0, seguridad: +5 },
-        impactoAdolescente: { estudios: 0, saludFisica: +15, saludMental: +10, relaciones: +25, deportes: +15 },
+        impactoAdolescente: { estudios: -2, saludFisica: +14, saludMental: +11, relaciones: +23, deportes: +16 },
         consecuenciaAdolescente: {
           titulo: "Oficio Real, Salario Propio & Respeto en el Club",
           narrativa: "Empezaste a laburar en un oficio productivo y te sumaste a la comisión directiva y actividades sociales del club de barrio. La gente del vecindario te ve todos los días, saben que sos alguien laburador que no le escapa al barro y te ganaste la confianza de los comerciantes y referentes barriales. El desgaste físico se siente tras 10 horas de jornada, pero tenés raíces sólidas donde pisás.",

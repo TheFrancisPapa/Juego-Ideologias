@@ -402,13 +402,17 @@ class MotorJuego {
     this.saludSupervivencia.seguridad = 50;
     this.saludSupervivencia.nombreMandatario = `Joven de ${orig.nombre}`;
 
-    this.perfilAdolescente = {
-      estudios: 75,
-      saludFisica: 80,
-      saludMental: 75,
-      relaciones: 70,
-      deportes: 75
+    const baselinesAdolescente = {
+      cuna_oro: { estudios: 78, saludFisica: 73, saludMental: 72, relaciones: 67, deportes: 74 },
+      cuna_popular: { estudios: 68, saludFisica: 83, saludMental: 74, relaciones: 79, deportes: 82 },
+      dinastia_feudal: { estudios: 73, saludFisica: 77, saludMental: 69, relaciones: 76, deportes: 71 },
+      clase_media_universitaria: { estudios: 83, saludFisica: 71, saludMental: 74, relaciones: 72, deportes: 68 }
     };
+
+    this.perfilAdolescente = Object.assign(
+      { estudios: 74, saludFisica: 79, saludMental: 73, relaciones: 71, deportes: 76 },
+      baselinesAdolescente[origenId] || {}
+    );
 
     if (orig.modificadores) {
       for (const s in orig.modificadores) {

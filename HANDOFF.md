@@ -126,13 +126,20 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
        - *Libre:* Rutina deportiva y gimnasio a tu propio ritmo.
     5. 🏫 **Escuela / Territorio:** En adolescencia reaccionan el Preceptor Walter y la Profesora Rossi; en militancia reaccionan el Compañero de Agrupación, Don Tito (referente barrial), el Rival de Agrupación y Doña Rosa (vecina almacenera).
   - **Filtros Dinámicos:** Botones para filtrar por `Destacados`, `👍 Te bancan`, `👎 Tensión / Reclamo`, `🎭 Dudas` y `Todos`.
-  - **Cargos Públicos Preservados:** En Congreso Nacional (`diputado`) y Casa Rosada (`presidente`), se activa automáticamente el termómetro nacional de 47 figuras públicas paródicas.
+### H. Métricas Granulares de Desarrollo y Salud Personal (Sin Restricción de Múltiplos de 5):
+- **Problema Observado:** Inicialmente, tanto los porcentajes base (75%, 80%, 70%) como las variaciones (`+20%`, `-5%`, `+25%`) operaban exclusivamente con múltiplos de 5. Esto provocaba una sensación de rigidez artificial y predecible en las 5 tarjetas de desarrollo personal del adolescente.
+- **Solución Implementada (`origenes_relaciones.js`, `motor.js`, `entorno_cercano.js`, `index.html`):**
+  - **Líneas Base Orgánicas por Cuna:** Cada origen socioeconómico (`cuna_oro`, `cuna_popular`, `dinastia_feudal`, `clase_media_universitaria`, default) inicia con valores estadísticos naturales y asimétricos (ej. estudios: 78%, saludFisica: 73%, saludMental: 72%, relaciones: 67%, deportes: 74%).
+  - **Deltas y Variaciones Asimétricas en Dilemas:** Los impactos adolescentes de `juv_15_anos` y `juv_18_anos` ahora aplican deltas granulares de números pares, impares y primos (`+18%`, `-4%`, `+6%`, `+23%`, `-7%`, `+11%`, `+26%`, etc.).
+  - **Clamping Seguro [0, 100]:** Todos los cálculos garantizan que los valores permanezcan dentro de rangos viables enteros sin generar números flotantes ni desbordar los límites.
+  - **Prueba Unitaria 130:** Se incorporó en `validar_sistema.js` la verificación de diversidad basal, presencia de diferenciales no múltiplos de 5 en todas las opciones de dilemas, y la consistencia matemática de la actualización de estado.
 
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
 Para preservar la estabilidad del proyecto en futuros sprints:
-1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **129 de 129 pruebas PASADAS**.
+1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **130 de 130 pruebas PASADAS**.
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.
 3. **Vanilla JS Nativo:** No añadir scripts de empaquetado o dependencias npm requeridas para correr en el navegador; el juego debe poder jugarse abriendo directamente `index.html` en cualquier navegador web moderno.
 4. **Handoff Permanente:** Ante cualquier modificación sustancial, actualizar este archivo `HANDOFF.md` y los artefactos de sesión para mantener la trazabilidad completa.
+

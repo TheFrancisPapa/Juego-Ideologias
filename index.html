@@ -6004,7 +6004,7 @@
 
       // 0. Si está en fase cuna / adolescencia: actualizar métricas formativas
       if (motorJuego.faseActual === 'cuna') {
-        const adol = motorJuego.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+        const adol = motorJuego.perfilAdolescente || { estudios: 74, saludFisica: 79, saludMental: 73, relaciones: 71, deportes: 76 };
         const elEst = document.getElementById('hud-adol-estudios');
         if (elEst) elEst.innerText = `${adol.estudios}%`;
         const elFis = document.getElementById('hud-adol-fisica');
@@ -7304,7 +7304,7 @@
       const container = document.getElementById('interlude-adolescente-container');
       if (!container) return;
 
-      const adolActual = motorJuego.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+      const adolActual = motorJuego.perfilAdolescente || { estudios: 74, saludFisica: 79, saludMental: 73, relaciones: 71, deportes: 76 };
       const adolPrev = (snapshotPrevio && snapshotPrevio.perfilAdolescente)
         ? snapshotPrevio.perfilAdolescente
         : adolActual;
@@ -12272,7 +12272,7 @@
       document.getElementById('turn-badge').classList.add('hidden');
       document.getElementById('screen-mayoria-edad').classList.remove('hidden');
 
-      const adol = motorJuego.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+      const adol = motorJuego.perfilAdolescente || { estudios: 74, saludFisica: 79, saludMental: 73, relaciones: 71, deportes: 76 };
       const elEst = document.getElementById('mayoria-stat-estudios');
       if (elEst) elEst.innerText = `${adol.estudios}%`;
       const elFis = document.getElementById('mayoria-stat-fisica');

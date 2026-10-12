@@ -4057,6 +4057,37 @@ test("Generación Reactiva en Militancia (Sin Cargo Público) y Métodos Institu
   assert.strictEqual(motor.ocupaCargoPublico(), true, "Como presidente SÍ ocupa cargo público");
 });
 
+test("Métricas y Números Granulares de Desarrollo Adolescente (No limitados a múltiplos de 5)", () => {
+  const motor = new MotorJuego();
+  motor.iniciarModoCuna('cuna_popular');
+
+  // Verificar que el baseline contiene números no múltiplos de 5
+  const statsCuna = Object.values(motor.perfilAdolescente);
+  const noMultiplo5Baseline = statsCuna.some(v => v % 5 !== 0);
+  assert.ok(noMultiplo5Baseline, "El perfil inicial debe contener métricas orgánicas no múltiplos de 5");
+
+  // Verificar que las opciones de DILEMAS_CRECIMIENTO tienen impactos variados
+  const d15 = DILEMAS_CRECIMIENTO.find(d => d.id === 'juv_15_anos');
+  const d18 = DILEMAS_CRECIMIENTO.find(d => d.id === 'juv_18_anos');
+  
+  const todosImpactos = [];
+  [...d15.opciones, ...d18.opciones].forEach(opc => {
+    if (opc.impactoAdolescente) {
+      Object.values(opc.impactoAdolescente).forEach(v => todosImpactos.push(v));
+    }
+  });
+
+  const noMultiplo5Impactos = todosImpactos.filter(v => v !== 0 && v % 5 !== 0);
+  assert.ok(noMultiplo5Impactos.length >= 10, "Debe haber una amplia mayoría de impactos que no sean múltiplos de 5");
+
+  // Aplicar decisión y corroborar aplicación limpia
+  const opcEstudio = d15.opciones.find(o => o.id === 'centro_estudiantes');
+  const prevEstudios = motor.perfilAdolescente.estudios;
+  motor.aplicarDecision(opcEstudio);
+  assert.strictEqual(motor.perfilAdolescente.estudios, prevEstudios + opcEstudio.impactoAdolescente.estudios);
+  assert.strictEqual(motor.perfilAdolescente.estudios % 5 !== 0, true, "El valor final de estudios debe ser un número orgánico");
+});
+
 console.log("\n=================================================================");
 
 console.log(`🏁 RESULTADO FINAL: ${testsPasados} de ${testsTotales} pruebas PASADAS`);

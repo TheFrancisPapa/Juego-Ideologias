@@ -488,7 +488,7 @@
   function obtenerReaccionesEntornoCercano(params = {}) {
     const fase = params.fase || 'cuna';
     const opcionElegida = params.opcionElegida || { texto: "" };
-    const perfilAdol = params.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+    const perfilAdol = params.perfilAdolescente || { estudios: 74, saludFisica: 79, saludMental: 73, relaciones: 71, deportes: 76 };
     
     // Configuración de estado afectivo y deportivo (por defecto ambos activos)
     const config = Object.assign({
