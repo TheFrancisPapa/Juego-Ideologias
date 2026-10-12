@@ -358,6 +358,7 @@ class MotorJuego {
     if (this.sistemaLegislativo) {
       this.sistemaLegislativo.sincronizarConMotor(this);
     }
+    this.limiteDilemasPorFase = null;
   }
 
 
@@ -382,11 +383,15 @@ class MotorJuego {
     this.cargarDilemasDeFase(this.faseActual);
   }
 
-  iniciarModoCuna(origenId = 'cuna_popular') {
+  iniciarModoCuna(origenId = 'cuna_popular', ritmo = null) {
     this.reiniciar();
     this.carrera = 'cuna';
     this.faseActual = 'cuna';
     this.modoInicio = 'cuna';
+    if (ritmo) {
+      this.limiteDilemasPorFase = ritmo;
+      this.configurarRitmoSemanal(ritmo === 1 ? 'decreto' : (ritmo === 7 ? 'trinchera' : 'parlamentario'));
+    }
 
     const orig = ORIGENES_CUNA[origenId] || ORIGENES_CUNA.cuna_popular;
     this.origenElegido = orig;
@@ -396,6 +401,14 @@ class MotorJuego {
     this.saludSupervivencia.paranoia = 5;
     this.saludSupervivencia.seguridad = 50;
     this.saludSupervivencia.nombreMandatario = `Joven de ${orig.nombre}`;
+
+    this.perfilAdolescente = {
+      estudios: 75,
+      saludFisica: 80,
+      saludMental: 75,
+      relaciones: 70,
+      deportes: 75
+    };
 
     if (orig.modificadores) {
       for (const s in orig.modificadores) {
@@ -421,11 +434,15 @@ class MotorJuego {
     return orig;
   }
 
-  iniciarModoBarro(cargoId = 'concejal_conurbano', edad = null) {
+  iniciarModoBarro(cargoId = 'concejal_conurbano', edad = null, ritmo = null) {
     this.reiniciar();
     this.carrera = 'militante';
     this.faseActual = 'militante';
     this.modoInicio = 'barro';
+    if (ritmo) {
+      this.limiteDilemasPorFase = ritmo;
+      this.configurarRitmoSemanal(ritmo === 1 ? 'decreto' : (ritmo === 7 ? 'trinchera' : 'parlamentario'));
+    }
 
     const cargo = CARGOS_BARRO[cargoId] || CARGOS_BARRO.concejal_conurbano;
     this.cargoBarroElegido = cargo;
@@ -452,11 +469,15 @@ class MotorJuego {
     return cargo;
   }
 
-  iniciarModoPresidente(rangoId = 'candidato_aparato', edad = null) {
+  iniciarModoPresidente(rangoId = 'candidato_aparato', edad = null, ritmo = null) {
     this.reiniciar();
     this.carrera = 'presidente';
     this.faseActual = 'presidente';
     this.modoInicio = 'presidente';
+    if (ritmo) {
+      this.limiteDilemasPorFase = ritmo;
+      this.configurarRitmoSemanal(ritmo === 1 ? 'decreto' : (ritmo === 7 ? 'trinchera' : 'parlamentario'));
+    }
 
     const rango = RANGOS_PRESIDENTE[rangoId] || RANGOS_PRESIDENTE.candidato_aparato;
     this.rangoPresidenteElegido = rango;
@@ -1121,7 +1142,8 @@ class MotorJuego {
   }
 
   obtenerDilemaActual() {
-    if (this.indiceDilema >= this.dilemasFase.length) {
+    const limite = this.limiteDilemasPorFase || this.dilemasFase.length;
+    if (this.indiceDilema >= Math.min(limite, this.dilemasFase.length)) {
       return null;
     }
 
@@ -1272,6 +1294,14 @@ class MotorJuego {
       if (s.coronarias !== undefined) this.saludSupervivencia.coronarias += s.coronarias;
       if (s.paranoia !== undefined) this.saludSupervivencia.paranoia += s.paranoia;
       if (s.seguridad !== undefined) this.saludSupervivencia.seguridad += s.seguridad;
+    }
+
+    if (opcion.impactoAdolescente && this.perfilAdolescente) {
+      for (const k in opcion.impactoAdolescente) {
+        if (this.perfilAdolescente[k] !== undefined) {
+          this.perfilAdolescente[k] = Math.max(5, Math.min(95, this.perfilAdolescente[k] + opcion.impactoAdolescente[k]));
+        }
+      }
     }
 
     // Desgaste biológico continuo de la gestión argentina

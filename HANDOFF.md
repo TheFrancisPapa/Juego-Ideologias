@@ -1,6 +1,6 @@
 # 📜 HANDOFF DE PROYECTO: EL SILLÓN DEL PODER
 > **Documento Vivo de Continuidad, Arquitectura y Estado de Trabajo**
-> **Última Actualización:** 2026-10-11
+> **Última Actualización:** 2026-10-12
 > **Rama Git:** `main` | **Tests:** 126/126 PASADOS
 
 ---
@@ -50,76 +50,49 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
 | `dinastias_nepotismo.js` | Clan familiar en Olivos, doble comando conyugal, nepotismo y reencarnación en el heredero. |
 | `ritmo_cadena_semanal.js` | Ciclo semanal (Lunes a Domingo), agenda política y radar de hipocresía. |
 | `salud_supervivencia.js` | Unidad Médica Presidencial (UMP), signos vitales, coronarias, paranoia y catálogo de muertes. |
-| `origenes_relaciones.js` | Cuna socioeconómica inicial y el menú de las 5 relaciones peligrosas. |
+| `origenes_relaciones.js` | Orígenes familiares de juventud, dilemas de formación adolescente y menú de relaciones peligrosas. |
 
 ---
 
-## 4. 🎨 Rediseño Visual & UX: Dilema al Frente, Telemetría en Pestañas y HUD Adaptativo
+## 4. 🎯 Logros Recientes & Rediseño de Experiencia de Usuario (Sprint Octubre 2026)
 
-### El Problema Resuelto (Sobrecarga de Información y Ruptura Narrativa):
-Al iniciar partida en cualquiera de los 3 modos, la pantalla arrojaba 6 paneles gigantescos apilados verticalmente (Mesa Chica de los 5 Despachos, Sectores Sociales, Macroeconomía, Termómetro Criollo, Salud UMP, Brújula de 12 ejes). Esto causaba:
-1. **Dilema Enterrado:** El jugador debía scrollear ~1500px hacia abajo solo para leer su primer dilema.
-2. **Inconsistencia de Rol:** En el modo "Desde la Cuna" (a los 0 años de edad) o en "Salto al Barro" (concejal local), la cabecera proclamaba estáticamente *"MANDATARIO EN EJERCICIO - Despacho Presidencial • Casa Rosada"*, con botones de helicóptero presidencial y monitor de Olivos.
+### A. Selector de Ritmo de Gestión (1, 3 o 7 Dilemas):
+- **Ubicación en Bienvenida:** Añadido en `screen-welcome` como **"Paso 1: ¿Cuántos dilemas querés tratar por etapa / semana?"**.
+- **Opciones Seleccionables:**
+  - ⚡ **1 Dilema (Modo Exprés / Decreto):** 1 sola decisión clave por etapa (10-15 min).
+  - ⚖️ **3 Dilemas (Modo Parlamentario) [Recomendado]:** La Medida, La Reacción y El Desenlace (25-35 min).
+  - 🛡️ **7 Dilemas (Modo Trinchera Profunda):** Inmersión día a día de lunes a domingo (45-60 min).
+- **Lógica de Motor:** Controlado mediante `motorJuego.limiteDilemasPorFase` y evaluado en `obtenerDilemaActual()`.
 
-### Arquitectura de la Solución:
-1. **Barra Superior HUD Dinámica (`player-identity-bar`):**
-   - **Identidad según el modo:**
-     - `cuna`: `👶 DESDE LA CUNA: INFANCIA Y JUVENTUD` (con origen familiar específico, ej: *Cuna Militante / Barrio Popular • Crianza, Escuela y Conciencia Social*).
-     - `militante`: `🚧 SALTO AL BARRO POLÍTICO` (con cargo inicial, ej: *Concejal de Municipio del Conurbano • Militancia, Territorio y Concejo Deliberante*).
-     - `presidente`: `🏛️ MANDATARIO EN EJERCICIO` (*Despacho Presidencial • Casa Rosada*).
-   - **Badge de Edad en Vivo:** Se actualiza turno a turno (`0 Años`, `6 Años`, `25 Años`, `30 Años`).
-   - **Micro-Pills de Telemetría Clave:** Indicadores at-a-glance (`👥 Apoyo: X%`, `💵 Dólar: $X`, `💣 Mecha: X%`, `🏦 BCRA: USD XM`).
-   - **Botón de Enlace Rápido:** `[ 📊 Ver Tableros ▾ ]` con smooth scroll hacia la consola inferior.
+### B. Rediseño Total de Modo A: Juventud & Formación (Adolescencia: 14 a 18 Años):
+- **Superación del concepto de "Nacer":** Se eliminó la contradicción narrativa de "nacer a los 0 años pero tener 15 años de inmediato".
+- **Enfoque 100% Adolescente:**
+  - **Estudios:** Materias, talleres, rendimiento académico y promedio escolar.
+  - **Salud Integral:** Salud física, resistencia, salud mental y equilibrio psicológico frente al estrés.
+  - **Relaciones:** Lazos familiares, amistades de colegio y grupo de pares.
+  - **Deportes:** Club de barrio, potrero, entrenamiento y compañerismo.
+- **Entornos Familiares de Partida (compatibilidad de IDs):**
+  - `cuna_oro`: Familia Tradicional / Barrio Residencial (San Isidro / Recoleta).
+  - `cuna_popular`: Hogar Trabajador & Club de Barrio (Conurbano / Periferia).
+  - `dinastia_feudal`: Tradición Cívica Institucional (Interior Provincial / Cuyo).
 
-2. **Tarjeta del Dilema Principal al Frente (`dilemma-card-main`):**
-   - Ubicada inmediatamente debajo del HUD, visible al 100% sin scroll al comenzar el turno.
-   - Contiene el badge de etapa, área de gobierno, título del dilema, descripción pedagógica, glosario interactivo, botón explicativo y opciones de respuesta graduadas.
-   - Aloja el panel de interludio con reacciones de medios, famosos, calle y redes sociales.
+### C. Telemetría Aislada para Adolescencia (Cero Sobrecarga Adulta):
+- Al jugar en modo Cuna:
+  - **HUD Superior:** Muestra micro-pills específicas de juventud (`📚 Estudios: 75%`, `🏃 Salud Física: 80%`, `🧠 Salud Mental: 75%`, `🤝 Vínculos: 70%`, `⚽ Deporte: 75%`). Se ocultan las variables de adulto (Dólar Blue, BCRA, Mecha de estallido).
+  - **Consola Inferior:** Se ocultan los Despachos de la Rosada, la Mesa de Dinero del BCRA y la Macroeconomía. Se activa la pestaña única: **🎒 Mi Vida Adolescente: Hábitos, Rendimiento y Salud Integral**, con tarjetas visuales y barras de progreso.
 
-3. **Centro de Operaciones y Telemetría en Pestañas (`operations-console`):**
-   - Reorganizado debajo del dilema principal en un contenedor elegante con selector de pestañas:
-     - 🏛️ **Despachos Rosada (`pane-despachos`):** Grilla de 5 despachos de la Rosada (oculta automáticamente en Cuna y Barro).
-     - 👥 **Apoyo Social (`pane-sectores`):** Sectores sociales argentinos (`sectors-grid`).
-     - 📈 **Macro & Mecha (`pane-macro`):** Tablero macroeconómico (`macro-grid`) y Termómetro Criollo (`termometro-criollo-grid`).
-     - 🩺 **Salud & Vida (`pane-salud`):** Monitor UMP y Reloj de Vida (`salud-supervivencia-grid`, oculta en Cuna y Barro).
-     - 🧭 **Brújula 12 Ejes (`pane-brujula`):** Brújula ideológica interactiva en vivo (`brujula-ejes-grid`).
-   - **Contratos DOM 100% Preservados:** Todos los IDs originales se mantuvieron idénticos para que las funciones de renderizado (`renderizarSectores`, `renderizarMacro`, etc.) sigan funcionando de forma impecable sin tocar la lógica de negocio.
-
----
-
-## 5. 🛠️ Corrección Previa: Activación de los 3 Botones de Inicio de Partida
-1. **Causa Raíz Real:** Conflicto de ámbito léxico global en navegadores por redeclaración de constantes (`ESQUEMAS_PAUTA`, etc.) entre scripts.
-2. **Solución Implementada:** Encapsulación de `motor.js` en una IIFE universal y vinculación de `window.motorJuego`.
-3. **Verificación:** Ejecutado en motor real Chromium (Edge headless) con conmutación confirmada en los 3 modos.
+### D. Hito Vital a los 18 Años (`screen-mayoria-edad`):
+- Al concluir los dilemas adolescentes (15 y 18 años), no se arroja al jugador a una urna legislativa inapropiada.
+- Se presenta una pantalla de celebración: **🎓 ¡Concluiste tu Adolescencia y Llegaste a los 18!**.
+- Resume el desempeño escolar, físico, mental y social.
+- Explica la adquisición de plenos derechos cívicos (Art. 37 CN / Ley 26.774) y el **desbloqueo de nuevos retos y métricas adultas** (Sectores sociales, macroeconomía y participación comunitaria).
+- El botón **"Dar el Salto a la Vida Adulta y Asumir Nuevos Retos"** transiciona fluidamente a la siguiente etapa formativa / territorial.
 
 ---
 
-## 6. ⚠️ Reglas Técnicas y Contratos Inmutables
+## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
 Para preservar la estabilidad del proyecto en futuros sprints:
 1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **126 de 126 pruebas PASADAS**.
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.
-3. **Desempate Vicepresidencial:** Las variables de desempate en `simularVotacionLey` deben tener scope fuera del bloque condicional de diputados.
-4. **Cero Dependencias Binarias Pesadas:** No agregar archivos MP3, WAV ni frameworks que requieran compilación previa; todo debe funcionar abriendo `index.html` en el navegador.
-5. **Rigor Constitucional:** Respetar los artículos de la Constitución Nacional (Arts. 23, 30, 40, 48, 50, 54, 55, 56, 57, 68, 69, 77-84, 88, 89, 99 inc. 3).
-
----
-
-## 7. 📋 Backlog / Próximos Pasos Sugeridos
-- [ ] **Guardado y Continuación de Partidas:** Persistir en `localStorage` el snapshot de `motorJuego` para reanudar partidas tras recargar el navegador.
-- [ ] **Modo Acta Oficial / Boletín Oficial:** Estilo visual temático símil papel sellado con tipografía mecanografiada para visualizar decretos y resoluciones.
-- [ ] **Exportación de Veredicto Final:** Botón para copiar resumen del mandato presidencial o descargar tarjeta en imagen para compartir en redes.
-- [ ] **Animaciones de Transición:** Suavizar transiciones entre la pantalla de bienvenida, dilemas y veredicto final.
-
----
-
-## 8. 🛠️ Comandos de Verificación Rápida
-```bash
-# 1. Ejecutar suite de pruebas completa:
-node validar_sistema.js
-
-# 2. Ver estado de git:
-git status
-
-# 3. Ver historial reciente:
-git log -n 5 --oneline
-```
+3. **Vanilla JS Nativo:** No añadir scripts de empaquetado o dependencias npm requeridas para correr en el navegador; el juego debe poder jugarse abriendo directamente `index.html` en cualquier navegador web moderno.
+4. **Handoff Permanente:** Ante cualquier modificación sustancial, actualizar este archivo `HANDOFF.md` y los artefactos de sesión para mantener la trazabilidad completa.

@@ -990,48 +990,51 @@ function evaluarHitoDesbloqueoLegal(edadActual, edadPrevia = 0) {
 }
 
 // =========================================================================
-// 4. DILEMAS DE CRECIMIENTO INFANTIL Y ADOLESCENTE (FASE CUNA: 15 Y 18 AÑOS)
+// 4. DILEMAS FORMATIVOS DE ADOLESCENCIA & JUVENTUD (15 Y 18 AÑOS)
 // =========================================================================
 const DILEMAS_CRECIMIENTO = [
   {
     id: "juv_15_anos",
     fase: "cuna",
-    etapaBadge: "Fase 0: Adolescencia (15 Años)",
-    area: "Iniciación Cívica & Calle",
-    titulo: "¿En qué trinchera te curtís a los 15 años?",
-    descripcion: "Tenés 15 años en una Argentina en crisis perpetua. La secundaria pública se cae a pedazos o el colegio privado es una burbuja. Llega el momento de tu primera decisión de calle.",
+    etapaBadge: "Adolescencia • 15 Años (Secundaria)",
+    area: "Estudios, Deporte & Salud Integral",
+    titulo: "La Vida Adolescente: Estudios, Deporte y Salud Integral",
+    descripcion: "Tenés 15 años y cursás el secundario. La rutina te pone a prueba: la exigencia de las materias y los exámenes, el club o el deporte para cuidar el físico, tu salud mental y psicológica ante el estrés y las expectativas familiares, y el tiempo compartido con tus amigos. ¿En qué decidís enfocar tus hábitos y tu energía durante esta etapa formativa?",
     explicacion: {
-      queMide: "Vocación militante combativa vs. roce popular deportivo vs. pragmatismo financiero barrani.",
-      siFavor: "Define tu afinidad ideológica inicial y tus lazos de lealtad generacionales.",
-      siContra: "Cada camino te gana respeto en un nicho pero te cierra puertas en otro."
+      queMide: "Prioridades del desarrollo adolescente: disciplina intelectual y académica vs. superación física y deportiva vs. bienestar psicológico, contención emocional y lazos de amistad.",
+      siFavor: "Forja el carácter, hábitos de vida saludables y la estructura emocional que te acompañará hacia la vida adulta.",
+      siContra: "Descuidar la salud física, el estudio o el equilibrio mental en la adolescencia genera vacíos y costos de adaptación más adelante."
     },
     opciones: [
       {
         id: "centro_estudiantes",
-        texto: "A) Meterte al Centro de Estudiantes y encabezar la toma del colegio exigiendo presupuesto edilicio y viandas dignas.",
-        impacto12Axes: { institucionalidad: 35, estatismo: 20, valores: 30 },
-        impactoSectores: { trabajo: +15, estadoCiencia: +15, seguridadJusticia: -15 },
+        texto: "A) Foco en los Estudios y Rendimiento Escolar: Priorizar las materias, talleres y lectura académica para asegurar un promedio alto y proyectar tu futuro, aunque implique resignar horas de ocio.",
+        impacto12Axes: { institucionalidad: 45, valores: 35 },
+        impactoSectores: { estadoCiencia: +15, claseMedia: +10, trabajo: +5 },
         impactoMacro: {},
-        impactoCriollo: { mechaSocial: +8 },
-        impactoSalud: { coronarias: +5, paranoia: +5, seguridad: -5 }
+        impactoCriollo: { mechaSocial: -5 },
+        impactoSalud: { coronarias: +5, paranoia: +5, seguridad: +5 },
+        impactoAdolescente: { estudios: +20, saludFisica: -5, saludMental: +5, relaciones: +5, deportes: -5 }
       },
       {
         id: "inferiores_ascenso",
-        texto: "B) Probarte en las inferiores de un club del ascenso (Chicago, Morón o Chacarita) bancando el barro y el vestuario pesado.",
+        texto: "B) Deporte, Club y Salud Física: Volcarte de lleno a la disciplina deportiva y el entrenamiento en el club de barrio o escuela, forjando resistencia, compañerismo y cuidado de tu salud física.",
         impacto12Axes: { valores: 60, seguridad: 40 },
-        impactoSectores: { trabajo: +10, claseMedia: 0 },
+        impactoSectores: { trabajo: +10, claseMedia: +5 },
         impactoMacro: {},
         impactoCriollo: { humorAfaScaloneta: +15 },
-        impactoSalud: { coronarias: +10, paranoia: -5, seguridad: +5 }
+        impactoSalud: { coronarias: +15, paranoia: -10, seguridad: +10 },
+        impactoAdolescente: { estudios: -5, saludFisica: +25, saludMental: +10, relaciones: +10, deportes: +25 }
       },
       {
         id: "cueva_colegio",
-        texto: "C) Armar una cueva de dólares blue en el recreo de la escuela cobrándoles comisión a los profesores y compañeros.",
-        impacto12Axes: { estatismo: 85, regulacion: 80, valores: 70 },
-        impactoSectores: { productivo: +15, claseMedia: +10, trabajo: -10 },
-        impactoMacro: { inflacionMensual: +0.1 },
-        impactoCriollo: { dolarBlue: +25 },
-        impactoSalud: { coronarias: 0, paranoia: +10, seguridad: 0 }
+        texto: "C) Salud Mental, Relaciones y Grupo de Pares: Priorizar el equilibrio psicológico, dialogar con tu familia y acompañar a tus amigos en sus momentos difíciles, construyendo vínculos afectivos sanos y empatía.",
+        impacto12Axes: { valores: 50, institucionalidad: 50 },
+        impactoSectores: { trabajo: +10, claseMedia: +10 },
+        impactoMacro: {},
+        impactoCriollo: { mechaSocial: -10 },
+        impactoSalud: { coronarias: +10, paranoia: -15, seguridad: +5 },
+        impactoAdolescente: { estudios: +5, saludFisica: +5, saludMental: +20, relaciones: +25, deportes: +5 }
       }
     ]
   },
@@ -1039,42 +1042,45 @@ const DILEMAS_CRECIMIENTO = [
   {
     id: "juv_18_anos",
     fase: "cuna",
-    etapaBadge: "Fase 0: Juventud (18 Años)",
-    area: "Destino Profesional & Poder",
-    titulo: "Cumplís 18 Años: La Puerta de Entrada al Sistema",
-    descripcion: "Terminás el secundario con el país al borde de otra corrida cambiaria. Necesitás elegir tu trampolín para disputar el poder real.",
+    etapaBadge: "Umbral Cívico • 18 Años (Mayoría de Edad)",
+    area: "Proyecto de Vida & Nuevos Retos",
+    titulo: "Cumplís 18 Años: El Gran Planteo de Cómo Continuar",
+    descripcion: "Terminás el secundario y cumplís los 18 años. Adquirís la mayoría de edad plena y tus derechos políticos y civiles (Arts. 25 CCyC y Ley 26.774). Se abre el gran interrogante de tu futuro: cómo encarar tus estudios superiores, tu inserción en el trabajo o tu compromiso con la comunidad. A partir de acá se desbloquean tus nuevos retos y métricas de vida ciudadana.",
     explicacion: {
-      queMide: "Rosca tribunalicia/académica vs. tecnocracia de mercado vs. fuerza de choque territorial.",
-      siFavor: "Define tu inserción en el aparato del Estado o en el submundo de la militancia.",
-      siContra: "Determina si tu carrera futura se apoya en expedientes, en planillas de Excel o en el asfalto."
+      queMide: "Rumbo vital de inserción adulta: educación superior universitaria vs. independencia laboral y oficio vs. vocación pública y participación social comunitaria.",
+      siFavor: "Determina tus herramientas de autonomía, tu red de relaciones adultas y el trampolín para los retos del país real.",
+      siContra: "Cada camino exige responsabilidades nuevas y define el perfil con el que te plantarás ante la sociedad."
     },
     opciones: [
       {
         id: "abogacia_uba",
-        texto: "A) Estudiar Abogacía en la UBA: rosca en los pasillos de Figueroa Alcorta, pasantía ad-honorem en un juzgado federal y asambleas estudiantiles.",
+        texto: "A) Universidad Pública y Formación Superior: Inscribirte en la universidad nacional para estudiar una carrera de vocación pública o científica, combinando estudio riguroso con participación en el claustro estudiantil.",
         impacto12Axes: { institucionalidad: 50, valores: 40 },
-        impactoSectores: { estadoCiencia: +15, seguridadJusticia: +10 },
+        impactoSectores: { estadoCiencia: +20, claseMedia: +10, trabajo: +5 },
         impactoMacro: {},
         impactoCriollo: { roscaGobernadores: +10 },
-        impactoSalud: { coronarias: -5, paranoia: +10, seguridad: +5 }
+        impactoSalud: { coronarias: +5, paranoia: +5, seguridad: +5 },
+        impactoAdolescente: { estudios: +25, saludFisica: 0, saludMental: +10, relaciones: +15, deportes: 0 }
       },
       {
         id: "economia_cema",
-        texto: "B) Estudiar Economía en la UCA o Di Tella: pasantías en consultoras de la City, contactos con CEOs y armar planillas de Excel para el FMI.",
-        impacto12Axes: { estatismo: 80, comercio: 85, regulacion: 75 },
-        impactoSectores: { productivo: +20, frenteExterno: +15, trabajo: -15 },
-        impactoMacro: { riesgoPais: -30 },
-        impactoCriollo: { dolarBlue: -20 },
-        impactoSalud: { coronarias: -2, paranoia: +5, seguridad: +10 }
+        texto: "B) Carrera Técnica, Especialización & Mercado: Enfocarte en carreras tecnológicas, productivas o de negocios, buscando pasantías laborales tempranas y solvencia económica orientada al sector privado.",
+        impacto12Axes: { estatismo: 70, comercio: 75, regulacion: 65 },
+        impactoSectores: { productivo: +20, frenteExterno: +15, trabajo: -5 },
+        impactoMacro: { riesgoPais: -20 },
+        impactoCriollo: { dolarBlue: -15 },
+        impactoSalud: { coronarias: 0, paranoia: +5, seguridad: +10 },
+        impactoAdolescente: { estudios: +20, saludFisica: +5, saludMental: +5, relaciones: +5, deportes: +5 }
       },
       {
         id: "paravalanchas_tribuna",
-        texto: "C) Subirte al paravalanchas de la tribuna local: organizar los micros, manejar el negocio de los trapitos y hacerle los favores pesados al intendente.",
-        impacto12Axes: { seguridad: 20, institucionalidad: 20, estatismo: 40 },
-        impactoSectores: { trabajo: +15, seguridadJusticia: -20 },
+        texto: "C) Trabajo Inmediato, Oficio & Compromiso Territorial: Salir a laburar para tener independencia económica propia, aprendiendo un oficio y sumándote a la comisión de tu club de barrio, centro vecinal o trinchera comunitaria.",
+        impacto12Axes: { seguridad: 30, institucionalidad: 40, estatismo: 45 },
+        impactoSectores: { trabajo: +20, seguridadJusticia: +5 },
         impactoMacro: {},
-        impactoCriollo: { mechaSocial: +12, roscaGobernadores: +15 },
-        impactoSalud: { coronarias: +5, paranoia: +20, seguridad: -15 }
+        impactoCriollo: { mechaSocial: -5, roscaGobernadores: +10 },
+        impactoSalud: { coronarias: +10, paranoia: 0, seguridad: +5 },
+        impactoAdolescente: { estudios: 0, saludFisica: +15, saludMental: +10, relaciones: +25, deportes: +15 }
       }
     ]
   }

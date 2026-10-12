@@ -119,71 +119,112 @@
         </p>
       </div>
 
+      <!-- SELECTOR DE RITMO DE GESTIÓN (1, 3 O 7 DILEMAS) -->
+      <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-amber-500/40 bg-slate-900/90 shadow-xl max-w-3xl mx-auto space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400 flex items-center gap-2">
+            <i class="fa-solid fa-stopwatch text-amber-400"></i> Paso 1: ¿Cuántos dilemas querés tratar por etapa / semana?
+          </span>
+          <span id="badge-ritmo-seleccionado" class="text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded border border-amber-500/40">
+            3 Dilemas (Equilibrado)
+          </span>
+        </div>
+        <p class="text-xs text-slate-300">
+          Elegí la profundidad y ritmo de tus decisiones políticas y de vida:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+          <button type="button" onclick="seleccionarRitmoJuego(1)" id="btn-ritmo-1" class="btn-ritmo-card p-3 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-amber-400 text-left transition-all opacity-80 cursor-pointer">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-amber-300 text-xs">⚡ 1 Dilema</span>
+              <span class="text-[9px] text-slate-400 font-mono">10-15 min</span>
+            </div>
+            <p class="text-[11px] text-slate-200 font-semibold">Modo Exprés / Decreto</p>
+            <p class="text-[10px] text-slate-400 leading-tight mt-0.5">Una sola decisión crucial y definitoria por etapa.</p>
+          </button>
+          <button type="button" onclick="seleccionarRitmoJuego(3)" id="btn-ritmo-3" class="btn-ritmo-card p-3 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-left transition-all shadow-md cursor-pointer">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-amber-300 text-xs">⚖️ 3 Dilemas</span>
+              <span class="text-[9px] text-amber-300 font-mono font-bold">Recomendado</span>
+            </div>
+            <p class="text-[11px] text-white font-semibold">Modo Parlamentario</p>
+            <p class="text-[10px] text-slate-300 leading-tight mt-0.5">La Medida, La Reacción y El Desenlace de gestión.</p>
+          </button>
+          <button type="button" onclick="seleccionarRitmoJuego(7)" id="btn-ritmo-7" class="btn-ritmo-card p-3 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-amber-400 text-left transition-all opacity-80 cursor-pointer">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-amber-300 text-xs">🛡️ 7 Dilemas</span>
+              <span class="text-[9px] text-slate-400 font-mono">45-60 min</span>
+            </div>
+            <p class="text-[11px] text-slate-200 font-semibold">Modo Trinchera Profunda</p>
+            <p class="text-[10px] text-slate-400 leading-tight mt-0.5">Gestión día a día de lunes a domingo. Inmersión total.</p>
+          </button>
+        </div>
+      </div>
+
       <!-- LOS TRES PUNTOS DE PARTIDA (ELEGÍ TU ORIGEN) -->
       <div class="space-y-4 pt-2">
         <div class="text-center space-y-1">
           <span class="text-xs font-bold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
-            <i class="fa-solid fa-route mr-1"></i> Tres Puntos de Partida: Elegí tu Origen
+            <i class="fa-solid fa-route mr-1"></i> Paso 2: Elegí tu Punto de Partida
           </span>
-          <h2 class="text-xl sm:text-2xl font-bold font-serif-title text-white">¿Cómo querés arrancar tu árbol genealógico político?</h2>
+          <h2 class="text-xl sm:text-2xl font-bold font-serif-title text-white">¿Desde qué momento querés empezar tu trayectoria?</h2>
           <p class="text-xs text-slate-300 max-w-2xl mx-auto">
-            Desde la cuna familiar a los 0 años, saltando a la trinchera del barro municipal, o asumiendo directamente en el sillón presidencial de Rivadavia.
+            Desde la adolescencia y formación secundaria (14 a 18 años), saltando a la trinchera del barro municipal, o asumiendo directamente en el sillón presidencial de Rivadavia.
           </p>
         </div>
 
         <div class="grid lg:grid-cols-3 gap-4">
           
-          <!-- MODO A: DESDE LA CUNA (0 AÑOS) -->
+          <!-- MODO A: JUVENTUD & FORMACIÓN (ADOLESCENCIA: 14-18 AÑOS) -->
           <div class="glass-panel p-5 rounded-2xl border-2 border-emerald-500/40 bg-slate-900/80 hover:border-emerald-400 transition-all flex flex-col justify-between shadow-xl">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg">
-                  <i class="fa-solid fa-baby"></i>
+                  <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold border border-emerald-500/40">
-                  Modo A • 0 Años
+                  Modo A • 14 a 18 Años
                 </span>
               </div>
               <div>
-                <h3 class="text-base font-bold text-white">Desde la Cuna (Nacer en Argentina)</h3>
+                <h3 class="text-base font-bold text-white">Juventud & Formación (Adolescencia)</h3>
                 <p class="text-[11px] text-slate-300 mt-1 leading-snug">
-                  Arrancás con tu ficha de nacimiento socioeconómica. Jugás los dilemas de adolescencia a los 15 y 18 años antes de saltar a la política.
+                  Viví los años de secundaria y formación personal. Enfocate en estudios, salud física y mental, relaciones y deportes antes de dar el salto a la vida adulta a los 18 años.
                 </p>
               </div>
 
               <!-- Selector de Origen -->
               <div class="space-y-1.5 pt-1">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 block">Seleccioná tu Origen:</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 block">Entorno Familiar de Partida:</span>
                 
                 <div id="btn-orig-oro" onclick="seleccionarOrigenCuna('cuna_oro')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-emerald-400 cursor-pointer transition-all text-left">
                   <div class="flex justify-between items-center text-xs">
-                    <span class="font-bold text-amber-300 flex items-center gap-1.5"><i class="fa-solid fa-champagne-glasses text-[11px]"></i> Cuna de Oro</span>
-                    <span class="text-[9px] text-slate-400">Recoleta / San Isidro</span>
+                    <span class="font-bold text-amber-300 flex items-center gap-1.5"><i class="fa-solid fa-champagne-glasses text-[11px]"></i> Familia Tradicional</span>
+                    <span class="text-[9px] text-slate-400">San Isidro / Recoleta</span>
                   </div>
-                  <p class="text-[10px] text-slate-400 mt-0.5 leading-snug">Apellido patricio y plata limpia. Cero calle; desconfianza en barrios populares.</p>
+                  <p class="text-[10px] text-slate-400 mt-0.5 leading-snug">Colegio privado, club exclusivo, estabilidad económica. Alta exigencia académica; poca calle cotidiana.</p>
                 </div>
 
                 <div id="btn-orig-popular" onclick="seleccionarOrigenCuna('cuna_popular')" class="p-2.5 rounded-xl border-2 border-emerald-400 bg-emerald-500/10 cursor-pointer transition-all text-left shadow-sm">
                   <div class="flex justify-between items-center text-xs">
-                    <span class="font-bold text-emerald-300 flex items-center gap-1.5"><i class="fa-solid fa-people-roof text-[11px]"></i> Cuna Militante Popular</span>
+                    <span class="font-bold text-emerald-300 flex items-center gap-1.5"><i class="fa-solid fa-people-roof text-[11px]"></i> Hogar Trabajador & Club</span>
                     <span class="text-[9px] text-slate-400">Conurbano / Periferia</span>
                   </div>
-                  <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">Ollas populares y club. Negociación cuerpo a cuerpo, cero guita; transas con punteros.</p>
+                  <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">Escuela pública, potrero y solidaridad barrial. Gran empatía, compañerismo y calle; recursos ajustados.</p>
                 </div>
 
                 <div id="btn-orig-feudal" onclick="seleccionarOrigenCuna('dinastia_feudal')" class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-emerald-400 cursor-pointer transition-all text-left">
                   <div class="flex justify-between items-center text-xs">
-                    <span class="font-bold text-rose-300 flex items-center gap-1.5"><i class="fa-solid fa-landmark-dome text-[11px]"></i> Dinastía Feudal</span>
+                    <span class="font-bold text-rose-300 flex items-center gap-1.5"><i class="fa-solid fa-landmark-dome text-[11px]"></i> Tradición Cívica / Interior</span>
                     <span class="text-[9px] text-slate-400">Norte Grande / Cuyo</span>
                   </div>
-                  <p class="text-[10px] text-slate-400 mt-0.5 leading-snug">Tío juez supremo y viejo vicegobernador. Aparato estatal a favor; estigma feudal afuera.</p>
+                  <p class="text-[10px] text-slate-400 mt-0.5 leading-snug">Colegio preuniversitario y círculos cívicos locales. Gran red de contactos institucionales y altas expectativas.</p>
                 </div>
               </div>
             </div>
 
-            <button onclick="iniciarModoCunaUI()" class="mt-4 w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2">
+            <button onclick="iniciarModoCunaUI()" class="mt-4 w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2 cursor-pointer">
               <i class="fa-solid fa-play"></i>
-              <span>Nacer y Crecer (0 Años)</span>
+              <span>Empezar en la Adolescencia (14-18 Años)</span>
             </button>
           </div>
 
@@ -317,8 +358,8 @@
             </div>
           </div>
 
-          <!-- Micro-Pills de Telemetría Clave (Visibles de un solo vistazo) -->
-          <div class="flex flex-wrap items-center gap-2 text-[11px]">
+          <!-- Micro-Pills de Telemetría Clave Adulta (Visibles en Barro / Mandato) -->
+          <div id="hud-pills-adulto" class="flex flex-wrap items-center gap-2 text-[11px]">
             <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-1.5 shadow-sm" title="Apoyo Social Promedio">
               <i class="fa-solid fa-users text-amber-400 text-xs"></i>
               <span class="text-slate-400">Apoyo:</span>
@@ -343,6 +384,39 @@
             <button type="button" onclick="scrollOAlternarConsola()" class="px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-500/40 hover:bg-amber-500/25 text-amber-300 font-semibold text-[11px] flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
               <i class="fa-solid fa-sliders text-amber-400"></i>
               <span id="hud-btn-consola-label">Ver Tableros ▾</span>
+            </button>
+          </div>
+
+          <!-- Micro-Pills de Formación Adolescente (Visibles en Cuna / Adolescencia) -->
+          <div id="hud-pills-adolescente" class="hidden flex flex-wrap items-center gap-2 text-[11px]">
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-sky-500/30 flex items-center gap-1.5 shadow-sm" title="Rendimiento Académico y Estudio">
+              <i class="fa-solid fa-book-open text-sky-400 text-xs"></i>
+              <span class="text-slate-400">Estudios:</span>
+              <span id="hud-adol-estudios" class="font-bold text-sky-300 font-mono">75%</span>
+            </div>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-emerald-500/30 flex items-center gap-1.5 shadow-sm" title="Salud Física & Estado Corporal">
+              <i class="fa-solid fa-person-running text-emerald-400 text-xs"></i>
+              <span class="text-slate-400">Salud Física:</span>
+              <span id="hud-adol-fisica" class="font-bold text-emerald-300 font-mono">80%</span>
+            </div>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-violet-500/30 flex items-center gap-1.5 shadow-sm" title="Salud Mental, Bienestar Emocional & Ánimo">
+              <i class="fa-solid fa-brain text-violet-400 text-xs"></i>
+              <span class="text-slate-400">Salud Mental:</span>
+              <span id="hud-adol-mental" class="font-bold text-violet-300 font-mono">75%</span>
+            </div>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-amber-500/30 flex items-center gap-1.5 shadow-sm" title="Relaciones de Amistad y Contención Familiar">
+              <i class="fa-solid fa-user-group text-amber-400 text-xs"></i>
+              <span class="text-slate-400">Vínculos:</span>
+              <span id="hud-adol-relaciones" class="font-bold text-amber-300 font-mono">70%</span>
+            </div>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-teal-500/30 flex items-center gap-1.5 shadow-sm" title="Deporte, Club y Disciplina">
+              <i class="fa-solid fa-futbol text-teal-400 text-xs"></i>
+              <span class="text-slate-400">Deporte:</span>
+              <span id="hud-adol-deportes" class="font-bold text-teal-300 font-mono">75%</span>
+            </div>
+            <button type="button" onclick="scrollOAlternarConsola()" class="px-3 py-1 rounded-lg bg-sky-500/15 border border-sky-500/40 hover:bg-sky-500/25 text-sky-300 font-semibold text-[11px] flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
+              <i class="fa-solid fa-graduation-cap text-sky-400"></i>
+              <span id="hud-btn-consola-adol-label">Mi Vida Escolar ▾</span>
             </button>
           </div>
         </div>
@@ -519,6 +593,9 @@
 
           <!-- Selector de Pestañas -->
           <div class="flex flex-wrap items-center gap-1.5" id="nav-pestanas-consola">
+            <button id="tab-btn-adolescente" onclick="cambiarPestanaConsola('adolescente')" class="tab-consola-btn hidden px-2.5 py-1 rounded-lg text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-graduation-cap text-sky-400"></i> Mi Formación Adolescente
+            </button>
             <button id="tab-btn-despachos" onclick="cambiarPestanaConsola('despachos')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-landmark text-amber-400"></i> Despachos Rosada
             </button>
@@ -534,6 +611,20 @@
             <button id="tab-btn-brujula" onclick="cambiarPestanaConsola('brujula')" class="tab-consola-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-compass text-sky-400"></i> Brújula 12 Ejes
             </button>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 0: FORMACIÓN ADOLESCENTE (ESTUDIOS, SALUD, VÍNCULOS, DEPORTE) -->
+        <div id="pane-adolescente" class="tab-pane-content hidden space-y-3">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 px-1">
+            <span class="flex items-center gap-1.5 text-sky-300 font-semibold">
+              <i class="fa-solid fa-graduation-cap text-sky-400"></i> Mi Vida Adolescente: Hábitos, Rendimiento y Salud Integral
+            </span>
+            <span class="text-slate-500">Formación personal previa al salto cívico a los 18 años</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5" id="adolescente-cards-grid">
+            <!-- Inyectado dinámicamente: Estudios, Salud Física, Salud Mental, Relaciones, Deportes -->
           </div>
         </div>
 
@@ -5172,6 +5263,79 @@
       </div>
     </div>
 
+    <!-- PANTALLA ESPECIAL: HITO DE MAYORÍA DE EDAD (18 AÑOS) -->
+    <section id="screen-mayoria-edad" class="hidden space-y-5 max-w-2xl mx-auto py-5">
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border-2 border-sky-500/50 text-center space-y-5 shadow-2xl bg-slate-900/95">
+        
+        <!-- ENCABEZADO CELEBRATORIO -->
+        <div class="space-y-2">
+          <div class="w-16 h-16 rounded-2xl bg-sky-500/15 border border-sky-500/40 text-sky-400 flex items-center justify-center mx-auto text-3xl shadow-inner">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase font-bold tracking-widest text-sky-400 bg-sky-500/10 px-3.5 py-1 rounded-full border border-sky-500/30">
+              🎉 Hito Cívico • Mayoría de Edad Cumplida (18 Años)
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-serif-title font-bold text-white mt-2">
+              ¡Concluiste tu Adolescencia y Llegaste a los 18!
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-lg mx-auto leading-relaxed">
+              Terminaste la secundaria y forjaste tus hábitos de vida. A partir de hoy adquirís la plena capacidad civil y tus derechos políticos como ciudadano argentino (Arts. 25 CCyC y Ley 26.774).
+            </p>
+          </div>
+        </div>
+
+        <!-- BALANCE DE TU FORMACIÓN FORMATIVA (ADOLESCENCIA) -->
+        <div class="space-y-2 pt-1 text-left">
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5 px-1">
+            <i class="fa-solid fa-award"></i> Balance de tu Formación Secundaria:
+          </span>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-book-open text-sky-400 mr-1"></i> Estudios</span>
+              <span id="mayoria-stat-estudios" class="font-bold text-sm text-sky-300 font-mono">80%</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-person-running text-emerald-400 mr-1"></i> Salud Física</span>
+              <span id="mayoria-stat-fisica" class="font-bold text-sm text-emerald-300 font-mono">85%</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-brain text-violet-400 mr-1"></i> Salud Mental</span>
+              <span id="mayoria-stat-mental" class="font-bold text-sm text-violet-300 font-mono">75%</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-user-group text-amber-400 mr-1"></i> Relaciones</span>
+              <span id="mayoria-stat-relaciones" class="font-bold text-sm text-amber-300 font-mono">80%</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1 col-span-2 sm:col-span-1">
+              <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-futbol text-teal-400 mr-1"></i> Deportes</span>
+              <span id="mayoria-stat-deportes" class="font-bold text-sm text-teal-300 font-mono">75%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESBLOQUEO DE NUEVOS RETOS Y MÉTRICAS ADULTAS -->
+        <div class="p-4 rounded-xl border border-amber-500/40 bg-amber-500/10 text-left space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Nuevos Retos y Métricas Desbloqueadas
+            </span>
+            <span class="text-[10px] font-mono bg-amber-500/20 text-amber-200 px-2 py-0.5 rounded">Ciudadanía Activa</span>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed">
+            Se abren ante vos los desafíos del país real. A partir de este momento se habilitan las métricas de <strong class="text-amber-300">Apoyo en Sectores Sociales</strong> (Trabajadores, Clase Media, Productivo), el <strong class="text-amber-300">Tablero Macroeconómico</strong> y la participación cívica y comunitaria.
+          </p>
+        </div>
+
+        <!-- BOTÓN DE AVANCE A LA VIDA ADULTA -->
+        <button onclick="continuarTrasMayoriaEdad()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold rounded-xl transition-all shadow-xl text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
+          <span>Dar el Salto a la Vida Adulta y Asumir Nuevos Retos</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </div>
+    </section>
+
     <section id="screen-election" class="hidden space-y-5 max-w-2xl mx-auto py-5">
       <div class="glass-panel p-5 sm:p-7 rounded-2xl border-2 border-amber-500/50 text-center space-y-4 shadow-2xl">
         
@@ -5623,6 +5787,37 @@
     let _origenCunaSeleccionado = 'cuna_popular';
     let _cargoBarroSeleccionado = 'concejal_conurbano';
     let _rangoPresSeleccionado = 'candidato_aparato';
+    let _ritmoDilemasSeleccionado = 3;
+
+    function seleccionarRitmoJuego(cant) {
+      _ritmoDilemasSeleccionado = cant;
+      const b1 = document.getElementById('btn-ritmo-1');
+      const b3 = document.getElementById('btn-ritmo-3');
+      const b7 = document.getElementById('btn-ritmo-7');
+      const badge = document.getElementById('badge-ritmo-seleccionado');
+
+      if (b1) {
+        b1.className = cant === 1
+          ? "btn-ritmo-card p-3 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-left transition-all shadow-md cursor-pointer"
+          : "btn-ritmo-card p-3 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-amber-400 text-left transition-all opacity-80 cursor-pointer";
+      }
+      if (b3) {
+        b3.className = cant === 3
+          ? "btn-ritmo-card p-3 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-left transition-all shadow-md cursor-pointer"
+          : "btn-ritmo-card p-3 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-amber-400 text-left transition-all opacity-80 cursor-pointer";
+      }
+      if (b7) {
+        b7.className = cant === 7
+          ? "btn-ritmo-card p-3 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-left transition-all shadow-md cursor-pointer"
+          : "btn-ritmo-card p-3 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-amber-400 text-left transition-all opacity-80 cursor-pointer";
+      }
+
+      if (badge) {
+        if (cant === 1) badge.innerText = "1 Dilema (Exprés / Decreto)";
+        else if (cant === 7) badge.innerText = "7 Dilemas (Trinchera Profunda)";
+        else badge.innerText = "3 Dilemas (Equilibrado)";
+      }
+    }
 
     function seleccionarOrigenCuna(origenId) {
       _origenCunaSeleccionado = origenId;
@@ -5686,7 +5881,7 @@
 
     function cambiarPestanaConsola(tabId) {
       _pestanaConsolaActiva = tabId;
-      const tabs = ['despachos', 'sectores', 'macro', 'salud', 'brujula'];
+      const tabs = ['adolescente', 'despachos', 'sectores', 'macro', 'salud', 'brujula'];
       tabs.forEach(t => {
         const btn = document.getElementById('tab-btn-' + t);
         const pane = document.getElementById('pane-' + t);
@@ -5710,6 +5905,8 @@
         const grid = document.getElementById('brujula-ejes-grid');
         if (grid) grid.classList.remove('hidden');
         renderizarBrujulaEnVivo();
+      } else if (tabId === 'adolescente') {
+        renderizarPerfilAdolescenteUI();
       }
     }
 
@@ -5720,8 +5917,95 @@
       }
     }
 
+    function renderizarPerfilAdolescenteUI() {
+      const grid = document.getElementById('adolescente-cards-grid');
+      if (!grid || !window.motorJuego || !motorJuego.perfilAdolescente) return;
+      const adol = motorJuego.perfilAdolescente;
+
+      const items = [
+        {
+          id: 'estudios',
+          nombre: 'Estudios & Escuela',
+          sub: 'Promedio y concentración',
+          icono: 'fa-solid fa-book-open',
+          color: 'sky',
+          val: adol.estudios,
+          desc: 'Dedicación a materias, talleres y lectura académica.'
+        },
+        {
+          id: 'saludFisica',
+          nombre: 'Salud Física',
+          sub: 'Estado corporal y energía',
+          icono: 'fa-solid fa-person-running',
+          color: 'emerald',
+          val: adol.saludFisica,
+          desc: 'Resistencia, vitalidad, buena alimentación y descanso.'
+        },
+        {
+          id: 'saludMental',
+          nombre: 'Salud Mental',
+          sub: 'Equilibrio y autoestima',
+          icono: 'fa-solid fa-brain',
+          color: 'violet',
+          val: adol.saludMental,
+          desc: 'Manejo del estrés escolar, diálogo y bienestar interior.'
+        },
+        {
+          id: 'relaciones',
+          nombre: 'Vínculos & Amigos',
+          sub: 'Pares y contención familiar',
+          icono: 'fa-solid fa-user-group',
+          color: 'amber',
+          val: adol.relaciones,
+          desc: 'Lazos de lealtad con amigos de escuela, barrio y familia.'
+        },
+        {
+          id: 'deportes',
+          nombre: 'Deporte & Club',
+          sub: 'Club de barrio y potrero',
+          icono: 'fa-solid fa-futbol',
+          color: 'teal',
+          val: adol.deportes,
+          desc: 'Espíritu de equipo, entrenamiento y actividad física periódica.'
+        }
+      ];
+
+      grid.innerHTML = items.map(it => `
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-${it.color}-500/30 space-y-2 shadow-sm flex flex-col justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-${it.color}-300 flex items-center gap-1.5">
+                <i class="${it.icono}"></i> ${it.nombre}
+              </span>
+              <span class="font-bold font-mono text-${it.color}-400">${it.val}%</span>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-snug">${it.desc}</p>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-${it.color}-400 h-full rounded-full transition-all duration-500" style="width: ${it.val}%"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
     function actualizarMicroHUD() {
       if (!window.motorJuego) return;
+
+      // 0. Si está en fase cuna / adolescencia: actualizar métricas formativas
+      if (motorJuego.faseActual === 'cuna') {
+        const adol = motorJuego.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+        const elEst = document.getElementById('hud-adol-estudios');
+        if (elEst) elEst.innerText = `${adol.estudios}%`;
+        const elFis = document.getElementById('hud-adol-fisica');
+        if (elFis) elFis.innerText = `${adol.saludFisica}%`;
+        const elMen = document.getElementById('hud-adol-mental');
+        if (elMen) elMen.innerText = `${adol.saludMental}%`;
+        const elRel = document.getElementById('hud-adol-relaciones');
+        if (elRel) elRel.innerText = `${adol.relaciones}%`;
+        const elDep = document.getElementById('hud-adol-deportes');
+        if (elDep) elDep.innerText = `${adol.deportes}%`;
+        renderizarPerfilAdolescenteUI();
+      }
 
       // 1. Apoyo social promedio
       const sec = motorJuego.aprobacionSectores;
@@ -5773,6 +6057,8 @@
     function prepararPantallaJuego(carrera) {
       document.getElementById('screen-welcome').classList.add('hidden');
       document.getElementById('screen-election').classList.add('hidden');
+      const scrMayoria = document.getElementById('screen-mayoria-edad');
+      if (scrMayoria) scrMayoria.classList.add('hidden');
       document.getElementById('screen-result').classList.add('hidden');
       document.getElementById('screen-game').classList.remove('hidden');
       document.getElementById('turn-badge').classList.remove('hidden');
@@ -5793,62 +6079,91 @@
       const subCargo = document.getElementById('mandatario-cargo-sub');
       const badgeEdad = document.getElementById('mandatario-edad-badge');
       const dotStatus = document.getElementById('mandatario-status-dot');
+      const tabAdolescente = document.getElementById('tab-btn-adolescente');
       const tabDespachos = document.getElementById('tab-btn-despachos');
+      const tabSectores = document.getElementById('tab-btn-sectores');
+      const tabMacro = document.getElementById('tab-btn-macro');
       const tabSalud = document.getElementById('tab-btn-salud');
+      const tabBrujula = document.getElementById('tab-btn-brujula');
+      const pillsAdulto = document.getElementById('hud-pills-adulto');
+      const pillsAdol = document.getElementById('hud-pills-adolescente');
 
       const edadVal = (motorJuego.saludSupervivencia && motorJuego.saludSupervivencia.edad !== undefined)
         ? motorJuego.saludSupervivencia.edad
-        : (carrera === 'cuna' ? 0 : (carrera === 'presidente' ? 30 : 25));
+        : (carrera === 'cuna' ? 15 : (carrera === 'presidente' ? 30 : 25));
 
       if (badgeEdad) {
         badgeEdad.innerText = `${edadVal} Años`;
       }
 
       if (carrera === 'cuna') {
+        if (pillsAdulto) pillsAdulto.classList.add('hidden');
+        if (pillsAdol) pillsAdol.classList.remove('hidden');
+
         if (badgeCargo) {
-          badgeCargo.innerText = "👶 DESDE LA CUNA: INFANCIA Y JUVENTUD";
-          badgeCargo.className = "text-xs sm:text-sm font-bold text-emerald-300 font-serif-title";
+          badgeCargo.innerText = "🎒 JUVENTUD & FORMACIÓN (ADOLESCENCIA: 14-18 AÑOS)";
+          badgeCargo.className = "text-xs sm:text-sm font-bold text-sky-300 font-serif-title";
         }
         if (subCargo) {
           const origNom = motorJuego.origenElegido ? motorJuego.origenElegido.nombre : "Hogar Argentino";
-          subCargo.innerText = `${origNom} • Crianza, Escuela y Conciencia Social`;
+          subCargo.innerText = `${origNom} • 15 Años • Secundaria & Formación Personal`;
         }
         if (dotStatus) {
-          dotStatus.className = "w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399] shrink-0";
+          dotStatus.className = "w-3 h-3 rounded-full bg-sky-400 animate-pulse shadow-[0_0_8px_#38bdf8] shrink-0";
         }
-        cambiarPestanaConsola('sectores');
+
+        // En adolescencia solo se muestra la pestaña de formación escolar
+        if (tabAdolescente) tabAdolescente.classList.remove('hidden');
         if (tabDespachos) tabDespachos.classList.add('hidden');
+        if (tabSectores) tabSectores.classList.add('hidden');
+        if (tabMacro) tabMacro.classList.add('hidden');
         if (tabSalud) tabSalud.classList.add('hidden');
-      } else if (carrera === 'militante' || carrera === 'barro') {
-        if (badgeCargo) {
-          badgeCargo.innerText = "🚧 SALTO AL BARRO POLÍTICO";
-          badgeCargo.className = "text-xs sm:text-sm font-bold text-amber-300 font-serif-title";
-        }
-        if (subCargo) {
-          const cargoNom = motorJuego.cargoBarroElegido ? motorJuego.cargoBarroElegido.nombre : "Trinchera Local";
-          subCargo.innerText = `${cargoNom} • Militancia, Territorio y Concejo Deliberante`;
-        }
-        if (dotStatus) {
-          dotStatus.className = "w-3 h-3 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#fbbf24] shrink-0";
-        }
-        cambiarPestanaConsola('sectores');
-        if (tabDespachos) tabDespachos.classList.add('hidden');
-        if (tabSalud) tabSalud.classList.add('hidden');
+        if (tabBrujula) tabBrujula.classList.add('hidden');
+
+        cambiarPestanaConsola('adolescente');
+        renderizarPerfilAdolescenteUI();
       } else {
-        // Modo Mandatario en Ejercicio (Presidencia o Diputado)
-        if (badgeCargo) {
-          badgeCargo.innerText = "🏛️ MANDATARIO EN EJERCICIO";
-          badgeCargo.className = "text-xs sm:text-sm font-bold text-amber-300 font-serif-title";
+        if (pillsAdol) pillsAdol.classList.add('hidden');
+        if (pillsAdulto) pillsAdulto.classList.remove('hidden');
+        if (tabAdolescente) tabAdolescente.classList.add('hidden');
+
+        if (carrera === 'militante' || carrera === 'barro') {
+          if (badgeCargo) {
+            badgeCargo.innerText = "🚧 SALTO AL BARRO POLÍTICO";
+            badgeCargo.className = "text-xs sm:text-sm font-bold text-amber-300 font-serif-title";
+          }
+          if (subCargo) {
+            const cargoNom = motorJuego.cargoBarroElegido ? motorJuego.cargoBarroElegido.nombre : "Trinchera Local";
+            subCargo.innerText = `${cargoNom} • Militancia, Territorio y Concejo Deliberante`;
+          }
+          if (dotStatus) {
+            dotStatus.className = "w-3 h-3 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#fbbf24] shrink-0";
+          }
+          if (tabDespachos) tabDespachos.classList.add('hidden');
+          if (tabSalud) tabSalud.classList.add('hidden');
+          if (tabSectores) tabSectores.classList.remove('hidden');
+          if (tabMacro) tabMacro.classList.remove('hidden');
+          if (tabBrujula) tabBrujula.classList.remove('hidden');
+          cambiarPestanaConsola('sectores');
+        } else {
+          // Modo Mandatario en Ejercicio (Presidencia o Diputado)
+          if (badgeCargo) {
+            badgeCargo.innerText = "🏛️ MANDATARIO EN EJERCICIO";
+            badgeCargo.className = "text-xs sm:text-sm font-bold text-amber-300 font-serif-title";
+          }
+          if (subCargo) {
+            subCargo.innerText = "Despacho Presidencial • Casa Rosada";
+          }
+          if (dotStatus) {
+            dotStatus.className = "w-3 h-3 rounded-full bg-rose-400 animate-pulse shadow-[0_0_8px_#f43f5e] shrink-0";
+          }
+          if (tabDespachos) tabDespachos.classList.remove('hidden');
+          if (tabSalud) tabSalud.classList.remove('hidden');
+          if (tabSectores) tabSectores.classList.remove('hidden');
+          if (tabMacro) tabMacro.classList.remove('hidden');
+          if (tabBrujula) tabBrujula.classList.remove('hidden');
+          cambiarPestanaConsola('despachos');
         }
-        if (subCargo) {
-          subCargo.innerText = "Despacho Presidencial • Casa Rosada";
-        }
-        if (dotStatus) {
-          dotStatus.className = "w-3 h-3 rounded-full bg-rose-400 animate-pulse shadow-[0_0_8px_#f43f5e] shrink-0";
-        }
-        if (tabDespachos) tabDespachos.classList.remove('hidden');
-        if (tabSalud) tabSalud.classList.remove('hidden');
-        cambiarPestanaConsola('despachos');
       }
 
       renderizarSectores();
@@ -5866,19 +6181,19 @@
     }
 
     function iniciarModoCunaUI() {
-      motorJuego.iniciarModoCuna(_origenCunaSeleccionado);
+      motorJuego.iniciarModoCuna(_origenCunaSeleccionado, _ritmoDilemasSeleccionado);
       prepararPantallaJuego('cuna');
       renderizarDilemaActual();
     }
 
     function iniciarModoBarroUI() {
-      motorJuego.iniciarModoBarro(_cargoBarroSeleccionado);
+      motorJuego.iniciarModoBarro(_cargoBarroSeleccionado, null, _ritmoDilemasSeleccionado);
       prepararPantallaJuego('militante');
       renderizarDilemaActual();
     }
 
     function iniciarModoPresidenteUI() {
-      motorJuego.iniciarModoPresidente(_rangoPresSeleccionado);
+      motorJuego.iniciarModoPresidente(_rangoPresSeleccionado, null, _ritmoDilemasSeleccionado);
       prepararPantallaJuego('presidente');
       abrirModalConstitucional(true);
     }
@@ -7367,6 +7682,8 @@
     function gestionarFinDeFase() {
       if (motorJuego.faseActual === 'presidente') {
         mostrarVeredictoFinal();
+      } else if (motorJuego.faseActual === 'cuna') {
+        mostrarPantallaMayoriaEdad();
       } else {
         mostrarPantallaEleccion();
       }
@@ -11457,11 +11774,35 @@
       }
     }
 
+    function mostrarPantallaMayoriaEdad() {
+      document.getElementById('screen-game').classList.add('hidden');
+      document.getElementById('turn-badge').classList.add('hidden');
+      document.getElementById('screen-mayoria-edad').classList.remove('hidden');
+
+      const adol = motorJuego.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+      const elEst = document.getElementById('mayoria-stat-estudios');
+      if (elEst) elEst.innerText = `${adol.estudios}%`;
+      const elFis = document.getElementById('mayoria-stat-fisica');
+      if (elFis) elFis.innerText = `${adol.saludFisica}%`;
+      const elMen = document.getElementById('mayoria-stat-mental');
+      if (elMen) elMen.innerText = `${adol.saludMental}%`;
+      const elRel = document.getElementById('mayoria-stat-relaciones');
+      if (elRel) elRel.innerText = `${adol.relaciones}%`;
+      const elDep = document.getElementById('mayoria-stat-deportes');
+      if (elDep) elDep.innerText = `${adol.deportes}%`;
+    }
+
+    function continuarTrasMayoriaEdad() {
+      const nuevaFase = motorJuego.avanzarSiguienteFase();
+      document.getElementById('screen-mayoria-edad').classList.add('hidden');
+      prepararPantallaJuego(nuevaFase);
+      renderizarDilemaActual();
+    }
+
     function continuarTrasEleccion() {
       const nuevaFase = motorJuego.avanzarSiguienteFase();
       document.getElementById('screen-election').classList.add('hidden');
-      document.getElementById('screen-game').classList.remove('hidden');
-      renderizarSectores();
+      prepararPantallaJuego(nuevaFase);
 
       const badgePres = document.getElementById('badge-presidente-sub30');
       const badgeDip = document.getElementById('badge-diputado-sub25');
