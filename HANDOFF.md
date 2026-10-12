@@ -1,7 +1,7 @@
 # 📜 HANDOFF DE PROYECTO: EL SILLÓN DEL PODER
 > **Documento Vivo de Continuidad, Arquitectura y Estado de Trabajo**
 > **Última Actualización:** 2026-10-12
-> **Rama Git:** `main` | **Tests:** 126/126 PASADOS
+> **Rama Git:** `main` | **Tests:** 129/129 PASADOS
 
 ---
 
@@ -18,10 +18,10 @@
 El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bundlers (Webpack/Vite) ni frameworks externos pesados:
 1. **Frontend:** `index.html` con Tailwind CSS (CDN), FontAwesome 6 (CDN) y Google Fonts (`Cinzel` y `Inter`).
 2. **Audio:** `sonidos_sillon.js` - Sintetizador procedural 100% nativo vía **Web Audio API** (cero archivos de audio externos).
-3. **Módulos JS (36 archivos):** Doble exportación universal:
+3. **Módulos JS (37 archivos):** Doble exportación universal:
    - Entorno Node.js: `module.exports = { ... }` para pruebas automáticas.
    - Entorno Navegador: `window.miModulo = { ... }` para consumo directo en el cliente.
-4. **Validación:** `validar_sistema.js` ejecuta 126 pruebas sincrónicas sobre todos los sistemas, variables y reglas constitucionales.
+4. **Validación:** `validar_sistema.js` ejecuta 129 pruebas sincrónicas sobre todos los sistemas, variables y reglas constitucionales.
 
 ---
 
@@ -51,6 +51,7 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
 | `ritmo_cadena_semanal.js` | Ciclo semanal (Lunes a Domingo), agenda política y radar de hipocresía. |
 | `salud_supervivencia.js` | Unidad Médica Presidencial (UMP), signos vitales, coronarias, paranoia y catálogo de muertes. |
 | `origenes_relaciones.js` | Orígenes familiares de juventud, dilemas de formación adolescente y menú de relaciones peligrosas. |
+| `entorno_cercano.js` | Termómetro de Entorno Cercano, afectos, familia, pareja (si tiene o no), amigos, entrenador (si tiene o no) y escuela/territorio. |
 
 ---
 
@@ -108,13 +109,30 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
     3. 💅 **Chismes & Farándula:** Nuevos medios integrados `america_lam` (LAM con Ángel de Brito y Yanina Latorre) e `intrusos` (América TV con Flor de la V / Marcela Tauro), con primicias de Wanda Nara, L-Gante, Pampita, Gran Hermano y escándalos de la farándula.
     4. 📺 **Bizarro / Crónica / Streaming:** Placas rojas insólitas de Crónica TV o emisiones de streaming argentino (Olga, Luzu, Blender, Neura, Gelatina, Carajo).
   - **Botón Zapping (`zappingMedios`):** Permite cambiar de canal al instante desde el interludio o la pantalla de despacho, refrescando titulares y canales de forma totalmente aleatoria.
-  - **Compatibilidad Total:** Se conserva la estructura de datos base de `generarMuroDeMedios` para asegurar compatibilidad estricta con los 126 tests de `validar_sistema.js`.
+  - **Compatibilidad Total:** Se conserva la estructura de datos base de `generarMuroDeMedios` para asegurar compatibilidad estricta con los tests de `validar_sistema.js`.
+
+### G. Termómetro de Entorno Cercano, Afectos & Vínculos (Sin Sobrecarga de Figuras Nacionales):
+- **Problema Observado:** En la adolescencia o en fases donde el jugador no ocupa un cargo público (ej. militancia barrial / territorio), se mostraba el "Termómetro de Opinión Pública (47 Figuras)" con dirigentes nacionales y periodistas (Grabois, Bregman, Brancatelli, Mengolini, Rosemblat, Laje) debatiendo sobre un estudiante de 15 años o un militante en el llano.
+- **Solución Implementada (`entorno_cercano.js`):**
+  - Se crearon los métodos `motorJuego.ocupaCargoPublico()` (verdadero solo en Diputados y Presidencia) y `motorJuego.esAdolescente()`.
+  - **En Adolescencia (`faseActual === 'cuna'`) y en Militancia (`!ocupaCargoPublico()`):** El termómetro se transforma en el **Termómetro de tu Entorno Cercano**:
+    1. 👨‍👩‍👧 **Familia:** Mamá (orgullo por el estudio o angustia por tu seguridad), Papá (cultura del esfuerzo y trabajo), Hermano/a (gaste cariñoso y complicidad).
+    2. 💖 **Pareja:** Conmutador interactivo `[En Pareja / Soltero libre]`:
+       - *En Pareja:* Camila/Lucas reacciona con amor o celos por el tiempo dedicado al club/estudio/militancia.
+       - *Soltero:* Disfruta de su libertad afectiva sin dar explicaciones de horarios.
+    3. 🤝 **Amigos:** Nico (mejor amigo de fierro) y Los Pibes del Grupo/Esquina (lealtad de barrio).
+    4. ⚽ **Entrenador / Club:** Conmutador interactivo `[DT en Club / Deporte libre]`:
+       - *Con DT:* Profe Gómez exige constancia en las prácticas o amenaza con mandarte al banco el fin de semana.
+       - *Libre:* Rutina deportiva y gimnasio a tu propio ritmo.
+    5. 🏫 **Escuela / Territorio:** En adolescencia reaccionan el Preceptor Walter y la Profesora Rossi; en militancia reaccionan el Compañero de Agrupación, Don Tito (referente barrial), el Rival de Agrupación y Doña Rosa (vecina almacenera).
+  - **Filtros Dinámicos:** Botones para filtrar por `Destacados`, `👍 Te bancan`, `👎 Tensión / Reclamo`, `🎭 Dudas` y `Todos`.
+  - **Cargos Públicos Preservados:** En Congreso Nacional (`diputado`) y Casa Rosada (`presidente`), se activa automáticamente el termómetro nacional de 47 figuras públicas paródicas.
 
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
 Para preservar la estabilidad del proyecto en futuros sprints:
-1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **126 de 126 pruebas PASADAS**.
+1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **129 de 129 pruebas PASADAS**.
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.
 3. **Vanilla JS Nativo:** No añadir scripts de empaquetado o dependencias npm requeridas para correr en el navegador; el juego debe poder jugarse abriendo directamente `index.html` en cualquier navegador web moderno.
 4. **Handoff Permanente:** Ante cualquier modificación sustancial, actualizar este archivo `HANDOFF.md` y los artefactos de sesión para mantener la trazabilidad completa.

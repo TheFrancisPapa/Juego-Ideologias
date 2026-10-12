@@ -539,10 +539,10 @@
             <!-- SECCIÓN 1: FAMOSOS Y CONDUCTORES EN MEDIOS & STREAMING -->
             <div class="space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                <span id="seccion-opinion-titulo" class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
                   <i class="fa-solid fa-microphone-lines text-amber-400"></i> Polémica de Famosos & Medios en vivo:
                 </span>
-                <span class="text-[10px] text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">Parodia Satírica Ficcional</span>
+                <span id="seccion-opinion-badge" class="text-[10px] text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">Parodia Satírica Ficcional</span>
               </div>
               <!-- Widget de Termómetro de Polarización Mediática -->
               <div id="termometro-famosos-widget"></div>
@@ -5611,6 +5611,7 @@
   <script src="medios_argentinos.js"></script>
   <script src="redes_sociales.js"></script>
   <script src="famosos_argentinos.js"></script>
+  <script src="entorno_cercano.js"></script>
   <script src="voz_de_la_calle.js"></script>
   <script src="sistema_legislativo.js"></script>
   <script src="botonera_normativa_congreso.js"></script>
@@ -7420,6 +7421,18 @@
           </div>
         </div>
 
+        <!-- SECCIÓN: TERMÓMETRO DE AFECTOS & ENTORNO CERCANO (FAMILIA, PAREJA, AMIGOS, CLUB) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-heart-pulse text-rose-400"></i> Termómetro de tu Entorno Cercano:
+            </span>
+            <span class="text-[10px] text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">Familia, Pareja, Amigos, Club y Colegio</span>
+          </div>
+          <div id="termometro-entorno-adol-widget"></div>
+          <div id="entorno-adol-reactions-container" class="grid sm:grid-cols-2 gap-2.5 text-xs"></div>
+        </div>
+
         <!-- MENSAJES DE WHATSAPP DEL ENTORNO (COMPAÑEROS, CLUB, FAMILIA) -->
         <div class="space-y-2">
           <div class="flex items-center justify-between">
@@ -7433,6 +7446,18 @@
           </div>
         </div>
       `;
+
+      window._ultimaOpcionElegida = opcionElegida;
+      if (typeof obtenerReaccionesEntornoCercano === 'function' && typeof renderizarWidgetEntorno === 'function') {
+        const datosAdol = obtenerReaccionesEntornoCercano({
+          fase: 'cuna',
+          opcionElegida: opcionElegida,
+          perfilAdolescente: motorJuego.perfilAdolescente,
+          configEntorno: window._configEntorno
+        });
+        window._entornoCache = datosAdol;
+        renderizarWidgetEntorno('termometro-entorno-adol-widget', 'entorno-adol-reactions-container', datosAdol, 'cuna');
+      }
     }
 
     function avanzarTrasInterludio() {
@@ -7664,6 +7689,187 @@
     }
 
     window._famososCache = null;
+    window._entornoCache = null;
+    window._configEntorno = { tienePareja: true, tieneEntrenador: true };
+    window._ultimaOpcionElegida = null;
+
+    function renderizarTarjetasEntorno(lista, containerCardsId) {
+      const container = document.getElementById(containerCardsId);
+      if (!container) return;
+      container.innerHTML = '';
+      if (!lista || lista.length === 0) {
+        container.innerHTML = '<div class="col-span-2 text-center py-4 text-xs text-slate-500 italic">No hay testimonios en esta categoría.</div>';
+        return;
+      }
+
+      lista.forEach(item => {
+        const card = document.createElement('div');
+        let borderColor = "border-slate-800 bg-slate-900/90";
+        let badgeColor = "bg-amber-500/20 text-amber-300 border-amber-500/30";
+
+        if (item.postura === 'bardean') {
+          borderColor = "border-rose-500/40 bg-gradient-to-br from-rose-950/25 via-slate-900 to-slate-900";
+          badgeColor = "bg-rose-500/20 text-rose-300 border-rose-500/30";
+        } else if (item.postura === 'bancan') {
+          borderColor = "border-emerald-500/40 bg-gradient-to-br from-emerald-950/25 via-slate-900 to-slate-900";
+          badgeColor = "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+        } else {
+          borderColor = "border-amber-500/40 bg-gradient-to-br from-amber-950/20 via-slate-900 to-slate-900";
+          badgeColor = "bg-amber-500/20 text-amber-300 border-amber-500/30";
+        }
+
+        card.className = `${borderColor} border p-3 rounded-xl space-y-2 text-slate-200 shadow-md transition-all hover:scale-[1.01]`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full bg-${item.color}-500/20 text-${item.color}-400 flex items-center justify-center text-sm border border-${item.color}-500/40 shrink-0">
+                <i class="${item.icono}"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-bold text-white text-xs">${item.nombre}</span>
+                  <span class="text-[9px] text-slate-400 bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-700 uppercase font-mono">${item.categoria}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 block">${item.rol}</span>
+              </div>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full border font-semibold shrink-0 ${badgeColor}">${item.badge}</span>
+          </div>
+          <p class="text-xs leading-relaxed text-slate-200 italic pt-1 border-t border-slate-800">
+            "${item.texto}"
+          </p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderizarWidgetEntorno(containerWidgetId, containerCardsId, datosEntorno, fase) {
+      const widget = document.getElementById(containerWidgetId);
+      if (!widget || !datosEntorno) return;
+
+      const c = datosEntorno.conteo;
+      const cfg = datosEntorno.config || window._configEntorno;
+      const totalValidos = Math.max(1, c.bancan + c.bardean + c.neutros);
+      const pctBancan = Math.round((c.bancan / totalValidos) * 100);
+      const pctNeutros = Math.round((c.neutros / totalValidos) * 100);
+      const pctBardean = Math.round((c.bardean / totalValidos) * 100);
+
+      const esAdol = (fase === 'cuna');
+      const tituloTermometro = esAdol
+        ? '<i class="fa-solid fa-heart-pulse text-rose-400"></i> Termómetro de Afectos & Vínculos Adolescentes:'
+        : '<i class="fa-solid fa-people-arrows text-rose-400"></i> Termómetro de tu Entorno Territorial & Afectos:';
+
+      widget.innerHTML = `
+        <div class="p-3.5 rounded-xl bg-slate-900/95 border border-slate-800 space-y-3 shadow-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs">
+            <span class="font-bold text-white flex items-center gap-1.5">
+              ${tituloTermometro}
+            </span>
+            <div class="flex items-center gap-2 text-[11px] font-mono flex-wrap">
+              <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${c.bancan} Te bancan</span>
+              <span class="text-rose-400 font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">${c.bardean} Tensión / Reclamo</span>
+              <span class="text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${c.neutros} Dudas</span>
+            </div>
+          </div>
+
+          <!-- Barra tricolor de vínculos en vivo -->
+          <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden flex shadow-inner">
+            <div style="width: ${pctBancan}%" class="bg-emerald-500 transition-all duration-500" title="Apoyos: ${c.bancan} (${pctBancan}%)"></div>
+            <div style="width: ${pctNeutros}%" class="bg-amber-400 transition-all duration-500" title="Dudas: ${c.neutros} (${pctNeutros}%)"></div>
+            <div style="width: ${pctBardean}%" class="bg-rose-500 transition-all duration-500" title="Tensión: ${c.bardean} (${pctBardean}%)"></div>
+          </div>
+
+          <!-- Selector de situación personal: Pareja y Entrenador (si tiene o no) -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-800 text-[11px]">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-slate-400 font-semibold text-[10px] uppercase tracking-wider flex items-center gap-1">
+                <i class="fa-solid fa-sliders text-slate-500"></i> Tu vida personal:
+              </span>
+              <button onclick="toggleConfigEntorno('pareja', '${containerWidgetId}', '${containerCardsId}', '${fase}')" class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold transition-all flex items-center gap-1 ${cfg.tienePareja ? 'bg-rose-500/20 border-rose-500/40 text-rose-300 hover:bg-rose-500/30' : 'bg-slate-800/80 border-slate-700 text-slate-400 hover:bg-slate-700'}">
+                <i class="fa-solid fa-heart text-[10px]"></i> ${cfg.tienePareja ? 'En Pareja (Camila)' : 'Soltero/a libre'}
+              </button>
+              <button onclick="toggleConfigEntorno('entrenador', '${containerWidgetId}', '${containerCardsId}', '${fase}')" class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold transition-all flex items-center gap-1 ${cfg.tieneEntrenador ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30' : 'bg-slate-800/80 border-slate-700 text-slate-400 hover:bg-slate-700'}">
+                <i class="fa-solid fa-futbol text-[10px]"></i> ${cfg.tieneEntrenador ? 'DT en Club (Profe Gómez)' : 'Actividad deportiva libre'}
+              </button>
+            </div>
+          </div>
+
+          <!-- Botones de filtrado interactivo -->
+          <div class="flex items-center gap-1.5 pt-0.5 overflow-x-auto text-[11px]">
+            <button onclick="filtrarReaccionesEntorno('destacadas', this, '${containerCardsId}')" class="btn-filtro-entorno px-2.5 py-1 rounded-lg bg-rose-500/30 text-rose-200 border border-rose-400 font-bold shrink-0">
+              Destacados (${datosEntorno.lista.length})
+            </button>
+            <button onclick="filtrarReaccionesEntorno('bancan', this, '${containerCardsId}')" class="btn-filtro-entorno px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+              👍 Te bancan (${c.bancan})
+            </button>
+            <button onclick="filtrarReaccionesEntorno('bardean', this, '${containerCardsId}')" class="btn-filtro-entorno px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+              👎 Tensión / Reclamo (${c.bardean})
+            </button>
+            <button onclick="filtrarReaccionesEntorno('neutros', this, '${containerCardsId}')" class="btn-filtro-entorno px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+              🎭 Dudas (${c.neutros})
+            </button>
+            <button onclick="filtrarReaccionesEntorno('todas', this, '${containerCardsId}')" class="btn-filtro-entorno px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+              Todos (${c.total})
+            </button>
+          </div>
+        </div>
+      `;
+
+      renderizarTarjetasEntorno(datosEntorno.lista, containerCardsId);
+    }
+
+    function filtrarReaccionesEntorno(filtro, btnEl, containerCardsId) {
+      const cache = window._entornoCache;
+      if (!cache) return;
+      const parent = btnEl ? btnEl.parentElement : null;
+      if (parent) {
+        parent.querySelectorAll('.btn-filtro-entorno').forEach(b => {
+          b.classList.remove('bg-rose-500/30', 'border-rose-400', 'text-rose-200', 'font-bold');
+          b.classList.add('bg-slate-800/60', 'border-slate-700', 'text-slate-300', 'font-medium');
+        });
+        if (btnEl) {
+          btnEl.classList.remove('bg-slate-800/60', 'border-slate-700', 'text-slate-300', 'font-medium');
+          btnEl.classList.add('bg-rose-500/30', 'border-rose-400', 'text-rose-200', 'font-bold');
+        }
+      }
+
+      if (filtro === 'bancan') {
+        renderizarTarjetasEntorno(cache.bancan || [], containerCardsId);
+      } else if (filtro === 'bardean') {
+        renderizarTarjetasEntorno(cache.bardean || [], containerCardsId);
+      } else if (filtro === 'neutros') {
+        renderizarTarjetasEntorno(cache.neutros || [], containerCardsId);
+      } else if (filtro === 'todas') {
+        renderizarTarjetasEntorno(cache.todas || cache.lista, containerCardsId);
+      } else {
+        renderizarTarjetasEntorno(cache.lista, containerCardsId);
+      }
+    }
+
+    function toggleConfigEntorno(clave, containerWidgetId, containerCardsId, fase) {
+      window._configEntorno = window._configEntorno || { tienePareja: true, tieneEntrenador: true };
+      if (clave === 'pareja') {
+        window._configEntorno.tienePareja = !window._configEntorno.tienePareja;
+      } else if (clave === 'entrenador') {
+        window._configEntorno.tieneEntrenador = !window._configEntorno.tieneEntrenador;
+      }
+
+      const ultimaOpcion = window._ultimaOpcionElegida || { texto: "" };
+      const fActual = fase || motorJuego.faseActual;
+      const datos = (typeof obtenerReaccionesEntornoCercano === 'function')
+        ? obtenerReaccionesEntornoCercano({
+            fase: fActual,
+            opcionElegida: ultimaOpcion,
+            perfilAdolescente: motorJuego.perfilAdolescente,
+            configEntorno: window._configEntorno
+          })
+        : null;
+
+      if (datos) {
+        window._entornoCache = datos;
+        renderizarWidgetEntorno(containerWidgetId, containerCardsId, datos, fActual);
+      }
+    }
 
     function renderizarTarjetasFamosos(lista) {
       const containerFamosos = document.getElementById('famosos-reactions-container');
@@ -7738,74 +7944,115 @@
       }
     }
 
-    // Renderizar panel de reacciones de Famosos, La Voz de la Calle y Redes Sociales (X, Instagram, Facebook)
+    // Renderizar panel de reacciones de Famosos o Entorno Cercano, La Voz de la Calle y Redes Sociales
     function renderizarFeedSocial(opcionElegida) {
       const panel = document.getElementById('reaction-interlude-panel') || document.getElementById('social-feed-panel');
       const containerSocial = document.getElementById('social-posts-container');
       const containerFamosos = document.getElementById('famosos-reactions-container');
       const containerCalle = document.getElementById('street-voices-container');
 
+      window._ultimaOpcionElegida = opcionElegida;
+
       // 0. Muro de Medios en Vivo (Zócalos de TV, Placas Rojas y Streaming)
       if (typeof renderizarMuroMedios === 'function') {
         renderizarMuroMedios(opcionElegida);
       }
 
-      // 1. Reacciones de Famosos y Termómetro Social Dinámico
-      if (containerFamosos && typeof obtenerReaccionesFamosos === 'function') {
-        const famosos = obtenerReaccionesFamosos(motorJuego.indiceDilema, opcionElegida, motorJuego.flags, motorJuego.vector12Axes);
-        window._famososCache = famosos;
+      // Discriminación Institucional: ¿El personaje ocupa un cargo público electivo (Diputado/Senador o Presidente)?
+      const tieneCargoPublico = typeof motorJuego.ocupaCargoPublico === 'function'
+        ? motorJuego.ocupaCargoPublico()
+        : (motorJuego.faseActual === 'diputado' || motorJuego.faseActual === 'presidente');
 
-        const widgetTermometro = document.getElementById('termometro-famosos-widget');
-        if (widgetTermometro && famosos.conteo) {
-          const c = famosos.conteo;
-          const totalValidos = Math.max(1, c.bancan + c.bardean + c.neutros);
-          const pctBancan = Math.round((c.bancan / totalValidos) * 100);
-          const pctNeutros = Math.round((c.neutros / totalValidos) * 100);
-          const pctBardean = Math.round((c.bardean / totalValidos) * 100);
+      const tituloSec = document.getElementById('seccion-opinion-titulo');
+      const badgeSec = document.getElementById('seccion-opinion-badge');
 
-          widgetTermometro.innerHTML = `
-            <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <i class="fa-solid fa-fire text-amber-400"></i> Termómetro de Opinión Pública (47 Figuras):
-                </span>
-                <div class="flex items-center gap-2 text-[11px] font-mono">
-                  <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${c.bancan} Te bancan</span>
-                  <span class="text-rose-400 font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">${c.bardean} Te bardean</span>
-                  <span class="text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${c.neutros} Chicanas</span>
-                </div>
-              </div>
-
-              <!-- Barra tricolor de polarización en vivo -->
-              <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden flex shadow-inner">
-                <div style="width: ${pctBancan}%" class="bg-emerald-500 transition-all duration-500" title="Apoyos: ${c.bancan} (${pctBancan}%)"></div>
-                <div style="width: ${pctNeutros}%" class="bg-amber-400 transition-all duration-500" title="Chicanas: ${c.neutros} (${pctNeutros}%)"></div>
-                <div style="width: ${pctBardean}%" class="bg-rose-500 transition-all duration-500" title="Repudios: ${c.bardean} (${pctBardean}%)"></div>
-              </div>
-
-              <!-- Botones de filtrado interactivo -->
-              <div class="flex items-center gap-1.5 pt-0.5 overflow-x-auto text-[11px]">
-                <button onclick="filtrarReaccionesFamosos('destacadas', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-amber-500/30 text-amber-200 border border-amber-400 font-bold shrink-0">
-                  Destacadas (${famosos.length})
-                </button>
-                <button onclick="filtrarReaccionesFamosos('bancan', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
-                  👍 Te bancan (${c.bancan})
-                </button>
-                <button onclick="filtrarReaccionesFamosos('bardean', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
-                  👎 Te bardean (${c.bardean})
-                </button>
-                <button onclick="filtrarReaccionesFamosos('neutros', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
-                  🎭 Chicanas (${c.neutros})
-                </button>
-                <button onclick="filtrarReaccionesFamosos('todas', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
-                  Todas (${c.total})
-                </button>
-              </div>
-            </div>
-          `;
+      if (!tieneCargoPublico) {
+        // RAMA A: NO OCUPA CARGO PÚBLICO (Militancia barrial / territorial en el llano)
+        if (tituloSec) {
+          tituloSec.className = "text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2";
+          tituloSec.innerHTML = '<i class="fa-solid fa-people-arrows text-rose-400"></i> Termómetro de tu Entorno Territorial & Vínculos:';
+        }
+        if (badgeSec) {
+          badgeSec.innerText = "Familia, Pareja, Amigos, Club y Territorio";
         }
 
-        renderizarTarjetasFamosos(famosos);
+        if (containerFamosos && typeof obtenerReaccionesEntornoCercano === 'function') {
+          const datosMilitante = obtenerReaccionesEntornoCercano({
+            fase: 'militante',
+            opcionElegida: opcionElegida,
+            perfilAdolescente: motorJuego.perfilAdolescente,
+            configEntorno: window._configEntorno
+          });
+          window._entornoCache = datosMilitante;
+          renderizarWidgetEntorno('termometro-famosos-widget', 'famosos-reactions-container', datosMilitante, 'militante');
+        }
+      } else {
+        // RAMA B: OCUPA CARGO PÚBLICO ELECTIVO (Congreso de la Nación o Presidencia de la Nación)
+        if (tituloSec) {
+          tituloSec.className = "text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2";
+          tituloSec.innerHTML = '<i class="fa-solid fa-microphone-lines text-amber-400"></i> Polémica de Famosos & Medios en vivo:';
+        }
+        if (badgeSec) {
+          badgeSec.innerText = "Parodia Satírica Ficcional";
+        }
+
+        // 1. Reacciones de Famosos y Termómetro Social Dinámico
+        if (containerFamosos && typeof obtenerReaccionesFamosos === 'function') {
+          const famosos = obtenerReaccionesFamosos(motorJuego.indiceDilema, opcionElegida, motorJuego.flags, motorJuego.vector12Axes);
+          window._famososCache = famosos;
+
+          const widgetTermometro = document.getElementById('termometro-famosos-widget');
+          if (widgetTermometro && famosos.conteo) {
+            const c = famosos.conteo;
+            const totalValidos = Math.max(1, c.bancan + c.bardean + c.neutros);
+            const pctBancan = Math.round((c.bancan / totalValidos) * 100);
+            const pctNeutros = Math.round((c.neutros / totalValidos) * 100);
+            const pctBardean = Math.round((c.bardean / totalValidos) * 100);
+
+            widgetTermometro.innerHTML = `
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-fire text-amber-400"></i> Termómetro de Opinión Pública (47 Figuras):
+                  </span>
+                  <div class="flex items-center gap-2 text-[11px] font-mono">
+                    <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${c.bancan} Te bancan</span>
+                    <span class="text-rose-400 font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">${c.bardean} Te bardean</span>
+                    <span class="text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${c.neutros} Chicanas</span>
+                  </div>
+                </div>
+
+                <!-- Barra tricolor de polarización en vivo -->
+                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden flex shadow-inner">
+                  <div style="width: ${pctBancan}%" class="bg-emerald-500 transition-all duration-500" title="Apoyos: ${c.bancan} (${pctBancan}%)"></div>
+                  <div style="width: ${pctNeutros}%" class="bg-amber-400 transition-all duration-500" title="Chicanas: ${c.neutros} (${pctNeutros}%)"></div>
+                  <div style="width: ${pctBardean}%" class="bg-rose-500 transition-all duration-500" title="Repudios: ${c.bardean} (${pctBardean}%)"></div>
+                </div>
+
+                <!-- Botones de filtrado interactivo -->
+                <div class="flex items-center gap-1.5 pt-0.5 overflow-x-auto text-[11px]">
+                  <button onclick="filtrarReaccionesFamosos('destacadas', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-amber-500/30 text-amber-200 border border-amber-400 font-bold shrink-0">
+                    Destacadas (${famosos.length})
+                  </button>
+                  <button onclick="filtrarReaccionesFamosos('bancan', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+                    👍 Te bancan (${c.bancan})
+                  </button>
+                  <button onclick="filtrarReaccionesFamosos('bardean', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+                    👎 Te bardean (${c.bardean})
+                  </button>
+                  <button onclick="filtrarReaccionesFamosos('neutros', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+                    🎭 Chicanas (${c.neutros})
+                  </button>
+                  <button onclick="filtrarReaccionesFamosos('todas', this)" class="btn-filtro-famosos px-2.5 py-1 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700 hover:bg-slate-700 font-medium shrink-0">
+                    Todas (${c.total})
+                  </button>
+                </div>
+              </div>
+            `;
+          }
+
+          renderizarTarjetasFamosos(famosos);
+        }
       }
 
       // 2. La Voz de la Calle (El pulso ciudadano real)

@@ -1538,6 +1538,14 @@ class MotorJuego {
     return this.indiceDilema >= this.dilemasFase.length;
   }
 
+  ocupaCargoPublico() {
+    return this.faseActual === 'diputado' || this.faseActual === 'presidente';
+  }
+
+  esAdolescente() {
+    return this.faseActual === 'cuna' || (this.saludSupervivencia && this.saludSupervivencia.edad < 18);
+  }
+
   // CÁLCULO ELECTORAL BASADO EN LA REGLA REAL DE LA CONSTITUCIÓN NACIONAL (ARTS. 97 Y 98 CN)
   calcularResultadoEleccion() {
     // Votan los sectores con base social en urnas:

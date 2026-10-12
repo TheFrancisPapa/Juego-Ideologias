@@ -41,6 +41,7 @@ const { CLASICOS_ARGENTINOS, OTROS_DEPORTES_ARGENTINOS } = require('./clasicos_f
 const { MARCAS_ARGENTINAS, detectarMarcasEnDecision } = require('./marcas_empresas_argentinas.js');
 const { MEDIOS_ARGENTINOS, generarMuroDeMedios } = require('./medios_argentinos.js');
 const { CIUDADANOS_ARGENTINOS, obtenerVocesDeLaCalle } = require('./voz_de_la_calle.js');
+const { ENTORNO_CERCANO, obtenerReaccionesEntornoCercano } = require('./entorno_cercano.js');
 const {
   ARQUETIPOS_EDAD,
   CATALOGO_MUERTES,
@@ -3964,6 +3965,96 @@ test("Motor de Audio Procedural Criollo (Web Audio API & Sonidos del Sillón)", 
   const estadoPost = audioCriollo.toggleSilencio();
   assert.strictEqual(estadoPost, !estadoPre);
   audioCriollo.toggleSilencio(); // volver al estado original
+});
+
+// =========================================================================
+// 26. VERIFICACIÓN DEL TERMÓMETRO DE ENTORNO CERCANO, AFECTOS Y VÍNCULOS
+// =========================================================================
+console.log("\n❤️ 26. VERIFICACIÓN DEL TERMÓMETRO DE ENTORNO CERCANO, AFECTOS Y VÍNCULOS (FAMILIA, PAREJA, AMIGOS, ENTRENADOR Y TERRITORIO)...");
+
+test("Catálogo de Figuras del Entorno Cercano (Familia, Pareja, Amigos, Entrenador, Escuela y Territorio)", () => {
+  assert.ok(ENTORNO_CERCANO.mama, "Debe existir Mamá");
+  assert.ok(ENTORNO_CERCANO.papa, "Debe existir Papá");
+  assert.ok(ENTORNO_CERCANO.hermano, "Debe existir Hermano/a");
+  assert.ok(ENTORNO_CERCANO.pareja_activa, "Debe existir Pareja Activa");
+  assert.ok(ENTORNO_CERCANO.soltero_libre, "Debe existir Soltería Libre");
+  assert.ok(ENTORNO_CERCANO.mejor_amigo, "Debe existir Mejor Amigo");
+  assert.ok(ENTORNO_CERCANO.grupo_pibes, "Debe existir Grupo de Amigos");
+  assert.ok(ENTORNO_CERCANO.entrenador_club, "Debe existir Entrenador del Club");
+  assert.ok(ENTORNO_CERCANO.gimnasio_libre, "Debe existir Actividad Física Libre");
+  assert.ok(ENTORNO_CERCANO.preceptor_escuela, "Debe existir Preceptor de Escuela");
+  assert.ok(ENTORNO_CERCANO.profesora_rossi, "Debe existir Profesora de Escuela");
+  assert.ok(ENTORNO_CERCANO.companero_militancia, "Debe existir Compañero de Militancia");
+  assert.ok(ENTORNO_CERCANO.don_tito_puntero, "Debe existir Don Tito Referente Barrial");
+  assert.ok(ENTORNO_CERCANO.rival_agrupacion, "Debe existir Rival de Agrupación");
+  assert.ok(ENTORNO_CERCANO.dona_rosa_vecina, "Debe existir Doña Rosa Vecina Almacenera");
+});
+
+test("Generación Reactiva del Termómetro de Entorno Cercano en Adolescencia (Fase Cuna) y Toggles de Pareja/DT", () => {
+  const decEstudio = { id: "estudios_academicos", texto: "Priorizar el estudio riguroso, lectura y promedio escolar" };
+
+  // Caso 1: Con pareja y con entrenador
+  const res1 = obtenerReaccionesEntornoCercano({
+    fase: 'cuna',
+    opcionElegida: decEstudio,
+    configEntorno: { tienePareja: true, tieneEntrenador: true }
+  });
+
+  assert.ok(res1.lista.length >= 7, "Debe generar al menos 7 figuras del entorno adolescente");
+  assert.ok(res1.conteo.bancan >= 1, "Debe haber quienes bancan");
+  assert.strictEqual(res1.conteo.total, res1.lista.length, "Total debe coincidir con lista");
+  
+  const tieneCamila = res1.lista.some(f => f.id === 'pareja');
+  const tieneDT = res1.lista.some(f => f.id === 'entrenador_club');
+  assert.ok(tieneCamila, "Debe incluir a la pareja formal cuando tienePareja es true");
+  assert.ok(tieneDT, "Debe incluir al DT del club cuando tieneEntrenador es true");
+
+  // Caso 2: Soltero y deporte libre
+  const res2 = obtenerReaccionesEntornoCercano({
+    fase: 'cuna',
+    opcionElegida: decEstudio,
+    configEntorno: { tienePareja: false, tieneEntrenador: false }
+  });
+
+  const tieneSoltero = res2.lista.some(f => f.id === 'soltero');
+  const tieneGymLibre = res2.lista.some(f => f.id === 'gimnasio_libre');
+  assert.ok(tieneSoltero, "Debe incluir estado de soltero libre cuando tienePareja es false");
+  assert.ok(tieneGymLibre, "Debe incluir deporte libre cuando tieneEntrenador es false");
+  assert.strictEqual(res2.lista.some(f => f.id === 'pareja'), false, "No debe figurar pareja cuando tienePareja es false");
+  assert.strictEqual(res2.lista.some(f => f.id === 'entrenador_club'), false, "No debe figurar DT cuando tieneEntrenador es false");
+});
+
+test("Generación Reactiva en Militancia (Sin Cargo Público) y Métodos Institucionales en MotorJuego", () => {
+  const decMilitante = { id: "cooperativa", texto: "Cooperativa de autoconstrucción donde las familias paguen el lote en cuotas" };
+
+  const resMil = obtenerReaccionesEntornoCercano({
+    fase: 'militante',
+    opcionElegida: decMilitante,
+    configEntorno: { tienePareja: true, tieneEntrenador: true }
+  });
+
+  assert.ok(resMil.lista.length >= 7, "Debe generar figuras de territorio y vínculos en militancia");
+  assert.ok(resMil.lista.some(f => f.id === 'referente_barrial'), "Debe incluir a Don Tito");
+  assert.ok(resMil.lista.some(f => f.id === 'companero_militancia'), "Debe incluir a compañero de militancia");
+  assert.ok(resMil.lista.some(f => f.id === 'rival_agrupacion'), "Debe incluir a rival de agrupación");
+
+  // Métodos en MotorJuego: ocupaCargoPublico y esAdolescente
+  const motor = new MotorJuego();
+  motor.faseActual = 'cuna';
+  motor.saludSupervivencia.edad = 15;
+  assert.strictEqual(motor.ocupaCargoPublico(), false, "En cuna no ocupa cargo público");
+  assert.strictEqual(motor.esAdolescente(), true, "A los 15 años en cuna es adolescente");
+
+  motor.faseActual = 'militante';
+  motor.saludSupervivencia.edad = 20;
+  assert.strictEqual(motor.ocupaCargoPublico(), false, "En militancia no ocupa cargo público");
+  assert.strictEqual(motor.esAdolescente(), false, "A los 20 años en militancia no es adolescente");
+
+  motor.faseActual = 'diputado';
+  assert.strictEqual(motor.ocupaCargoPublico(), true, "Como diputado SÍ ocupa cargo público");
+
+  motor.faseActual = 'presidente';
+  assert.strictEqual(motor.ocupaCargoPublico(), true, "Como presidente SÍ ocupa cargo público");
 });
 
 console.log("\n=================================================================");
