@@ -1014,7 +1014,18 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { mechaSocial: -5 },
         impactoSalud: { coronarias: +5, paranoia: +5, seguridad: +5 },
-        impactoAdolescente: { estudios: +20, saludFisica: -5, saludMental: +5, relaciones: +5, deportes: -5 }
+        impactoAdolescente: { estudios: +20, saludFisica: -5, saludMental: +5, relaciones: +5, deportes: -5 },
+        consecuenciaAdolescente: {
+          titulo: "Boletín de Honor y Recomendación Académica vs. Pérdida del Club",
+          narrativa: "Clavaste un 9.5 en el boletín trimestral. Tu profesor de Historia y la vicedirectora quedaron fascinados con tu redacción y te propusieron para representar a la escuela en las Olimpíadas académicas. Sin embargo, al dedicarle todas las tardes al estudio, faltaste a los entrenamientos del club y el DT te mandó al banco de suplentes: perdiste la oportunidad de que te viera un reclutador de un club grande que vino a ver el partido del sábado.",
+          puertaAbierta: "Recomendación formal de directivos y prestigio académico escolar.",
+          costoOportunidad: "Perdiste la titularidad deportiva y la chance de probarte en un club grande.",
+          mensajesEntorno: [
+            { autor: "Sofi (Delegada de Curso)", rol: "Compañera de banco", avatar: "fa-solid fa-graduation-cap", color: "sky", texto: "¡Bien ahí con el boletín! El profe nos dijo que tenés el promedio más alto del turno mañana 👏" },
+            { autor: "Nacho (Amigo del Club)", rol: "Delantero de inferiores", avatar: "fa-solid fa-futbol", color: "emerald", texto: "Uh perro, vino un ojeador de Racing a la cancha y preguntó por vos... te re perdiste la oportunidad de tu vida por quedarte estudiando!" },
+            { autor: "Mamá y Papá", rol: "Familia en casa", avatar: "fa-solid fa-house-user", color: "amber", texto: "Vimos tus notas, estamos re orgullosos de vos hijo. El estudio te va a abrir puertas que hoy ni te imaginás." }
+          ]
+        }
       },
       {
         id: "inferiores_ascenso",
@@ -1024,7 +1035,18 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { humorAfaScaloneta: +15 },
         impactoSalud: { coronarias: +15, paranoia: -10, seguridad: +10 },
-        impactoAdolescente: { estudios: -5, saludFisica: +25, saludMental: +10, relaciones: +10, deportes: +25 }
+        impactoAdolescente: { estudios: -5, saludFisica: +25, saludMental: +10, relaciones: +10, deportes: +25 },
+        consecuenciaAdolescente: {
+          titulo: "Capitán en Inferiores y Prueba en Reserva vs. Riesgo en Diciembre",
+          narrativa: "La rompiste toda en el torneo de la liga juvenil. Tu potencia física y liderazgo llamaron la atención de un reclutador de un club grande de Primera División que te consiguió una prueba en la Reserva. Tu estado físico y autoestima están en el punto más alto. Sin embargo, por viajar a los partidos descuidaste Matemática y Literatura: te llevaste dos materias a diciembre y tus viejos te pusieron los puntos, advirtiéndote que si no aprobás se suspende el fútbol.",
+          puertaAbierta: "Prueba formal en la Reserva de un club grande de Primera División.",
+          costoOportunidad: "Materias a diciembre y fuerte ultimátum familiar sobre tu rendimiento escolar.",
+          mensajesEntorno: [
+            { autor: "DT Gustavo (Club de Barrio)", rol: "Entrenador de inferiores", avatar: "fa-solid fa-futbol", color: "emerald", texto: "Crack, el martes a las 8 am te quiero con los botines limpios en el predio. Te conseguí la prueba con la gente de Primera, no me falles!" },
+            { autor: "Lautaro (Compañero de aula)", rol: "Amigo del fondo", avatar: "fa-solid fa-book", color: "rose", texto: "Che capo, te cubrí con la profe pero te anotó para rendir en diciembre. Ponete a copiar las carpetas que te van a fusilar." },
+            { autor: "Papá / Mamá", rol: "Familia en casa", avatar: "fa-solid fa-house-user", color: "amber", texto: "Felicidades por el partido, pero acá sin secundario terminado no hay club que valga. En diciembre te sentás a estudiar." }
+          ]
+        }
       },
       {
         id: "cueva_colegio",
@@ -1034,7 +1056,18 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { mechaSocial: -10 },
         impactoSalud: { coronarias: +10, paranoia: -15, seguridad: +5 },
-        impactoAdolescente: { estudios: +5, saludFisica: +5, saludMental: +20, relaciones: +25, deportes: +5 }
+        impactoAdolescente: { estudios: +5, saludFisica: +5, saludMental: +20, relaciones: +25, deportes: +5 },
+        consecuenciaAdolescente: {
+          titulo: "Amigo de Fierro para Toda la Vida vs. Oportunidad en Stand-by",
+          narrativa: "Estuviste al pie del cañón cuando tu mejor amigo atravesaba una crisis familiar pesada y te convertiste en el pilar de confianza de tu grupo de pares. Te ganaste la lealtad incondicional de tus compañeros. Ese amigo que bancaste resultará ser una persona clave en el futuro que recordará tu lealtad y te abrirá puertas decisivas cuando ingreses a la vida adulta. Tu salud mental y paz interior están intactas, aunque en la escuela y en el club quedaste en un cómodo segundo plano.",
+          puertaAbierta: "Un amigo leal de fierro y una red de afecto que te respaldará en momentos clave de tu futuro.",
+          costoOportunidad: "Rendimiento escolar y deportivo en segundo plano, sin reconocimientos institucionales tempranos.",
+          mensajesEntorno: [
+            { autor: "Mateo (Tu Mejor Amigo)", rol: "Amigo de la infancia", avatar: "fa-solid fa-heart", color: "violet", texto: "Hermano, de verdad gracias por escucharme y bancarme el otro día. Sos un tipo de fierro, nunca me voy a olvidar de esto ❤️" },
+            { autor: "Camila (Compañera de curso)", rol: "Grupo de amigos", avatar: "fa-solid fa-users", color: "amber", texto: "Qué linda la juntada de ayer en la plaza! Hacía mil que no nos reíamos tanto. Qué bueno tenerte en el grupo." },
+            { autor: "Tus Viejos", rol: "Familia en casa", avatar: "fa-solid fa-house-user", color: "sky", texto: "Nos alegra mucho verte tranquilo y de buen humor. Cuidar a los buenos amigos y estar bien con uno mismo es lo más valioso." }
+          ]
+        }
       }
     ]
   },
@@ -1060,7 +1093,18 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { roscaGobernadores: +10 },
         impactoSalud: { coronarias: +5, paranoia: +5, seguridad: +5 },
-        impactoAdolescente: { estudios: +25, saludFisica: 0, saludMental: +10, relaciones: +15, deportes: 0 }
+        impactoAdolescente: { estudios: +25, saludFisica: 0, saludMental: +10, relaciones: +15, deportes: 0 },
+        consecuenciaAdolescente: {
+          titulo: "Ingreso a la Universidad Pública & Primeros Contactos",
+          narrativa: "Comenzaste las cursadas universitarias. En los pasillos y comisiones conociste a profesores destacados y a tus primeros pares de militancia y debate académico. Empezaste a construir capital intelectual y legitimidad técnica. Vivís con lo justo y resignás independencia económica inmediata, pero tu cabeza y tus contactos crecen exponencialmente.",
+          puertaAbierta: "Red de contactos universitarios, debate de ideas y formación académica superior.",
+          costoOportunidad: "Cero ingresos propios y dependencia económica familiar por varios años.",
+          mensajesEntorno: [
+            { autor: "Prof. Argañaraz", rol: "Titular de Cátedra", avatar: "fa-solid fa-landmark", color: "sky", texto: "Estimado, muy agudo su ensayo sobre el Estado de Derecho. Siga participando en el seminario de investigación." },
+            { autor: "Rocío (Centro de Estudiantes)", rol: "Militante universitaria", avatar: "fa-solid fa-bullhorn", color: "amber", texto: "Che, el jueves armamos mateada de ingresantes para charlar sobre el presupuesto. Venite que necesitamos voces despiertas!" },
+            { autor: "Grupo del Secundario", rol: "Amigos de la escuela", avatar: "fa-solid fa-users", color: "emerald", texto: "¡Felicitaciones futuro doctor! Cuando te recibas no te olvides de los pibes de la secundaria eh!" }
+          ]
+        }
       },
       {
         id: "economia_cema",
@@ -1070,7 +1114,18 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: { riesgoPais: -20 },
         impactoCriollo: { dolarBlue: -15 },
         impactoSalud: { coronarias: 0, paranoia: +5, seguridad: +10 },
-        impactoAdolescente: { estudios: +20, saludFisica: +5, saludMental: +5, relaciones: +5, deportes: +5 }
+        impactoAdolescente: { estudios: +20, saludFisica: +5, saludMental: +5, relaciones: +5, deportes: +5 },
+        consecuenciaAdolescente: {
+          titulo: "Pasantía en el Sector Privado & Primer Sueldo",
+          narrativa: "Entraste como pasante en una compañía privada de servicios financieros y consultoría. Aprendiste a manejar herramientas de análisis de datos y el lenguaje de los negocios. Tu primer sueldo te dio autonomía para comprarte tus cosas y pagar tus gastos. Sin embargo, tus viejos amigos del barrio sienten que tus horarios de oficina te alejaron y que te volviste un poco distante.",
+          puertaAbierta: "Independencia financiera temprana, roce corporativo y visión de mercado.",
+          costoOportunidad: "Distancia afectiva con tus amistades del barrio y poca presencia en la calle.",
+          mensajesEntorno: [
+            { autor: "Martín (Gerente de Área)", rol: "Jefe de pasantía", avatar: "fa-solid fa-briefcase", color: "emerald", texto: "Muy buen reporte el de hoy. Tenés madera para crecer rápido en el sector privado si mantenés esta disciplina." },
+            { autor: "Nacho (Amigo del barrio)", rol: "Amigo de la infancia", avatar: "fa-solid fa-futbol", color: "amber", texto: "Che, ya nunca venís al club los viernes. Ahora que andás de camisa en la City te olvidaste de los pibes o qué?" },
+            { autor: "Mamá / Papá", rol: "Familia en casa", avatar: "fa-solid fa-house-user", color: "sky", texto: "¡Qué emoción que te pagues tus propios gastos hijo! Cuidá la plata y aprendé todo lo que puedas." }
+          ]
+        }
       },
       {
         id: "paravalanchas_tribuna",
@@ -1080,7 +1135,18 @@ const DILEMAS_CRECIMIENTO = [
         impactoMacro: {},
         impactoCriollo: { mechaSocial: -5, roscaGobernadores: +10 },
         impactoSalud: { coronarias: +10, paranoia: 0, seguridad: +5 },
-        impactoAdolescente: { estudios: 0, saludFisica: +15, saludMental: +10, relaciones: +25, deportes: +15 }
+        impactoAdolescente: { estudios: 0, saludFisica: +15, saludMental: +10, relaciones: +25, deportes: +15 },
+        consecuenciaAdolescente: {
+          titulo: "Oficio Real, Salario Propio & Respeto en el Club",
+          narrativa: "Empezaste a laburar en un oficio productivo y te sumaste a la comisión directiva y actividades sociales del club de barrio. La gente del vecindario te ve todos los días, saben que sos alguien laburador que no le escapa al barro y te ganaste la confianza de los comerciantes y referentes barriales. El desgaste físico se siente tras 10 horas de jornada, pero tenés raíces sólidas donde pisás.",
+          puertaAbierta: "Respeto popular genuino, oficio concreto y arraigo comunitario inquebrantable.",
+          costoOportunidad: "Desgaste corporal temprano y postergación de la educación superior formal.",
+          mensajesEntorno: [
+            { autor: "Don Carlos (Presidente del Club)", rol: "Referente barrial", avatar: "fa-solid fa-users-gear", color: "amber", texto: "Pibe, gracias por quedarte a pintar las tribunas y arreglar las luces. Gente comprometida como vos es la que mantiene vivo este club." },
+            { autor: "Sofi (Excompañera de banco)", rol: "Amiga del secundario", avatar: "fa-solid fa-graduation-cap", color: "sky", texto: "Te crucé el otro día con el mameluco de laburo, qué orgullo verte pelearla de frente! Avisá cuando te juntes con los pibes." },
+            { autor: "Tus Viejos", rol: "Familia trabajadora", avatar: "fa-solid fa-hand-holding-heart", color: "emerald", texto: "La plata ganada con el lomo propio vale el doble. Que nadie te diga que no sabés lo que cuesta la vida." }
+          ]
+        }
       }
     ]
   }

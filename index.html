@@ -495,78 +495,88 @@
             <!-- Inyectado dinámicamente si hay Clímax de Crisis -->
           </div>
 
-          <!-- BANNER DE RESOLUCIÓN ADOPTADA -->
-          <div class="p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 space-y-1">
-            <span class="text-[10px] uppercase font-bold text-amber-400 tracking-wider flex items-center gap-1.5">
-              <i class="fa-solid fa-stamp"></i> Medida adoptada por tu gestión:
-            </span>
-            <p id="interlude-decision-text" class="text-xs sm:text-sm text-slate-100 font-medium leading-relaxed"></p>
+          <!-- CONTENEDOR 1: INTERLUDIO ADOLESCENTE (SOLO FASE CUNA / ADOLESCENCIA) -->
+          <div id="interlude-adolescente-container" class="hidden space-y-4">
+            <!-- Inyectado dinámicamente: métricas de desarrollo, puertas/costos de oportunidad y mensajes de WhatsApp -->
           </div>
 
-          <!-- VARIACIÓN DE SECTORES Y VARIABLES MACRO -->
-          <div class="space-y-2">
-            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-arrow-trend-up text-amber-400"></i> Impacto inmediato en los números del país:
-            </span>
-            <div id="interlude-impact-diff" class="grid sm:grid-cols-2 gap-2 text-xs">
-              <!-- Inyectado dinámicamente -->
-            </div>
-          </div>
+          <!-- CONTENEDOR 2: INTERLUDIO ADULTO (BARRO, DIPUTADO, PRESIDENTE) -->
+          <div id="interlude-adulto-container" class="space-y-5">
 
-          <!-- SECCIÓN: MURO DE MEDIOS (ZÓCALOS DE TV, PLACAS ROJAS Y STREAMING) -->
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-tv text-sky-400"></i> Muro de Medios en Vivo (Zócalos, Placas & Streaming):
+            <!-- BANNER DE RESOLUCIÓN ADOPTADA -->
+            <div class="p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 space-y-1">
+              <span class="text-[10px] uppercase font-bold text-amber-400 tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-stamp"></i> Medida adoptada por tu gestión:
               </span>
-              <button onclick="zappingMedios()" class="text-[10px] text-sky-300 bg-sky-500/10 hover:bg-sky-500/20 px-2.5 py-0.5 rounded border border-sky-500/30 transition-colors flex items-center gap-1 font-semibold shadow-sm">
-                <i class="fa-solid fa-shuffle"></i> Zapping (Cambiar canales)
-              </button>
+              <p id="interlude-decision-text" class="text-xs sm:text-sm text-slate-100 font-medium leading-relaxed"></p>
             </div>
-            <div id="media-wall-container" class="grid gap-3">
-              <!-- Inyectado dinámicamente con estética TV / Placa Roja / Streaming -->
-            </div>
-          </div>
 
-          <!-- SECCIÓN 1: FAMOSOS Y CONDUCTORES EN MEDIOS & STREAMING -->
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-microphone-lines text-amber-400"></i> Polémica de Famosos & Medios en vivo:
+            <!-- VARIACIÓN DE SECTORES Y VARIABLES MACRO -->
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-arrow-trend-up text-amber-400"></i> Impacto inmediato en los números del país:
               </span>
-              <span class="text-[10px] text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">Parodia Satírica Ficcional</span>
+              <div id="interlude-impact-diff" class="grid sm:grid-cols-2 gap-2 text-xs">
+                <!-- Inyectado dinámicamente -->
+              </div>
             </div>
-            <!-- Widget de Termómetro de Polarización Mediática -->
-            <div id="termometro-famosos-widget"></div>
-            <div id="famosos-reactions-container" class="grid sm:grid-cols-2 gap-2.5 text-xs">
-              <!-- Inyectado por JS -->
-            </div>
-          </div>
 
-          <!-- SECCIÓN 2: LA VOZ DE LA CALLE (EL PULSO CIUDADANO REAL) -->
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-users text-emerald-400"></i> La Voz de la Calle (Precios, Sueldos y Vida Diaria):
-              </span>
-              <span class="text-[10px] text-slate-500">¿Qué dice la gente de a pie?</span>
+            <!-- SECCIÓN: MURO DE MEDIOS (ZÓCALOS DE TV, PLACAS ROJAS Y STREAMING) -->
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-tv text-sky-400"></i> Muro de Medios en Vivo (Zócalos, Placas & Streaming):
+                </span>
+                <button onclick="zappingMedios()" class="text-[10px] text-sky-300 bg-sky-500/10 hover:bg-sky-500/20 px-2.5 py-0.5 rounded border border-sky-500/30 transition-colors flex items-center gap-1 font-semibold shadow-sm">
+                  <i class="fa-solid fa-shuffle"></i> Zapping (Cambiar canales)
+                </button>
+              </div>
+              <div id="media-wall-container" class="grid gap-3">
+                <!-- Inyectado dinámicamente con estética TV / Placa Roja / Streaming -->
+              </div>
             </div>
-            <div id="street-voices-container" class="grid sm:grid-cols-2 gap-2.5 text-xs">
-              <!-- Inyectado por JS -->
-            </div>
-          </div>
 
-          <!-- SECCIÓN 3: PULSO EN REDES SOCIALES (Twitter / X, Instagram, Facebook) -->
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-satellite-dish text-red-500 animate-pulse"></i> El Pulso de las Redes Sociales:
-              </span>
-              <span class="text-[10px] text-slate-500">Tendencias del momento en Argentina</span>
+            <!-- SECCIÓN 1: FAMOSOS Y CONDUCTORES EN MEDIOS & STREAMING -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-microphone-lines text-amber-400"></i> Polémica de Famosos & Medios en vivo:
+                </span>
+                <span class="text-[10px] text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">Parodia Satírica Ficcional</span>
+              </div>
+              <!-- Widget de Termómetro de Polarización Mediática -->
+              <div id="termometro-famosos-widget"></div>
+              <div id="famosos-reactions-container" class="grid sm:grid-cols-2 gap-2.5 text-xs">
+                <!-- Inyectado por JS -->
+              </div>
             </div>
-            <div id="social-posts-container" class="grid sm:grid-cols-3 gap-2.5 text-xs">
-              <!-- Inyectado dinámicamente por JS -->
+
+            <!-- SECCIÓN 2: LA VOZ DE LA CALLE (EL PULSO CIUDADANO REAL) -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-users text-emerald-400"></i> La Voz de la Calle (Precios, Sueldos y Vida Diaria):
+                </span>
+                <span class="text-[10px] text-slate-500">¿Qué dice la gente de a pie?</span>
+              </div>
+              <div id="street-voices-container" class="grid sm:grid-cols-2 gap-2.5 text-xs">
+                <!-- Inyectado por JS -->
+              </div>
             </div>
+
+            <!-- SECCIÓN 3: PULSO EN REDES SOCIALES (Twitter / X, Instagram, Facebook) -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-satellite-dish text-red-500 animate-pulse"></i> El Pulso de las Redes Sociales:
+                </span>
+                <span class="text-[10px] text-slate-500">Tendencias del momento en Argentina</span>
+              </div>
+              <div id="social-posts-container" class="grid sm:grid-cols-3 gap-2.5 text-xs">
+                <!-- Inyectado dinámicamente por JS -->
+              </div>
+            </div>
+
           </div>
 
           <!-- BOTÓN DESTACADO PARA AVANZAR TRAS LEER LAS REPERCUSIONES -->
@@ -6622,20 +6632,31 @@
               sectores: { ...motorJuego.aprobacionSectores },
               macro: { ...motorJuego.macro },
               termometroCriollo: { ...motorJuego.termometroCriollo },
-              saludSupervivencia: { ...motorJuego.saludSupervivencia }
+              saludSupervivencia: motorJuego.saludSupervivencia ? {
+                coronarias: motorJuego.saludSupervivencia.coronarias,
+                paranoia: motorJuego.saludSupervivencia.paranoia,
+                seguridad: motorJuego.saludSupervivencia.seguridad,
+                edad: motorJuego.saludSupervivencia.edad
+              } : null,
+              perfilAdolescente: motorJuego.perfilAdolescente ? { ...motorJuego.perfilAdolescente } : null
             };
             motorJuego.aplicarDecision(opc);
-            renderizarSectores();
-            renderizarMacro();
-            renderizarTermometroCriollo();
-            renderizarSaludSupervivencia();
-            renderizarComodoroPyUI();
-            renderizarSIDEUI();
-            renderizarCancilleriaUI();
-            renderizarGabineteUI();
-            renderizarMediosUI();
-            renderizarSalaCrisisUI();
-            if (_brujulaEnVivoAbierta) renderizarBrujulaEnVivo();
+            if (motorJuego.faseActual === 'cuna') {
+              renderizarPerfilAdolescenteUI();
+              actualizarMicroHUD();
+            } else {
+              renderizarSectores();
+              renderizarMacro();
+              renderizarTermometroCriollo();
+              renderizarSaludSupervivencia();
+              renderizarComodoroPyUI();
+              renderizarSIDEUI();
+              renderizarCancilleriaUI();
+              renderizarGabineteUI();
+              renderizarMediosUI();
+              renderizarSalaCrisisUI();
+              if (_brujulaEnVivoAbierta) renderizarBrujulaEnVivo();
+            }
             mostrarInterludio(opc, snapPrevio);
           }
         };
@@ -6848,7 +6869,13 @@
         sectores: { ...motorJuego.aprobacionSectores },
         macro: { ...motorJuego.macro },
         termometroCriollo: { ...motorJuego.termometroCriollo },
-        saludSupervivencia: { ...motorJuego.saludSupervivencia }
+        saludSupervivencia: motorJuego.saludSupervivencia ? {
+          coronarias: motorJuego.saludSupervivencia.coronarias,
+          paranoia: motorJuego.saludSupervivencia.paranoia,
+          seguridad: motorJuego.saludSupervivencia.seguridad,
+          edad: motorJuego.saludSupervivencia.edad
+        } : null,
+        perfilAdolescente: motorJuego.perfilAdolescente ? { ...motorJuego.perfilAdolescente } : null
       };
       motorJuego.aplicarDecision(opc);
       renderizarSectores();
@@ -6868,9 +6895,47 @@
     function mostrarInterludio(opcionElegida, snapshotPrevio) {
       document.getElementById('dilemma-options-section').classList.add('hidden');
       const panel = document.getElementById('reaction-interlude-panel');
+      const adolContainer = document.getElementById('interlude-adolescente-container');
+      const adultContainer = document.getElementById('interlude-adulto-container');
+      const crisisPanel = document.getElementById('crisis-climax-panel');
+
+      // RAMA 1: ADOLESCENCIA / FASE CUNA (15 a 18 AÑOS)
+      if (motorJuego.faseActual === 'cuna') {
+        if (crisisPanel) {
+          crisisPanel.classList.add('hidden');
+          crisisPanel.innerHTML = '';
+        }
+        if (adultContainer) adultContainer.classList.add('hidden');
+        if (adolContainer) {
+          adolContainer.classList.remove('hidden');
+          renderizarInterludioAdolescente(opcionElegida, snapshotPrevio);
+        }
+
+        // Etiqueta del botón de avance
+        const btnLabel = document.getElementById('btn-advance-interlude-label');
+        const totalDilemas = (motorJuego.dilemasFase && motorJuego.dilemasFase.length)
+          ? motorJuego.dilemasFase.length
+          : (DILEMAS_DATA[motorJuego.faseActual] || []).length;
+        const esUltimo = typeof motorJuego.esFinDeFase === 'function'
+          ? motorJuego.esFinDeFase()
+          : (motorJuego.indiceDilema >= totalDilemas);
+
+        if (esUltimo) {
+          btnLabel.innerText = "Cumplir 18 Años (Mayoría de Edad & Nuevos Retos)";
+        } else {
+          btnLabel.innerText = "Continuar a los 18 Años";
+        }
+
+        panel.classList.remove('hidden');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+
+      // RAMA 2: MODO ADULTO / GESTIÓN PÚBLICA (Militante / Barro / Diputado / Presidente)
+      if (adolContainer) adolContainer.classList.add('hidden');
+      if (adultContainer) adultContainer.classList.remove('hidden');
 
       // 0. Clímax de Crisis si la Mecha Social superó el 85%
-      const crisisPanel = document.getElementById('crisis-climax-panel');
       if (crisisPanel) {
         const esCrisis = motorJuego.climaxCrisis || (motorJuego.termometroCriollo && motorJuego.termometroCriollo.mechaSocial >= 85);
         if (esCrisis) {
@@ -7078,36 +7143,48 @@
       }
 
       if (snapshotPrevio && snapshotPrevio.saludSupervivencia && motorJuego.saludSupervivencia) {
-        const dCor = motorJuego.saludSupervivencia.coronarias - snapshotPrevio.saludSupervivencia.coronarias;
+        const prevCor = Number(snapshotPrevio.saludSupervivencia.coronarias) || 100;
+        const actCor = Number(motorJuego.saludSupervivencia.coronarias) || 100;
+        const dCor = actCor - prevCor;
         if (dCor !== 0) {
           const item = document.createElement('div');
           const mejora = dCor > 0;
           item.className = `p-2 rounded-lg border ${mejora ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-300' : 'bg-rose-950/20 border-rose-500/30 text-rose-300'} flex justify-between items-center`;
           item.innerHTML = `
             <span class="flex items-center gap-1 font-medium text-[11px]"><i class="fa-solid fa-heart-pulse"></i> Coronarias</span>
-            <span class="font-bold text-xs">${dCor > 0 ? '+' : ''}${dCor}% (${motorJuego.saludSupervivencia.coronarias}%)</span>
+            <span class="font-bold text-xs">${dCor > 0 ? '+' : ''}${dCor}% (${actCor}%)</span>
           `;
           diffBox.appendChild(item);
         }
-        const dPar = motorJuego.saludSupervivencia.paranoia - snapshotPrevio.saludSupervivencia.paranoia;
-        if (dPar !== 0) {
+
+        const prevPar = (snapshotPrevio.saludSupervivencia.paranoia !== undefined && !isNaN(Number(snapshotPrevio.saludSupervivencia.paranoia)))
+          ? Number(snapshotPrevio.saludSupervivencia.paranoia)
+          : (motorJuego.saludSupervivencia.paranoia !== undefined ? Number(motorJuego.saludSupervivencia.paranoia) : 0);
+        const actPar = (motorJuego.saludSupervivencia.paranoia !== undefined && !isNaN(Number(motorJuego.saludSupervivencia.paranoia)))
+          ? Number(motorJuego.saludSupervivencia.paranoia)
+          : 0;
+        const dPar = actPar - prevPar;
+        if (!isNaN(dPar) && dPar !== 0) {
           const item = document.createElement('div');
           const mejora = dPar < 0;
           item.className = `p-2 rounded-lg border ${mejora ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-300' : 'bg-rose-950/20 border-rose-500/30 text-rose-300'} flex justify-between items-center`;
           item.innerHTML = `
             <span class="flex items-center gap-1 font-medium text-[11px]"><i class="fa-solid fa-brain"></i> Paranoia</span>
-            <span class="font-bold text-xs">${dPar > 0 ? '+' : ''}${dPar}% (${motorJuego.saludSupervivencia.paranoia}%)</span>
+            <span class="font-bold text-xs">${dPar > 0 ? '+' : ''}${dPar}% (${actPar}%)</span>
           `;
           diffBox.appendChild(item);
         }
-        const dSeg = motorJuego.saludSupervivencia.seguridad - snapshotPrevio.saludSupervivencia.seguridad;
+
+        const prevSeg = Number(snapshotPrevio.saludSupervivencia.seguridad) || 50;
+        const actSeg = Number(motorJuego.saludSupervivencia.seguridad) || 50;
+        const dSeg = actSeg - prevSeg;
         if (dSeg !== 0) {
           const item = document.createElement('div');
           const mejora = dSeg > 0;
           item.className = `p-2 rounded-lg border ${mejora ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-300' : 'bg-rose-950/20 border-rose-500/30 text-rose-300'} flex justify-between items-center`;
           item.innerHTML = `
             <span class="flex items-center gap-1 font-medium text-[11px]"><i class="fa-solid fa-shield-halved"></i> Seguridad</span>
-            <span class="font-bold text-xs">${dSeg > 0 ? '+' : ''}${dSeg}% (${motorJuego.saludSupervivencia.seguridad}%)</span>
+            <span class="font-bold text-xs">${dSeg > 0 ? '+' : ''}${dSeg}% (${actSeg}%)</span>
           `;
           diffBox.appendChild(item);
         }
@@ -7222,8 +7299,148 @@
       panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    function renderizarInterludioAdolescente(opcionElegida, snapshotPrevio) {
+      const container = document.getElementById('interlude-adolescente-container');
+      if (!container) return;
+
+      const adolActual = motorJuego.perfilAdolescente || { estudios: 75, saludFisica: 80, saludMental: 75, relaciones: 70, deportes: 75 };
+      const adolPrev = (snapshotPrevio && snapshotPrevio.perfilAdolescente)
+        ? snapshotPrevio.perfilAdolescente
+        : adolActual;
+
+      const metricas = [
+        { key: 'estudios', label: 'Estudios & Rendimiento', icon: 'fa-solid fa-graduation-cap' },
+        { key: 'saludFisica', label: 'Salud Física', icon: 'fa-solid fa-heart-pulse' },
+        { key: 'saludMental', label: 'Salud Mental & Ánimo', icon: 'fa-solid fa-brain' },
+        { key: 'relaciones', label: 'Vínculos de Pares', icon: 'fa-solid fa-users' },
+        { key: 'deportes', label: 'Deporte & Club', icon: 'fa-solid fa-futbol' }
+      ];
+
+      const diffsHtml = metricas.map(m => {
+        const act = adolActual[m.key] !== undefined ? adolActual[m.key] : 70;
+        const prev = adolPrev[m.key] !== undefined ? adolPrev[m.key] : act;
+        const diff = act - prev;
+        const claseColor = diff > 0
+          ? 'bg-emerald-950/25 border-emerald-500/40 text-emerald-300'
+          : (diff < 0 ? 'bg-rose-950/25 border-rose-500/40 text-rose-300' : 'bg-slate-900/60 border-slate-800 text-slate-400');
+        const badgeDiff = diff !== 0
+          ? `<span class="font-bold text-xs">${diff > 0 ? '+' : ''}${diff}% (${act}%)</span>`
+          : `<span class="font-medium text-[11px] text-slate-500">Sin cambios (${act}%)</span>`;
+
+        return `
+          <div class="p-2.5 rounded-xl border ${claseColor} flex flex-col justify-between gap-1 shadow-sm">
+            <span class="flex items-center gap-1.5 font-semibold text-[11px] text-slate-200">
+              <i class="${m.icon} text-sky-400"></i> ${m.label}
+            </span>
+            ${badgeDiff}
+          </div>
+        `;
+      }).join('');
+
+      const cons = opcionElegida.consecuenciaAdolescente || {
+        titulo: "Consecuencias formativas en tu rutina diaria",
+        narrativa: "Tus decisiones en esta etapa configuran tus hábitos, tus calificaciones y la relación con tus afectos cercanos.",
+        puertaAbierta: "Desarrollo de disciplina y nuevos vínculos formativos.",
+        costoOportunidad: "Tiempo resignado en otras actividades de recreación o estudio.",
+        mensajesEntorno: [
+          { autor: "Compañero de aula", rol: "Escuela secundaria", avatar: "fa-solid fa-user", color: "sky", texto: "¡Buena decisión! Se nota en cómo te estás manejando día a día." },
+          { autor: "Familia", rol: "Hogar", avatar: "fa-solid fa-house-user", color: "amber", texto: "Te apoyamos con lo que decidiste encarar hijo, a meterle con ganas." }
+        ]
+      };
+
+      const msgsHtml = (cons.mensajesEntorno || []).map(msg => `
+        <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/90 space-y-2 shadow-md">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-${msg.color || 'sky'}-500/20 text-${msg.color || 'sky'}-400 flex items-center justify-center text-xs border border-${msg.color || 'sky'}-500/40">
+                <i class="${msg.avatar || 'fa-solid fa-user'}"></i>
+              </div>
+              <div>
+                <span class="text-[11px] font-bold text-white block leading-tight">${msg.autor}</span>
+                <span class="text-[9px] text-slate-400 font-medium">${msg.rol}</span>
+              </div>
+            </div>
+            <span class="text-[9px] text-slate-500 font-mono">16:42</span>
+          </div>
+          <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="text-[11px] text-slate-200 leading-snug">"${msg.texto}"</p>
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <!-- BANNER DE DECISIÓN FORMATIVA -->
+        <div class="p-3.5 rounded-xl border border-sky-500/40 bg-sky-950/20 space-y-1 shadow-sm">
+          <span class="text-[10px] uppercase font-bold text-sky-400 tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-graduation-cap"></i> Decisión adoptada en tu adolescencia:
+          </span>
+          <p class="text-xs sm:text-sm text-slate-100 font-medium leading-relaxed">${opcionElegida.texto}</p>
+        </div>
+
+        <!-- IMPACTO EN LAS 5 DIMENSIONES FORMATIVAS (ESTUDIOS, SALUD, VÍNCULOS, DEPORTES) -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-sky-400"></i> Impacto en tu desarrollo y salud personal:
+          </span>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
+            ${diffsHtml}
+          </div>
+        </div>
+
+        <!-- TARJETA NARRATIVA: PUERTAS QUE SE ABREN VS COSTO DE OPORTUNIDAD -->
+        <div class="rounded-xl border border-amber-500/40 bg-slate-900/90 p-4 space-y-3 shadow-lg">
+          <div class="flex items-center gap-2 border-b border-slate-800 pb-2.5">
+            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-compass"></i>
+            </div>
+            <div>
+              <span class="text-[10px] text-amber-400 uppercase font-black tracking-wider block">Consecuencias en tu vida cotidiana</span>
+              <h4 class="text-xs sm:text-sm font-bold text-slate-100">${cons.titulo}</h4>
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">${cons.narrativa}</p>
+
+          <div class="grid sm:grid-cols-2 gap-2.5 pt-1">
+            <!-- Puerta abierta / Oportunidad futura -->
+            <div class="p-2.5 rounded-lg border border-emerald-500/40 bg-emerald-950/25 space-y-1">
+              <span class="text-[10px] uppercase font-bold text-emerald-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-door-open"></i> Puerta que se abre / Oportunidad futura:
+              </span>
+              <p class="text-xs text-emerald-200 leading-snug">${cons.puertaAbierta}</p>
+            </div>
+
+            <!-- Costo de oportunidad / Lo que perdiste -->
+            <div class="p-2.5 rounded-lg border border-rose-500/40 bg-rose-950/25 space-y-1">
+              <span class="text-[10px] uppercase font-bold text-rose-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-scale-unbalanced"></i> Costo de oportunidad / Lo que perdiste:
+              </span>
+              <p class="text-xs text-rose-200 leading-snug">${cons.costoOportunidad}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- MENSAJES DE WHATSAPP DEL ENTORNO (COMPAÑEROS, CLUB, FAMILIA) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Mensajes en tu celular (WhatsApp de amigos, escuela y familia):
+            </span>
+            <span class="text-[10px] text-slate-500 font-mono">En línea</span>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-2.5 text-xs">
+            ${msgsHtml}
+          </div>
+        </div>
+      `;
+    }
+
     function avanzarTrasInterludio() {
       document.getElementById('reaction-interlude-panel').classList.add('hidden');
+      const adolContainer = document.getElementById('interlude-adolescente-container');
+      if (adolContainer) adolContainer.classList.add('hidden');
+      const adultContainer = document.getElementById('interlude-adulto-container');
+      if (adultContainer) adultContainer.classList.remove('hidden');
       document.getElementById('dilemma-options-section').classList.remove('hidden');
       renderizarDilemaActual();
     }

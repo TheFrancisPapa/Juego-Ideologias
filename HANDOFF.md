@@ -88,6 +88,17 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
 - Explica la adquisición de plenos derechos cívicos (Art. 37 CN / Ley 26.774) y el **desbloqueo de nuevos retos y métricas adultas** (Sectores sociales, macroeconomía y participación comunitaria).
 - El botón **"Dar el Salto a la Vida Adulta y Asumir Nuevos Retos"** transiciona fluidamente a la siguiente etapa formativa / territorial.
 
+### E. Interludio Reactivo Adolescente & Aislamiento Total de la Política Adulta:
+- **Erradicación del Circo Político en la Adolescencia:** Cuando el jugador toma una decisión a los 15 o 18 años, ya no se muestran placas rojas de Crónica, zócalos de C5N/LN+, tuits de Milei/Laje/Grabois ni indicadores macroeconómicos del país.
+- **Contenedor `#interlude-adolescente-container`:**
+  - **Decisión adoptada:** Enfoque escolar, deportivo o de vínculos elegido.
+  - **Diferenciales de Desarrollo:** Impacto directo en Estudios, Salud Física, Salud Mental, Vínculos y Deporte (`perfilAdolescente`).
+  - **Dilema de Oportunidades:** Tarjeta narrativa con:
+    - 🔑 *Puerta que se abre / Oportunidad futura* (ej: recomendación de directivos, prueba en Reserva de Primera, amigo de fierro).
+    - ❌ *Costo de oportunidad / Lo que perdiste* (ej: pérdida de titularidad en el club, materias a diciembre, poca presencia en el barrio).
+  - **WhatsApp en Vivo:** Mensajes de chat en el celular con compañeros de aula, amigos de inferiores y familia.
+- **Corrección de Bug `Paranoia NaN%`:** Resuelto el bug por el cual desestructurar `{ ...motorJuego.saludSupervivencia }` perdía el getter prototípico `paranoia`, asegurando valores numéricos limpios y diffs 100% seguros tanto en modo cuna como en mandatos adultos.
+
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
