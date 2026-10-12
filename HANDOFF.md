@@ -144,6 +144,13 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
   - **Píldora de Suerte en HUD y Mayoría de Edad:** El HUD superior de juventud y la pantalla de los 18 años (`screen-mayoria-edad`) reflejan la Suerte Criolla del personaje en tiempo real.
   - **Pruebas 131 y 132:** La suite `validar_sistema.js` audita tanto la existencia del atributo base y ficha como la variabilidad probabilística entre múltiples vidas y la reacción del entorno.
 
+### J. Redacción Natural, Inmersiva y sin Jargon Legal en Dilemas:
+- **Problema Observado:** Inserción de citas frías como `(Arts. 25 CCyC y Ley 26.774)` en medio de la narrativa del dilema de los 18 años y en la pantalla de mayoría de edad, lo cual rompía la inmersión y sonaba a expediente judicial en lugar de una experiencia humana de crecimiento.
+- **Solución Implementada (`origenes_relaciones.js`, `index.html`):**
+  - **Erradicación Total de Citaciones de Códigos en Textos Jugables:** Se reemplazaron todas las menciones a artículos y leyes en la descripción de `juv_18_anos`, `juv_15_anos`, `hito_16_anos`, `hito_18_anos` y en `screen-mayoria-edad` por una redacción fluida, clara y natural:
+    - *"Terminás el secundario y cumplís los 18 años. Ya sos mayor de edad: podés votar, trabajar formalmente y empezar a tomar tus propias decisiones sin depender de nadie. Se abre el gran interrogante de tu futuro: si meterte de lleno en una carrera universitaria, buscar un trabajo para tener tu propia plata, o salir a laburar y comprometerte con tu barrio y tu gente..."*
+  - **Preservación de Metadatos Técnicos:** Las propiedades estructuradas internas (ej. `marcoLegal`) se conservan intactas en los objetos de datos para compatibilidad estricta con las pruebas de auditoría jurídica, sin contaminar jamás la prosa narrativa que lee el usuario en pantalla.
+
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
@@ -152,5 +159,6 @@ Para preservar la estabilidad del proyecto en futuros sprints:
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.
 3. **Vanilla JS Nativo:** No añadir scripts de empaquetado o dependencias npm requeridas para correr en el navegador; el juego debe poder jugarse abriendo directamente `index.html` en cualquier navegador web moderno.
 4. **Handoff Permanente:** Ante cualquier modificación sustancial, actualizar este archivo `HANDOFF.md` y los artefactos de sesión para mantener la trazabilidad completa.
+
 
 

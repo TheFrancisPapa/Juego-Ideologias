@@ -746,7 +746,7 @@ const DILEMAS_HITOS_LEGALES = [
     edadHito: 16,
     marcoLegal: "Ley 26.774 (Voto Joven) y Ley 22.278 (Régimen Penal Juvenil)",
     titulo: "A los 16 Años: El Hito del Voto Joven y la Toma del Colegio",
-    situacion: "Es un año electoral presidencial. Rige la Ley 26.774: figurás en el padrón electoral, pero el voto es optativo. A la vez, el centro de estudiantes de tu colegio secundario vota tomar el establecimiento contra una reforma educativa.",
+    situacion: "Es un año de elecciones presidenciales. Por primera vez figurás en el padrón electoral y tu voto es optativo. Al mismo tiempo, el centro de estudiantes de tu colegio secundario vota tomar el establecimiento contra una reforma educativa.",
     opciones: [
       {
         id: "militante_base",
@@ -783,7 +783,7 @@ const DILEMAS_HITOS_LEGALES = [
     edadHito: 18,
     marcoLegal: "Art. 25 CCyC (Mayoría de edad plena) y Código Electoral Nacional",
     titulo: "A los 18 Años: La Mayoría de Edad y la Mesa de Votación",
-    situacion: "Cumplís 18 años. Cesó la responsabilidad parental de tus viejos. El Correo Argentino te deja un telegrama bajo la puerta: fuiste designado Presidente de Mesa en una escuela del Conurbano o de la Capital Federal. Son las 17:30 hs. Faltan 30 minutos para cerrar los comicios. El fiscal del partido gobernante se te acerca con dos cafés y un fajo de billetes en la mano: 'Pibe, faltan boletas de la oposición en el cuarto oscuro pero nadie vino a reponerlas. Firmá el acta de escrutinio como viene, poné que no hubo impugnaciones y acá tenés una changa de $ 150.000 para el fin de semana.'",
+    situacion: "Cumplís 18 años y ya sos mayor de edad. El Correo Argentino te deja un telegrama bajo la puerta: fuiste designado Presidente de Mesa en una escuela del Conurbano o de la Capital Federal. Son las 17:30 hs. Faltan 30 minutos para cerrar los comicios. El fiscal del partido gobernante se te acerca con dos cafés y un fajo de billetes en la mano: 'Pibe, faltan boletas de la oposición en el cuarto oscuro pero nadie vino a reponerlas. Firmá el acta de escrutinio como viene, poné que no hubo impugnaciones y acá tenés una changa de $ 150.000 para el fin de semana.'",
     opciones: [
       {
         id: "firmar_acta_plata",
@@ -1008,7 +1008,7 @@ const DILEMAS_CRECIMIENTO = [
     etapaBadge: "Adolescencia • 15 Años (Secundaria)",
     area: "Estudios, Deporte & Salud Integral",
     titulo: "La Vida Adolescente: Estudios, Deporte y Salud Integral",
-    descripcion: "Tenés 15 años y cursás el secundario. La rutina te pone a prueba: la exigencia de las materias y los exámenes, el club o el deporte para cuidar el físico, tu salud mental y psicológica ante el estrés y las expectativas familiares, y el tiempo compartido con tus amigos. ¿En qué decidís enfocar tus hábitos y tu energía durante esta etapa formativa?",
+    descripcion: "Tenés 15 años y estás en pleno secundario. Entre las materias que se ponen exigentes, los entrenamientos en el club, las salidas con amigos y las expectativas familiares, el tiempo no te alcanza para todo. Tenés que decidir a qué le ponés el cuerpo y la cabeza en esta etapa formativa.",
     explicacion: {
       queMide: "Prioridades del desarrollo adolescente: disciplina intelectual y académica vs. superación física y deportiva vs. bienestar psicológico, contención emocional y lazos de amistad.",
       siFavor: "Forja el carácter, hábitos de vida saludables y la estructura emocional que te acompañará hacia la vida adulta.",
@@ -1087,7 +1087,7 @@ const DILEMAS_CRECIMIENTO = [
     etapaBadge: "Umbral Cívico • 18 Años (Mayoría de Edad)",
     area: "Proyecto de Vida & Nuevos Retos",
     titulo: "Cumplís 18 Años: El Gran Planteo de Cómo Continuar",
-    descripcion: "Terminás el secundario y cumplís los 18 años. Adquirís la mayoría de edad plena y tus derechos políticos y civiles (Arts. 25 CCyC y Ley 26.774). Se abre el gran interrogante de tu futuro: cómo encarar tus estudios superiores, tu inserción en el trabajo o tu compromiso con la comunidad. A partir de acá se desbloquean tus nuevos retos y métricas de vida ciudadana.",
+    descripcion: "Terminás el secundario y cumplís los 18 años. Ya sos mayor de edad: podés votar, trabajar formalmente y empezar a tomar tus propias decisiones sin depender de nadie. Se abre el gran interrogante de tu futuro: si meterte de lleno en una carrera universitaria, buscar un trabajo para tener tu propia plata, o salir a laburar y comprometerte con tu barrio y tu gente. ¿Qué rumbo decidís tomar para arrancar tu vida adulta?",
     explicacion: {
       queMide: "Rumbo vital de inserción adulta: educación superior universitaria vs. independencia laboral y oficio vs. vocación pública y participación social comunitaria.",
       siFavor: "Determina tus herramientas de autonomía, tu red de relaciones adultas y el trampolín para los retos del país real.",
