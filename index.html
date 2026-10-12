@@ -414,6 +414,11 @@
               <span class="text-slate-400">Deporte:</span>
               <span id="hud-adol-deportes" class="font-bold text-teal-300 font-mono">75%</span>
             </div>
+            <div class="px-2.5 py-1 rounded-lg bg-slate-950/70 border border-emerald-500/30 flex items-center gap-1.5 shadow-sm" title="Suerte Criolla & Azar de Vida">
+              <i class="fa-solid fa-clover text-emerald-400 text-xs"></i>
+              <span class="text-slate-400">Suerte:</span>
+              <span id="hud-adol-suerte" class="font-bold text-emerald-300 font-mono">--%</span>
+            </div>
             <button type="button" onclick="scrollOAlternarConsola()" class="px-3 py-1 rounded-lg bg-sky-500/15 border border-sky-500/40 hover:bg-sky-500/25 text-sky-300 font-semibold text-[11px] flex items-center gap-1.5 transition-all cursor-pointer shadow-sm">
               <i class="fa-solid fa-graduation-cap text-sky-400"></i>
               <span id="hud-btn-consola-adol-label">Mi Vida Escolar ▾</span>
@@ -5300,7 +5305,7 @@
           <span class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5 px-1">
             <i class="fa-solid fa-award"></i> Balance de tu Formación Secundaria:
           </span>
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-center text-xs">
             <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
               <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-book-open text-sky-400 mr-1"></i> Estudios</span>
               <span id="mayoria-stat-estudios" class="font-bold text-sm text-sky-300 font-mono">80%</span>
@@ -5317,9 +5322,13 @@
               <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-user-group text-amber-400 mr-1"></i> Relaciones</span>
               <span id="mayoria-stat-relaciones" class="font-bold text-sm text-amber-300 font-mono">80%</span>
             </div>
-            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1 col-span-2 sm:col-span-1">
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
               <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-futbol text-teal-400 mr-1"></i> Deportes</span>
               <span id="mayoria-stat-deportes" class="font-bold text-sm text-teal-300 font-mono">75%</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-emerald-500/30 space-y-1">
+              <span class="text-[10px] text-slate-400 block"><i class="fa-solid fa-clover text-emerald-400 mr-1"></i> Suerte</span>
+              <span id="mayoria-stat-suerte" class="font-bold text-sm text-emerald-300 font-mono">--%</span>
             </div>
           </div>
         </div>
@@ -6015,6 +6024,8 @@
         if (elRel) elRel.innerText = `${adol.relaciones}%`;
         const elDep = document.getElementById('hud-adol-deportes');
         if (elDep) elDep.innerText = `${adol.deportes}%`;
+        const elSue = document.getElementById('hud-adol-suerte');
+        if (elSue) elSue.innerText = `${motorJuego.suerte || 72}%`;
         renderizarPerfilAdolescenteUI();
       }
 
@@ -7369,6 +7380,11 @@
         </div>
       `).join('');
 
+      const suerteVal = (window.motorJuego && motorJuego.suerte) || 72;
+      const golpeSuerte = (window.motorJuego && typeof motorJuego.tirarGolpeDeSuerte === 'function')
+        ? motorJuego.tirarGolpeDeSuerte('adolescente')
+        : { titulo: "¡Golpe de Suerte Criolla!", texto: "El profesor titular faltó con licencia médica y el suplente tomó un trabajo práctico grupal sencillo." };
+
       container.innerHTML = `
         <!-- BANNER DE DECISIÓN FORMATIVA -->
         <div class="p-3.5 rounded-xl border border-sky-500/40 bg-sky-950/20 space-y-1 shadow-sm">
@@ -7386,6 +7402,21 @@
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
             ${diffsHtml}
           </div>
+        </div>
+
+        <!-- GOLPE DE SUERTE & FACTOR AZAR VITAL -->
+        <div class="rounded-xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/25 via-slate-900 to-slate-900 p-3.5 space-y-1.5 shadow-md">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-clover text-emerald-400"></i> ${golpeSuerte.titulo}
+            </span>
+            <span class="text-[10px] font-mono text-emerald-300 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30">
+              Suerte de tu vida: ${suerteVal}%
+            </span>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed italic">
+            "${golpeSuerte.texto}"
+          </p>
         </div>
 
         <!-- TARJETA NARRATIVA: PUERTAS QUE SE ABREN VS COSTO DE OPORTUNIDAD -->
@@ -7748,7 +7779,9 @@
       if (!widget || !datosEntorno) return;
 
       const c = datosEntorno.conteo;
-      const cfg = datosEntorno.config || window._configEntorno;
+      const cfg = datosEntorno.config || (window.motorJuego && window.motorJuego.vidaPersonal) || window._configEntorno || { tienePareja: true, tieneEntrenador: true, suerte: 72 };
+      const suerteVal = cfg.suerte || (window.motorJuego && window.motorJuego.suerte) || 72;
+      const catSuerte = cfg.categoriaSuerte || (suerteVal >= 80 ? 'Con un Dios Aparte' : (suerteVal >= 60 ? 'Con Buena Estrella' : (suerteVal >= 40 ? 'Suerte Criolla' : 'Mala Pata')));
       const totalValidos = Math.max(1, c.bancan + c.bardean + c.neutros);
       const pctBancan = Math.round((c.bancan / totalValidos) * 100);
       const pctNeutros = Math.round((c.neutros / totalValidos) * 100);
@@ -7779,19 +7812,30 @@
             <div style="width: ${pctBardean}%" class="bg-rose-500 transition-all duration-500" title="Tensión: ${c.bardean} (${pctBardean}%)"></div>
           </div>
 
-          <!-- Selector de situación personal: Pareja y Entrenador (si tiene o no) -->
+          <!-- Vida personal y Factor Suerte (Asignados por el destino de cada vida, NO botones activables/desactivables) -->
           <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-800 text-[11px]">
             <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="text-slate-400 font-semibold text-[10px] uppercase tracking-wider flex items-center gap-1">
-                <i class="fa-solid fa-sliders text-slate-500"></i> Tu vida personal:
+              <span class="text-slate-400 font-semibold text-[10px] uppercase tracking-wider flex items-center gap-1" title="El azar definió tus vínculos afectivos y deportivos para esta vida">
+                <i class="fa-solid fa-dice text-amber-400"></i> Tu vida personal (Por suerte):
               </span>
-              <button onclick="toggleConfigEntorno('pareja', '${containerWidgetId}', '${containerCardsId}', '${fase}')" class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold transition-all flex items-center gap-1 ${cfg.tienePareja ? 'bg-rose-500/20 border-rose-500/40 text-rose-300 hover:bg-rose-500/30' : 'bg-slate-800/80 border-slate-700 text-slate-400 hover:bg-slate-700'}">
-                <i class="fa-solid fa-heart text-[10px]"></i> ${cfg.tienePareja ? 'En Pareja (Camila)' : 'Soltero/a libre'}
-              </button>
-              <button onclick="toggleConfigEntorno('entrenador', '${containerWidgetId}', '${containerCardsId}', '${fase}')" class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold transition-all flex items-center gap-1 ${cfg.tieneEntrenador ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30' : 'bg-slate-800/80 border-slate-700 text-slate-400 hover:bg-slate-700'}">
-                <i class="fa-solid fa-futbol text-[10px]"></i> ${cfg.tieneEntrenador ? 'DT en Club (Profe Gómez)' : 'Actividad deportiva libre'}
-              </button>
+              <span class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 select-none ${cfg.tienePareja ? 'bg-rose-500/15 border-rose-500/40 text-rose-300' : 'bg-slate-800/80 border-slate-700 text-slate-300'}" title="${cfg.tienePareja ? 'En esta vida el azar te tocó con pareja sentimental' : 'En esta vida el azar te tocó soltero/a libre'}">
+                <i class="${cfg.tienePareja ? 'fa-solid fa-heart text-rose-400' : 'fa-solid fa-heart-crack text-slate-400'} text-[10px]"></i>
+                ${cfg.tienePareja ? (cfg.nombrePareja ? `En Pareja (${cfg.nombrePareja})` : 'En Pareja (Camila)') : 'Soltero/a libre'}
+                <span class="text-[9px] opacity-70 font-mono">(Destino)</span>
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 select-none ${cfg.tieneEntrenador ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300' : 'bg-slate-800/80 border-slate-700 text-slate-300'}" title="${cfg.tieneEntrenador ? 'En esta vida el azar te fichó con DT en un club' : 'En esta vida hacés deporte libre por tu cuenta'}">
+                <i class="${cfg.tieneEntrenador ? 'fa-solid fa-futbol text-emerald-400' : 'fa-solid fa-person-running text-slate-400'} text-[10px]"></i>
+                ${cfg.tieneEntrenador ? 'DT en Club (Profe Gómez)' : 'Deporte libre / Gimnasio'}
+                <span class="text-[9px] opacity-70 font-mono">(Destino)</span>
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full border border-amber-500/40 bg-amber-500/15 text-amber-300 text-[11px] font-semibold flex items-center gap-1.5 select-none" title="Suerte Criolla de esta vida">
+                <i class="fa-solid fa-clover text-emerald-400 text-[10px]"></i>
+                Suerte: ${suerteVal}% (${catSuerte})
+              </span>
             </div>
+            <span class="text-[10px] text-slate-500 italic hidden sm:inline">
+              * El azar define tus vínculos en cada vida
+            </span>
           </div>
 
           <!-- Botones de filtrado interactivo -->
@@ -11660,6 +11704,9 @@
           { k: 'chasis', etiqueta: 'Resistencia Chasis: ', val: f.atributos.chasis },
           { k: 'escrupulos', etiqueta: 'Escrúpulos Morales: ', val: f.atributos.escrupulos }
         ];
+        if (f.atributos.suerte !== undefined) {
+          atribs.push({ k: 'suerte', etiqueta: 'Suerte Criolla / Azar: ', val: f.atributos.suerte });
+        }
 
         atribList.innerHTML = atribs.map(a => {
           const barra = generarBarraASCII(a.val, 20);
@@ -12283,6 +12330,8 @@
       if (elRel) elRel.innerText = `${adol.relaciones}%`;
       const elDep = document.getElementById('mayoria-stat-deportes');
       if (elDep) elDep.innerText = `${adol.deportes}%`;
+      const elSue = document.getElementById('mayoria-stat-suerte');
+      if (elSue) elSue.innerText = `${motorJuego.suerte || 72}%`;
     }
 
     function continuarTrasMayoriaEdad() {

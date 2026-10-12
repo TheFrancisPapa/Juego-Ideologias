@@ -359,6 +359,7 @@ class MotorJuego {
       this.sistemaLegislativo.sincronizarConMotor(this);
     }
     this.limiteDilemasPorFase = null;
+    this.sortearVidaPersonalYSuerte();
   }
 
 
@@ -388,6 +389,7 @@ class MotorJuego {
     this.carrera = 'cuna';
     this.faseActual = 'cuna';
     this.modoInicio = 'cuna';
+    this.sortearVidaPersonalYSuerte({ origenId });
     if (ritmo) {
       this.limiteDilemasPorFase = ritmo;
       this.configurarRitmoSemanal(ritmo === 1 ? 'decreto' : (ritmo === 7 ? 'trinchera' : 'parlamentario'));
@@ -1548,6 +1550,138 @@ class MotorJuego {
 
   esAdolescente() {
     return this.faseActual === 'cuna' || (this.saludSupervivencia && this.saludSupervivencia.edad < 18);
+  }
+
+  sortearVidaPersonalYSuerte(opciones = {}) {
+    // 1. Suerte Criolla (1 a 100, granular, sin restringir a múltiplos de 5)
+    const suerteBase = opciones.suerte !== undefined
+      ? opciones.suerte
+      : Math.floor(21 + Math.random() * 74); // 21 a 94
+
+    let categoriaSuerte = "Suerte Criolla Promedio";
+    let descSuerte = "A veces cara, a veces ceca; la tenés que pelear día a día.";
+    let iconoSuerte = "fa-solid fa-clover";
+    let colorSuerte = "emerald";
+
+    if (suerteBase >= 80) {
+      categoriaSuerte = "Con un Dios Aparte";
+      descSuerte = "Naciste con una estrella; los planetas se alinean y los vientos soplan a favor.";
+      iconoSuerte = "fa-solid fa-star";
+      colorSuerte = "amber";
+    } else if (suerteBase >= 60) {
+      categoriaSuerte = "Con Buena Estrella";
+      descSuerte = "Ligás oportunidades fortuitas, contactos providenciales y rebotes favorables.";
+      iconoSuerte = "fa-solid fa-sparkles";
+      colorSuerte = "emerald";
+    } else if (suerteBase >= 40) {
+      categoriaSuerte = "Suerte Criolla Estándar";
+      descSuerte = "El azar no te regala nada ni te condena; todo depende de tu cintura y de cómo te muevas.";
+      iconoSuerte = "fa-solid fa-clover";
+      colorSuerte = "sky";
+    } else if (suerteBase >= 20) {
+      categoriaSuerte = "Viento de Frente";
+      descSuerte = "Los imprevistos te pegan de lleno y todo te cuesta el doble de esfuerzo.";
+      iconoSuerte = "fa-solid fa-cloud-rain";
+      colorSuerte = "indigo";
+    } else {
+      categoriaSuerte = "Mala Leche Histórica";
+      descSuerte = "Si llueve sopa salís con tenedor; el destino te pone a prueba con cada paso.";
+      iconoSuerte = "fa-solid fa-bolt";
+      colorSuerte = "rose";
+    }
+
+    // 2. Azar de Pareja (En una vida tenés novia/novio y en la otra no - pura suerte)
+    const probPareja = opciones.tienePareja !== undefined
+      ? (opciones.tienePareja ? 1 : 0)
+      : (0.35 + (suerteBase / 100) * 0.3);
+    const tienePareja = opciones.tienePareja !== undefined
+      ? Boolean(opciones.tienePareja)
+      : (Math.random() < probPareja);
+
+    const nombresPareja = ["Camila", "Lucas", "Valentina", "Mateo", "Sofía", "Joaquín"];
+    const nombrePareja = opciones.nombrePareja || nombresPareja[Math.floor(Math.random() * nombresPareja.length)];
+
+    // 3. Azar de Entrenador en Club (En una vida te fichan con DT y en la otra hacés deporte libre)
+    const probEntrenador = opciones.tieneEntrenador !== undefined
+      ? (opciones.tieneEntrenador ? 1 : 0)
+      : (0.35 + (suerteBase / 100) * 0.3);
+    const tieneEntrenador = opciones.tieneEntrenador !== undefined
+      ? Boolean(opciones.tieneEntrenador)
+      : (Math.random() < probEntrenador);
+
+    // 4. Micro-golpe de suerte inicial
+    const eventosGolpeSuerte = [
+      "Encontraste $5.000 en el bolsillo de una campera vieja justo para la merienda.",
+      "Un paro de transporte postergó la prueba de matemática que no habías preparado.",
+      "Te regalaron un par de botines casi nuevos en el club de barrio.",
+      "Tu tío te regaló una bicicleta playera usada para moverte al colegio.",
+      "Te ganaste una rifa del buffet del club con una docena de empanadas.",
+      "El preceptor Walter te borró una llegada tarde porque le caés simpático.",
+      "Se cortó la luz en la escuela diez minutos antes de que te llamaran a dar lección oral."
+    ];
+    const golpeDeSuerteInicial = eventosGolpeSuerte[Math.floor(Math.random() * eventosGolpeSuerte.length)];
+
+    this.suerte = suerteBase;
+    this.vidaPersonal = {
+      tienePareja,
+      nombrePareja,
+      tieneEntrenador,
+      nombreEntrenador: "Profe Gómez",
+      suerte: suerteBase,
+      categoriaSuerte,
+      descSuerte,
+      iconoSuerte,
+      colorSuerte,
+      golpeDeSuerteInicial,
+      sorteadoPorDestino: true
+    };
+
+    if (typeof window !== 'undefined') {
+      window._configEntorno = {
+        tienePareja: this.vidaPersonal.tienePareja,
+        nombrePareja: this.vidaPersonal.nombrePareja,
+        tieneEntrenador: this.vidaPersonal.tieneEntrenador,
+        nombreEntrenador: this.vidaPersonal.nombreEntrenador,
+        suerte: this.suerte,
+        categoriaSuerte: this.vidaPersonal.categoriaSuerte,
+        descSuerte: this.vidaPersonal.descSuerte,
+        sorteadoPorDestino: true
+      };
+    }
+
+    return this.vidaPersonal;
+  }
+
+  tirarGolpeDeSuerte(contexto = 'adolescente') {
+    const suerte = this.suerte || 50;
+    const roll = Math.floor(1 + Math.random() * 100);
+    const esFavorable = roll <= (suerte + 10);
+
+    const favoresAdolescente = [
+      { titulo: "¡Golpe de Suerte Criolla!", texto: "El profesor titular faltó con licencia médica y el suplente tomó un trabajo práctico grupal sencillo.", tipo: "favorable" },
+      { titulo: "¡Viento de Cola en el Barrio!", texto: "En el club armaron una rifa solidaria y te cubrieron la cuota de la indumentaria deportiva.", tipo: "favorable" },
+      { titulo: "¡El Destino a tu Favor!", texto: "Tu amigo de fierro te pasó los apuntes completos con las preguntas clavadas de la prueba.", tipo: "favorable" },
+      { titulo: "¡Casualidad Providencial!", texto: "Un conocido de tu familia te consiguió una changa bien paga que hiciste en dos horas.", tipo: "favorable" }
+    ];
+
+    const revesesAdolescente = [
+      { titulo: "Giro Inesperado del Destino", texto: "Se largó un temporal tremendo justo cuando salías de casa y se te mojaron las carpetas.", tipo: "adverso" },
+      { titulo: "Mala Pata Criolla", texto: "Se te pinchó la rueda de la bicicleta en el camino y tuviste que meter dos kilómetros trotando.", tipo: "adverso" },
+      { titulo: "Imprevisto de Último Momento", texto: "El preceptor cambió las fechas de entrega sin avisar y tuviste que trasnochar para llegar.", tipo: "adverso" }
+    ];
+
+    if (esFavorable) {
+      return favoresAdolescente[Math.floor(Math.random() * favoresAdolescente.length)];
+    } else {
+      return revesesAdolescente[Math.floor(Math.random() * revesesAdolescente.length)];
+    }
+  }
+
+  obtenerConfigEntorno() {
+    if (!this.vidaPersonal) {
+      this.sortearVidaPersonalYSuerte();
+    }
+    return this.vidaPersonal;
   }
 
   // CÁLCULO ELECTORAL BASADO EN LA REGLA REAL DE LA CONSTITUCIÓN NACIONAL (ARTS. 97 Y 98 CN)

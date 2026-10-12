@@ -490,11 +490,24 @@
     const opcionElegida = params.opcionElegida || { texto: "" };
     const perfilAdol = params.perfilAdolescente || { estudios: 74, saludFisica: 79, saludMental: 73, relaciones: 71, deportes: 76 };
     
-    // Configuración de estado afectivo y deportivo (por defecto ambos activos)
+    // Configuración de estado afectivo y deportivo (fijado por la suerte de la vida o provisto)
+    let cfgFuente = params.configEntorno;
+    if (!cfgFuente && typeof window !== 'undefined' && window.motorJuego && window.motorJuego.vidaPersonal) {
+      cfgFuente = window.motorJuego.vidaPersonal;
+    }
+    if (!cfgFuente && typeof window !== 'undefined' && window._configEntorno) {
+      cfgFuente = window._configEntorno;
+    }
+
     const config = Object.assign({
       tienePareja: true,
-      tieneEntrenador: true
-    }, params.configEntorno || {});
+      nombrePareja: "Camila",
+      tieneEntrenador: true,
+      nombreEntrenador: "Profe Gómez",
+      suerte: 72,
+      categoriaSuerte: "Con Buena Estrella",
+      sorteadoPorDestino: true
+    }, cfgFuente || {});
 
     const lista = [];
     const bancan = [];
@@ -516,9 +529,14 @@
       if (fig.condicion === 'sin_entrenador' && config.tieneEntrenador) continue;
 
       const reac = fig.generarReaccion(opcionElegida, fase, perfilAdol);
+      let nombreFig = fig.nombre;
+      if (fig.id === 'pareja' && config.nombrePareja) {
+        nombreFig = `Tu Pareja (${config.nombrePareja})`;
+      }
+
       const card = {
         id: fig.id,
-        nombre: fig.nombre,
+        nombre: nombreFig,
         rol: fig.rol,
         categoria: fig.categoria,
         icono: fig.icono,

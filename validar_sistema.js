@@ -4088,6 +4088,74 @@ test("Métricas y Números Granulares de Desarrollo Adolescente (No limitados a 
   assert.strictEqual(motor.perfilAdolescente.estudios % 5 !== 0, true, "El valor final de estudios debe ser un número orgánico");
 });
 
+console.log("\n🍀 27. AUDITORÍA DEL SISTEMA DE SUERTE CRIOLLA, VIDA PERSONAL ALEATORIA Y AZAR VITAL...");
+
+test("Factor Suerte Criolla (Atributo Base, Ficha SEN y Rangos de Fortuna)", () => {
+  // 1. Verificación en catálogo ATRIBUTOS_BASE_DEF
+  const defSuerte = ATRIBUTOS_BASE_DEF.suerte;
+  assert.ok(defSuerte, "Debe existir la definición de Suerte en ATRIBUTOS_BASE_DEF");
+  assert.strictEqual(defSuerte.id, "suerte");
+  assert.ok(defSuerte.nombre.includes("Suerte"));
+  assert.ok(defSuerte.icono.includes("clover"));
+  assert.strictEqual(typeof defSuerte.comentarioRango, 'function');
+  assert.ok(defSuerte.comentarioRango(85).includes("dios aparte") || defSuerte.comentarioRango(85).includes("estrella"));
+  assert.ok(defSuerte.comentarioRango(15).includes("Mala leche"));
+
+  // 2. Verificación en generarFichaMatricularDirigente
+  const ficha = generarFichaMatricularDirigente({ modo: 'cuna', origenId: 'cuna_popular' });
+  assert.ok(ficha.atributos, "La ficha debe contener atributos");
+  assert.ok(ficha.atributos.suerte !== undefined, "La ficha SEN debe contener el atributo suerte");
+  assert.ok(ficha.atributos.suerte >= 1 && ficha.atributos.suerte <= 100, "El valor de suerte debe estar entre 1 y 100");
+
+  // 3. Verificación en MotorJuego al reiniciar o iniciar cuna
+  const motor = new MotorJuego();
+  motor.iniciarModoCuna('cuna_popular');
+  assert.ok(motor.suerte >= 1 && motor.suerte <= 100, "Motor debe poseer suerte asignada entre 1 y 100");
+  assert.ok(motor.vidaPersonal, "Motor debe poseer objeto vidaPersonal");
+  assert.strictEqual(motor.vidaPersonal.suerte, motor.suerte, "La suerte de vidaPersonal debe coincidir con la de motor");
+  assert.strictEqual(motor.vidaPersonal.sorteadoPorDestino, true, "Debe estar marcado como sorteadoPorDestino");
+});
+
+test("Vida Personal Aleatoria por Destino (Pareja y Entrenador fijados por el azar y Golpe de Suerte)", () => {
+  const motor = new MotorJuego();
+
+  // Sortear múltiples vidas para asegurar variabilidad estadística auténtica (en una vida tenés y en otra no)
+  let vioConPareja = false;
+  let vioSinPareja = false;
+  let vioConDT = false;
+  let vioSinDT = false;
+
+  for (let i = 0; i < 50; i++) {
+    const vp = motor.sortearVidaPersonalYSuerte();
+    if (vp.tienePareja) vioConPareja = true;
+    if (!vp.tienePareja) vioSinPareja = true;
+    if (vp.tieneEntrenador) vioConDT = true;
+    if (!vp.tieneEntrenador) vioSinDT = true;
+  }
+
+  assert.ok(vioConPareja, "En algunas vidas debe tocar tener pareja");
+  assert.ok(vioSinPareja, "En otras vidas debe tocar estar soltero/a libre");
+  assert.ok(vioConDT, "En algunas vidas debe tocar tener DT en club");
+  assert.ok(vioSinDT, "En otras vidas debe tocar hacer deporte libre");
+
+  // Verificar que obtenerReaccionesEntornoCercano respeta la vidaPersonal del motor
+  motor.sortearVidaPersonalYSuerte({ tienePareja: false, tieneEntrenador: false });
+  const reacSin = obtenerReaccionesEntornoCercano({
+    fase: 'cuna',
+    configEntorno: motor.vidaPersonal
+  });
+  assert.ok(reacSin.lista.some(f => f.id === 'soltero'), "Debe incluir figura de soltero cuando tienePareja es false");
+  assert.strictEqual(reacSin.lista.some(f => f.id === 'pareja'), false, "No debe incluir pareja formal cuando tienePareja es false");
+  assert.ok(reacSin.lista.some(f => f.id === 'gimnasio_libre'), "Debe incluir gimnasio libre cuando tieneEntrenador es false");
+  assert.strictEqual(reacSin.lista.some(f => f.id === 'entrenador_club'), false, "No debe incluir DT cuando tieneEntrenador es false");
+
+  // Verificar tirarGolpeDeSuerte
+  const golpe = motor.tirarGolpeDeSuerte('adolescente');
+  assert.ok(golpe, "Debe generar un golpe de suerte");
+  assert.ok(golpe.titulo, "El golpe de suerte debe tener título");
+  assert.ok(golpe.texto, "El golpe de suerte debe tener texto descriptivo");
+});
+
 console.log("\n=================================================================");
 
 console.log(`🏁 RESULTADO FINAL: ${testsPasados} de ${testsTotales} pruebas PASADAS`);

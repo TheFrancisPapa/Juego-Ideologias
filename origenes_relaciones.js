@@ -340,6 +340,14 @@ const ATRIBUTOS_BASE_DEF = {
     color: "emerald",
     descripcion: "Atributo inverso. Cuanto más alto, más te cuesta firmar un apriete, traicionar a un socio o usar fondos reservados; si llega a cero, sos un psicópata del poder capaz de cualquier maniobra maquiavélica.",
     comentarioRango: (val) => val >= 70 ? "Moral republicana; le cuesta firmar aprietes sucios" : (val >= 40 ? "Capaz de entregar a un socio si la coyuntura aprieta" : "Psicópata maquiavélico del poder absoluto")
+  },
+  suerte: {
+    id: "suerte",
+    nombre: "Suerte y Fortuna Criolla",
+    icono: "fa-solid fa-clover",
+    color: "emerald",
+    descripcion: "El factor azar y destino en la Argentina: define si ligás un buen pasar, si te toca una pareja que te acompañe, un DT que te banque en el club, o si te persigue la mala pata.",
+    comentarioRango: (val) => val >= 80 ? "Nació con una estrella / Con un dios aparte" : (val >= 60 ? "Con buena estrella y viento a favor" : (val >= 40 ? "Suerte criolla promedio; a veces cara, a veces ceca" : "Mala leche histórica; todo le cuesta el triple"))
   }
 };
 
@@ -520,7 +528,8 @@ function generarFichaMatricularDirigente(opciones = {}) {
     rosca: Math.max(10, Math.min(99, opciones.rosca !== undefined ? opciones.rosca : Math.round(baseAtrib.rosca + (Math.random() * 12 - 6)))),
     calle: Math.max(5, Math.min(99, opciones.calle !== undefined ? opciones.calle : Math.round(baseAtrib.calle + (Math.random() * 12 - 6)))),
     chasis: Math.max(20, Math.min(99, opciones.chasis !== undefined ? opciones.chasis : Math.round(baseAtrib.chasis + (Math.random() * 12 - 6)))),
-    escrupulos: Math.max(5, Math.min(95, opciones.escrupulos !== undefined ? opciones.escrupulos : Math.round(baseAtrib.escrupulos + (Math.random() * 12 - 6))))
+    escrupulos: Math.max(5, Math.min(95, opciones.escrupulos !== undefined ? opciones.escrupulos : Math.round(baseAtrib.escrupulos + (Math.random() * 12 - 6)))),
+    suerte: Math.max(5, Math.min(98, opciones.suerte !== undefined ? opciones.suerte : Math.round(20 + Math.random() * 75)))
   };
 
   // 4. Virtudes (2 elegidas o sorteadas)

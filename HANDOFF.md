@@ -134,12 +134,23 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
   - **Clamping Seguro [0, 100]:** Todos los cálculos garantizan que los valores permanezcan dentro de rangos viables enteros sin generar números flotantes ni desbordar los límites.
   - **Prueba Unitaria 130:** Se incorporó en `validar_sistema.js` la verificación de diversidad basal, presencia de diferenciales no múltiplos de 5 en todas las opciones de dilemas, y la consistencia matemática de la actualización de estado.
 
+### I. Sistema de Suerte Criolla y Vida Personal Aleatoria por Destino:
+- **Problema Observado:** Tener novia o un entrenador no debe ser un botón interactivo que el jugador pueda activar y desactivar a piacere en la pantalla como si fuera un switch de configuración. En una vida tenés pareja y en otra no; en una vida te ficha un club con DT y en otra hacés deporte libre. Todo depende de la suerte y el azar inicial del personaje.
+- **Solución Implementada (`motor.js`, `origenes_relaciones.js`, `entorno_cercano.js`, `index.html`, `validar_sistema.js`):**
+  - **Erradicación de Toggles Manuales:** Se eliminaron los botones interactivos de activación/desactivación en el widget del entorno cercano (`renderizarWidgetEntorno`). Ahora se muestran como **badges de estado fijados por el destino** (`En Pareja (Camila / Lucas) [Destino]` o `Soltero/a libre [Destino]`; `DT en Club (Profe Gómez) [Destino]` o `Deporte libre / Gimnasio [Destino]`).
+  - **Atributo Base de Suerte Criolla:** Se añadió formalmente el atributo `suerte` a `ATRIBUTOS_BASE_DEF`, a la Ficha Matricular SEN (`generarFichaMatricularDirigente`) y a `MotorJuego.suerte` (1 a 100, con categorías desde *Mala Leche Histórica* hasta *Con un Dios Aparte*).
+  - **Método `motorJuego.sortearVidaPersonalYSuerte()`:** Al iniciar o reiniciar cualquier vida (`iniciarModoCuna`, `reiniciar`), el motor sortea el nivel de suerte, determina por probabilidad si en esa vida el personaje tiene o no pareja, y si tiene o no entrenador de club, asignando además una anécdota/golpe de suerte inicial.
+  - **Tirada de Azar en Interludio (`motorJuego.tirarGolpeDeSuerte`):** En cada decisión adolescente, el azar interviene activando un micro-evento fortuito (*¡Golpe de Suerte Criolla!*, *¡Viento de Cola en el Barrio!*, *Mala Pata Criolla*, etc.) reflejado en una tarjeta dedicada del interludio.
+  - **Píldora de Suerte en HUD y Mayoría de Edad:** El HUD superior de juventud y la pantalla de los 18 años (`screen-mayoria-edad`) reflejan la Suerte Criolla del personaje en tiempo real.
+  - **Pruebas 131 y 132:** La suite `validar_sistema.js` audita tanto la existencia del atributo base y ficha como la variabilidad probabilística entre múltiples vidas y la reacción del entorno.
+
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables
 Para preservar la estabilidad del proyecto en futuros sprints:
-1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **130 de 130 pruebas PASADAS**.
+1. **Regla de Tests 100%:** `node validar_sistema.js` debe arrojar siempre **132 de 132 pruebas PASADAS**.
 2. **Contrato de 10 Marcas:** `MARCAS_ARGENTINAS` debe mantener exactamente 10 marcas históricas (`assert.strictEqual(Object.keys(MARCAS_ARGENTINAS).length, 10)`). Lobbies corporativos adicionales deben alojarse en `LOBBIES_CORPORATIVOS_ARG`.
 3. **Vanilla JS Nativo:** No añadir scripts de empaquetado o dependencias npm requeridas para correr en el navegador; el juego debe poder jugarse abriendo directamente `index.html` en cualquier navegador web moderno.
 4. **Handoff Permanente:** Ante cualquier modificación sustancial, actualizar este archivo `HANDOFF.md` y los artefactos de sesión para mantener la trazabilidad completa.
+
 
