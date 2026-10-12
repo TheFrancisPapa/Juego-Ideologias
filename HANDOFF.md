@@ -151,6 +151,13 @@ El proyecto está diseñado con una arquitectura **Vanilla JS Modular**, sin bun
     - *"Terminás el secundario y cumplís los 18 años. Ya sos mayor de edad: podés votar, trabajar formalmente y empezar a tomar tus propias decisiones sin depender de nadie. Se abre el gran interrogante de tu futuro: si meterte de lleno en una carrera universitaria, buscar un trabajo para tener tu propia plata, o salir a laburar y comprometerte con tu barrio y tu gente..."*
   - **Preservación de Metadatos Técnicos:** Las propiedades estructuradas internas (ej. `marcoLegal`) se conservan intactas en los objetos de datos para compatibilidad estricta con las pruebas de auditoría jurídica, sin contaminar jamás la prosa narrativa que lee el usuario en pantalla.
 
+### K. Nota Aclaratoria Simplificada con Ícono ? (Erradicación de Casillas Binarias):
+- **Problema Observado:** El desplegable pedagógico anterior mostraba un encabezado rígido ("¿Qué implica esta decisión y qué se está midiendo?") y dos casillas forzadas: "✔ Si estás a favor" y "✖ Si estás en contra", las cuales generaban `undefined` en dilemas juveniles o de múltiples opciones (A, B, C, D), rompiendo la prolijidad visual y la coherencia conceptual.
+- **Solución Implementada (`index.html`):**
+  - **Píldora Compacta con Ícono `?`:** Se transformó el bloque en un botón discreto y elegante con el badge `?` y la etiqueta "Nota aclaratoria".
+  - **Explicación Contextual Unificada:** Al desplegarse, muestra un único panel limpio con el encabezado "¿Qué se evalúa en esta decisión?" y un párrafo aclaratorio directo (`#expl-que-mide`), eliminando por completo las cajas binarias `expl-si-favor` y `expl-si-contra`.
+  - **Manejo Robusto de Datos (`renderizarDilemaActual`):** Adapta fluidamente tanto objetos `{ queMide, siFavor, ... }` como strings directos de dilemas históricos o de cuna, asegurando que jamás se imprima `undefined`.
+
 ---
 
 ## 5. ⚠️ Reglas Técnicas y Contratos Inmutables

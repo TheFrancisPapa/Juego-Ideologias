@@ -448,39 +448,20 @@
           </div>
         </div>
 
-        <!-- BOTÓN PEDAGÓGICO DE IMPLICANCIAS & ACLARATORIO -->
-        <div class="rounded-xl border border-amber-500/20 bg-amber-500/5 overflow-hidden">
-          <button onclick="toggleExplicacion()" class="w-full px-4 py-2.5 flex items-center justify-between text-left text-xs font-semibold text-amber-300 hover:bg-amber-500/10 transition-colors">
-            <span class="flex items-center gap-2">
-              <i class="fa-solid fa-circle-question text-amber-400 text-sm"></i>
-              <span>¿Qué implica esta decisión y qué se está midiendo?</span>
-            </span>
-            <i id="expl-arrow" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+        <!-- NOTA ACLARATORIA (CON ÍCONO DE ?) -->
+        <div class="pt-0.5">
+          <button type="button" onclick="toggleExplicacion()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-semibold transition-all cursor-pointer shadow-sm group">
+            <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-xs group-hover:bg-amber-400 group-hover:text-black transition-colors">?</span>
+            <span>Nota aclaratoria</span>
+            <i id="expl-arrow" class="fa-solid fa-chevron-down text-[10px] text-amber-400/70 transition-transform"></i>
           </button>
-          
-          <div id="expl-content" class="hidden px-4 pb-4 pt-1 space-y-3 text-xs border-t border-amber-500/10">
-            <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
-              <span class="font-bold text-amber-400 uppercase text-[10px] tracking-wider block mb-1">
-                <i class="fa-solid fa-compass mr-1"></i> Ejes en juego:
-              </span>
-              <p id="expl-que-mide" class="text-slate-300 leading-relaxed"></p>
-            </div>
 
-            <div class="grid sm:grid-cols-2 gap-2.5">
-              <div class="bg-emerald-950/20 border border-emerald-500/30 p-2.5 rounded-lg">
-                <span class="font-bold text-emerald-400 flex items-center gap-1.5 mb-1">
-                  <i class="fa-solid fa-circle-check"></i> Si estás a favor:
-                </span>
-                <p id="expl-si-favor" class="text-slate-300 leading-relaxed"></p>
-              </div>
-
-              <div class="bg-rose-950/20 border border-rose-500/30 p-2.5 rounded-lg">
-                <span class="font-bold text-rose-400 flex items-center gap-1.5 mb-1">
-                  <i class="fa-solid fa-circle-xmark"></i> Si estás en contra:
-                </span>
-                <p id="expl-si-contra" class="text-slate-300 leading-relaxed"></p>
-              </div>
+          <div id="expl-content" class="hidden mt-2 p-3.5 rounded-xl bg-slate-900/95 border border-amber-500/30 space-y-1.5 text-xs text-slate-300 shadow-md">
+            <div class="flex items-center gap-1.5 font-bold text-amber-400 text-[11px] uppercase tracking-wider">
+              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[10px]">?</span>
+              <span>¿Qué se evalúa en esta decisión?</span>
             </div>
+            <p id="expl-que-mide" class="leading-relaxed text-slate-200 font-sans"></p>
           </div>
         </div>
 
@@ -6611,9 +6592,19 @@
       document.getElementById('dilemma-title').innerText = dilema.titulo;
       document.getElementById('dilemma-desc').innerHTML = procesarTextoConGlosario(dilema.descripcion);
 
-      document.getElementById('expl-que-mide').innerText = dilema.explicacion.queMide;
-      document.getElementById('expl-si-favor').innerText = dilema.explicacion.siDeAcuerdo;
-      document.getElementById('expl-si-contra').innerText = dilema.explicacion.siEnContra;
+      const elExpl = document.getElementById('expl-que-mide');
+      if (elExpl) {
+        let textoAclaratorio = "";
+        if (typeof dilema.explicacion === 'string') {
+          textoAclaratorio = dilema.explicacion;
+        } else if (dilema.explicacion && typeof dilema.explicacion === 'object') {
+          textoAclaratorio = dilema.explicacion.queMide || dilema.explicacion.descripcion || "";
+          if (dilema.explicacion.siFavor && !textoAclaratorio.includes(dilema.explicacion.siFavor)) {
+            textoAclaratorio += ` ${dilema.explicacion.siFavor}`;
+          }
+        }
+        elExpl.innerText = textoAclaratorio || "Esta decisión evalúa el rumbo estratégico y los valores formativos o políticos de tu gestión.";
+      }
 
       cerrarExplicacion();
 
